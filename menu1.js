@@ -1,5 +1,10 @@
+import {Nav} from './components/nav.js'
+
+const nav = new Nav(document.querySelector('.nav'), 'sup')
+nav.render()
+console.log(nav);
 const toggleNav = () => {
-	const nav = document.querySelector('.nav1');
+	// const nav = document.querySelector('.nav');
 	// nav.style.width = '250px';
 	if (nav.classList.contains('navExpand')) {
 		setTimeout(() => {
@@ -11,11 +16,11 @@ const toggleNav = () => {
 		}, 200)
 	}
 }
+
 const closeNav = () => {
-	const nav = document.querySelector('.nav1');
+	// const nav = document.querySelector('.nav');
 	// nav.style.width = '0px';
 	nav.classList.toggle('navExpand')
-
 }
 
 const handleCardData = (action, key, cardData) => {
@@ -28,14 +33,15 @@ const handleCardData = (action, key, cardData) => {
 	}
 }
 
+//toggle menu, send expand event to nav
 document.querySelector('.menu-button')
 	.addEventListener('click', e => {
-		toggleNav();
+		nav.toggleNav();
 	})
 
 document.querySelector('.close-nav')
 	.addEventListener('click', e => {
-		toggleNav();
+		nav.toggleNav();
 		window.navigator.vibrate(1000); // 
 	})
 
@@ -88,9 +94,9 @@ document.querySelector('.userform-submit-button')
 
 document.querySelector('.new-card-link')
 	.addEventListener('click', e => {
-		let nav = document.querySelector('.nav1')
+		// let nav = document.querySelector('.nav')
 		// nav.classList.add('hide')
-		toggleNav()
+		nav.toggleNav()
 
 		let modal = document.querySelector('.form-modal-container')
 		modal.classList.remove('hide')
