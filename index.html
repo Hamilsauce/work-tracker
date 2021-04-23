@@ -1,25 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
 
-  <title>Vue.js</title>
-  
-  <!-- Vue.js -->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"></script>
-  
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="menu1.css" type="text/css" media="all" />
+	<title></title>
 </head>
 
 <body>
-  <div id="vue-app">
-  <div class="">
-    <h1 class="">{{heading}}</h1>
-    <p class="">{{text}}</p>
-  </div>
-</div>
-  <!-- Project -->
-  <script src="app.js"></script>
+	<div class="nav1">
+		<div class="nav-head">
+			<div class="close-nav">
+				X
+			</div>
+		</div>
+		<a class="home-link nav-link" href="#">home</a>
+		<div class="new-card-link nav-link">New Card</div>
+		<a class="music-link nav-link" href="https://hamilsauce.github.io/music-library-app/">ham radio</a>
+		<a class="about-link nav-link" href="#">About</a>
+		<a class="contact-link nav-link" href="#">Contact</a>
+		<a class="github-link nav-link" href="#">github</a>
+	</div>
+	<div class="form-modal-container hide">
+		<h3 class="form-modal-header">
+			New Card
+		</h3>
+		<form class="userform" action="">
+			<label for="author-name-input">Author</label>
+			<input type="text" class="author-name-input textInput" name="author-name-input" id="author-name-input" value="" />
+			<label for="date-input">Date</label>
+			<input type="text" class="date-input textInput" name="date-input" id="date-input" value="" />
+			<label for="header-input">Header</label>
+			<input type="text" class="header-input textInput" name="header-input" id="header-input" value="" />
+			<label for="content-input">Content</label>
+			<textarea rows="20" class="content-input textInput" name="content-input" id="content-input" value="" />
+			<div class="userform-button-container">
+				<input class="userform-submit-button" type="submit" name="" id="" value="Submit" />
+				<input class="userform-cancel-button" type="button" name="" id="" value="Cancel" />
+			</div>
+		</form>
+	</div>
+	<div class="main">
+		
+<header class="header">
+	<img class="menu-button" src="./assets/ellipsis.svg">
+		
+	</img>
+	<div class="header-title">
+		Work Tracker
+	</div>
+</header>
+<main class="app">
+	
+</main>
+<footer class="footer">
+	
+</footer>
+	</div>
+
+	<script src="menu1.js" type="module" charset="utf-8"></script>
 </body>
+
 </html>
