@@ -6,38 +6,34 @@
 		'date hrs hrs'
 		'date det det';
 	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-rows: 1fr 1fr 2fr;
 	justify-content: space-between;
-	padding: 0px 7px 0px 0px;
-	grid-column-gap:10px;
+	grid-column-gap: 10px;
 	grid-row-gap: 0px;
+	grid-row-gap: 5px;
 	height: 0;
 	min-height: 110px;
-	/* max-height: 120px; */
-	/* max-height: fit-content; */
 	margin-top: 12px;
 	margin-bottom: 12px;
+	/* padding: 0px 0px 0px 0px; */
 	background: #FFFFFF;
-	border: 1px solid transparent;
+	border: 1px solid #B3B3B3BD;
 	border-radius: 2px;
-	/* transition: 0.3s; */
 	box-shadow: 0 2px 5px 0px #60606050;
+	transition: 0.25s ease;
 }
 
 .activeCard {
-		box-shadow: 0 2px 5px #60606070;
-		/* background: #DBDBDB30; */
-		border: 1px solid #9E9E9E;
-height: 120px;
+	box-shadow: 0 2px 5px #60606070;
+	border: 1px solid #727272;
+	/* height: 120px; */
 	margin-bottom: 12px;
-/* max-height: fit-content; */
-/* max-height: max-content */
-	/* transition: 0.3s; */
-	/* padding: 0px 7px 12px 7px; */
-	
+	transform: scale(1.04, 1.08);
+
 }
 
 .card:hover {
-		/* padding: 0px 7px 6px 7px; */
+	/* padding: 0px 7px 6px 7px; */
 	/* min-height: 100%; */
 
 }
@@ -46,12 +42,14 @@ height: 120px;
 	grid-area: head;
 	/* padding: 6px 0px 6px 0px; */
 	/* transition: 0.3s; */
-	transition: 0.3s;
-	height: 0px;
+	/* transition: 0.3s; */
+/* max-height: 25px; */
+	transition: 0.4s ease-out;
 }
-.activeCard > .card-header-container {
-	height: 20px;
-} 
+
+.activeCard>.card-header-container {
+	/* max-height: 25px; */
+}
 
 
 .card-header {
@@ -59,6 +57,7 @@ height: 120px;
 	flex-direction: row;
 	justify-content: flex-end;
 	column-gap: 10px;
+	max-height: 25px;
 	/* padding: 0px 0px 5px 0px; */
 	/* min-height: 100px; */
 	/* width: 255px; */
@@ -74,6 +73,7 @@ height: 120px;
 .header-button {
 	padding: 5px;
 }
+
 .card-date {
 	display: flex;
 	flex-direction: column;
@@ -116,7 +116,13 @@ height: 120px;
 	/* width: 255px; */
 }
 
-.activeCard > .card-details {
+.activeCard>.card-date {
+	background: #4D57C8;
+color: white;
+	transition: 0.2s ease;
+
+}
+.activeCard>.card-details {
 
 	padding: 0px 0px 6px 0px;
 }

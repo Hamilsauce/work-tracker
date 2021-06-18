@@ -22,33 +22,37 @@ function findProductKey(productId) {
 const DeleteCardModal = Vue.component('delete-card-modal', {
 	template: '#delete-card-modal',
 	props: {
-		showDeleteModal: Boolean,
-		showModal: Boolean
+		// showDeleteModal: Boolean,
+		// showModal: Boolean
 	},
 	data() {
 		return {
-			deleteConfirmed: null
+			// deleteConfirmed: null
 		}
 	},
 	methods: {
-		handleDeleteChoice(userChoice) {
-			this.deleteConfirmed = userChoice; //bool
-			if (this.deleteConfirmed === true) store.commit('deleteCard');
-			this.showModal = false;
-			this.deleteConfirmed = null;
-			// this.$emit('toggle-nav', false)
-		},
+		// handleDeleteChoice(userChoice) {
+		// 	this.deleteConfirmed = userChoice; //bool
+		// 	if (this.deleteConfirmed === true) store.commit('deleteCard');
+		// 	this.showModal = false;
+		// 	this.deleteConfirmed = null;
+		// 	// this.$emit('toggle-nav', false)
+		// },
 		deleteConfirmed() {
 			// this.deleteConfirmed = userChoice; //bool
 			// if (this.deleteConfirmed === true) store.commit('deleteCard');
+		console.log('poo');
+		
 			store.commit('deleteCard');
-			this.$emit('toggle-delete-modal')
+			store.commit('toggleDeleteModal')
+			// this.$emit('toggle-delete-modal')
 			// this.showModal = false;
 			// this.deleteConfirmed = null;
 		},
 		deleteCanceled() {
-			this.$emit('toggle-delete-modal')
-			
+			store.commit('toggleDeleteModal')
+			// this.$emit('toggle-delete-modal')
+
 		},
 		// exportJsonClicked() { this.$emit('export-json') },
 		// exportCsvClicked() { this.$emit('export-csv') }
@@ -155,7 +159,7 @@ const Card = Vue.component('card', {
 		deleteCard() {
 			// this.$emit('toggle-delete-modal')
 			store.commit('toggleDeleteModal')
-			this.$emit('delete-selected', this.shiftData.id) 
+			// this.$emit('delete-selected', this.shiftData.id) 
 		},
 
 		toggleEdit() { this.$emit('toggle-edit', this.shiftData.id) },
@@ -259,7 +263,6 @@ const app = new Vue({
 		return {
 			workData: workHistory,
 			showNav: false,
-			showDeleteModal: false
 		}
 	},
 	computed: {
@@ -272,18 +275,12 @@ const app = new Vue({
 	},
 	methods: {
 		handleExportAsJson() { exportAsJson(this.workHistory) },
-		handleExportAsCsv() {
-			// console.log('csv', exportAsCsv(this.workHistory))
-			return exportAsCsv(this.workHistory)
-
-			//		exportAsCsv(this.workHistory) 
-
-		},
+		handleExportAsCsv() { exportAsCsv(this.workHistory) },
 		listenForNavToggle(data) { this.showNav = data },
-		toggleDeleteModal() { 
-			this.showDeleteModal = !this.showDeleteModal 
-			console.log(this.showDeleteModal);
-		},
+		// toggleDeleteModal() {
+		// 	this.showDeleteModal = !this.showDeleteModal
+		// 	console.log(this.showDeleteModal);
+		// },
 	},
 	created() {
 		store.dispatch('fetchLocalStorageData')

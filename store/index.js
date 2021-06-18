@@ -10,6 +10,7 @@ export default {
 
 	mutations: {
 		toggleDeleteModal(state) {
+			console.log(state);
 			state.showDeleteModal = !state.showDeleteModal;
 		},
 		addShiftToWorkHistory(state, newShift) {
