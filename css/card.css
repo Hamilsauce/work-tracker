@@ -1,0 +1,122 @@
+.card {
+	box-sizing: border-box;
+	display: grid;
+	grid-template-areas:
+		'date head head'
+		'date hrs hrs'
+		'date det det';
+	grid-template-columns: 1fr 2fr 1fr;
+	justify-content: space-between;
+	padding: 0px 7px 0px 0px;
+	grid-column-gap:10px;
+	grid-row-gap: 0px;
+	height: 0;
+	min-height: 110px;
+	/* max-height: 120px; */
+	/* max-height: fit-content; */
+	margin-top: 12px;
+	margin-bottom: 12px;
+	background: #FFFFFF;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	/* transition: 0.3s; */
+	box-shadow: 0 2px 5px 0px #60606050;
+}
+
+.activeCard {
+		box-shadow: 0 2px 5px #60606070;
+		/* background: #DBDBDB30; */
+		border: 1px solid #9E9E9E;
+height: 120px;
+	margin-bottom: 12px;
+/* max-height: fit-content; */
+/* max-height: max-content */
+	/* transition: 0.3s; */
+	/* padding: 0px 7px 12px 7px; */
+	
+}
+
+.card:hover {
+		/* padding: 0px 7px 6px 7px; */
+	/* min-height: 100%; */
+
+}
+
+.card-header-container {
+	grid-area: head;
+	/* padding: 6px 0px 6px 0px; */
+	/* transition: 0.3s; */
+	transition: 0.3s;
+	height: 0px;
+}
+.activeCard > .card-header-container {
+	height: 20px;
+} 
+
+
+.card-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	column-gap: 10px;
+	/* padding: 0px 0px 5px 0px; */
+	/* min-height: 100px; */
+	/* width: 255px; */
+}
+
+.card-edit-buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	column-gap: 10px;
+}
+
+.header-button {
+	padding: 5px;
+}
+.card-date {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: center;
+	grid-area: date;
+	grid-column: 1;
+	/* height: fit-content; */
+	/* width: fit-content; */
+	padding-right: 10px;
+	border-right: 2px solid #E6E6E6;
+	background: #F0F0F0;
+	font-size: 1.5em;
+	font-weight: 700;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.card-date>.month {
+	font-size: 0.8em;
+	font-weight: 300;
+	letter-spacing: 1px;
+	line-height: 0.8;
+	/* text-align: right; */
+}
+
+.card-hours {
+	grid-area: hrs;
+	/* padding: 5px 0px 0px 0px; */
+	font-size: 1.2em;
+	font-weight: 500;
+	text-align: left;
+}
+
+.card-details {
+	grid-area: det;
+	padding: 0px 0px 0px 0px;
+	grid-column: 2 / span 2;
+	/* min-height: 100px; */
+	/* width: 255px; */
+}
+
+.activeCard > .card-details {
+
+	padding: 0px 0px 6px 0px;
+}

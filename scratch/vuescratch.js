@@ -1,6 +1,6 @@
-import storeObj from './store/index.js'
-import { workHistory } from './data/work-data.js'
-import { exportAsJson, exportAsCsv } from './services/fileSaver.js'
+import storeObj from '../store/index.js'
+import { workHistory } from '../data/work-data.js'
+import { exportAsJson, exportAsCsv } from '../services/fileSaver.js'
 const products = [
 	{ id: 1, name: 'Angular', description: 'Superheroic JavaScript MVW Framework.', price: 100 },
 	{ id: 2, name: 'Ember', description: 'A framework for creating ambitious web applications.', price: 100 },
@@ -18,48 +18,6 @@ function findProductKey(productId) {
 		}
 	}
 };
-
-const DeleteCardModal = Vue.component('delete-card-modal', {
-	template: '#delete-card-modal',
-	props: {
-		showDeleteModal: Boolean,
-		showModal: Boolean
-	},
-	data() {
-		return {
-			deleteConfirmed: null
-		}
-	},
-	methods: {
-		handleDeleteChoice(userChoice) {
-			this.deleteConfirmed = userChoice; //bool
-			if (this.deleteConfirmed === true) store.commit('deleteCard');
-			this.showModal = false;
-			this.deleteConfirmed = null;
-			// this.$emit('toggle-nav', false)
-		},
-		deleteConfirmed() {
-			// this.deleteConfirmed = userChoice; //bool
-			// if (this.deleteConfirmed === true) store.commit('deleteCard');
-			store.commit('deleteCard');
-			this.$emit('toggle-delete-modal')
-			// this.showModal = false;
-			// this.deleteConfirmed = null;
-		},
-		deleteCanceled() {
-			this.$emit('toggle-delete-modal')
-			
-		},
-		// exportJsonClicked() { this.$emit('export-json') },
-		// exportCsvClicked() { this.$emit('export-csv') }
-	},
-	watch: {},
-	computed: {
-		showNav() { return store.getters.showNav }
-
-	},
-	created() {}
-});
 
 const AppNav = Vue.component('app-nav', {
 	template: '#app-nav',
@@ -151,13 +109,7 @@ const Card = Vue.component('card', {
 	},
 	methods: {
 		emitCardSelected() { this.$emit('card-selected', this.shiftData.id) },
-
-		deleteCard() {
-			// this.$emit('toggle-delete-modal')
-			store.commit('toggleDeleteModal')
-			this.$emit('delete-selected', this.shiftData.id) 
-		},
-
+		deleteCard() { this.$emit('delete-selected', this.shiftData.id) },
 		toggleEdit() { this.$emit('toggle-edit', this.shiftData.id) },
 		saveEdit() { this.$emit('save-edit', this.newShiftData) },
 		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
@@ -211,8 +163,7 @@ const CardView = Vue.component('card-view', {
 		cancelCardEdit() { this.editCardId = -1 },
 		handleDeleteCard(cardId) {
 			this.deleteIdArray.push(cardId)
-			// store.commit('deleteCard', this.deleteIdArray)
-			store.commit('deleteCard')
+			store.commit('deleteCard', this.deleteIdArray)
 		}
 	},
 	computed: {
@@ -258,13 +209,11 @@ const app = new Vue({
 	data() {
 		return {
 			workData: workHistory,
-			showNav: false,
-			showDeleteModal: false
+			showNav: false
 		}
 	},
 	computed: {
-		workHistory() { return store.getters.workHistory },
-		showDeleteModal() { return store.getters.showDeleteModal }
+		workHistory() { return store.getters.workHistory }
 	},
 
 	watch: {
@@ -280,10 +229,6 @@ const app = new Vue({
 
 		},
 		listenForNavToggle(data) { this.showNav = data },
-		toggleDeleteModal() { 
-			this.showDeleteModal = !this.showDeleteModal 
-			console.log(this.showDeleteModal);
-		},
 	},
 	created() {
 		store.dispatch('fetchLocalStorageData')

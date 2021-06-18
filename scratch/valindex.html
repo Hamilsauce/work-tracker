@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css" type="text/css" media="all" />
+	<title>Work Track</title>
+</head>
+
+<body>
+	<div class="app">
+		<div class="nav"></div>
+		<div class="form-modal-container hide">
+			<h3 class="form-modal-header">
+				New Card
+			</h3>
+			<form class="userform">
+				<label for="author-name-input">Author</label>
+				<input type="text" class="author-name-input textInput" name="author-name-input" id="author-name-input" value="" />
+				<label for="date-input">Date</label>
+				<input type="text" class="date-input textInput" name="date-input" id="date-input" value="" />
+				<label for="header-input">Header</label>
+				<input type="text" class="header-input textInput" name="header-input" id="header-input" value="" />
+				<label for="content-input">Content</label>
+				<textarea rows="20" class="content-input textInput" name="content-input" id="content-input"></textarea>
+				<input class="userform-submit-button" type="submit" value="Submit" />
+				<input class="userform-cancel-button" type="button" value="Cancel" />
+			</form>
+		</div>
+		<header class="header">
+			<img class="menu-button" src="./assets/ellipsis.svg" alt="menu-button" />
+			<div class="header-title">
+				Work Tracker
+			</div>
+		</header>
+		<div class="app-body"></div>
+		<footer class="footer"></footer>
+	</div>
+	<script src="main.js" type="module" charset="utf-8"></script>
+</body>
+
+</html>

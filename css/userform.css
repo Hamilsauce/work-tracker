@@ -1,0 +1,63 @@
+.form-modal-container {
+	display: block;
+	/* position: fixed; */
+	/* top: 0; */
+	/* right: 0; */
+	height: 100%;
+	width: 100%;
+	padding: 5px;
+	/* background-blend-mode: color-dodge  */
+	;
+	/* background: #384F61DE; */
+	color: #000;
+	backdrop-filter: blur(2.5px);
+	overflow: hidden;
+	z-index: 22;
+}
+
+.form-modal-container.hide {
+	display: none;
+}
+
+.form-modal-header {
+	padding: 5px;
+}
+
+.userform {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	grid-template-rows: auto;
+	grid-gap: 10px 2px;
+	/* align-items: space-around; */
+	justify-content: space-evenly;
+	/* padding-right: 10px; */
+	/* margin-right: 10px; */
+}
+
+.userform label {
+	/* background-blend-mode: exclusion; */
+	padding: 5px;
+	background: #1D4361D9;
+	color: #FFFFFF;
+}
+
+.text-input {
+	font-size: 1.1em;
+	padding: 5px;
+	outline: none;
+	box-shadow: 1px 1px 5px #2C343ABA;
+}
+
+.content-input {}
+
+.userform-button-container {
+	display: flex;
+	justify-content: flex-end;
+	width: auto;
+	grid-column: 2;
+}
+
+.userform-button-container input {
+	margin: auto 5px;
+	padding: 5px;
+}

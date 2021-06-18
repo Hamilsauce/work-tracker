@@ -23,7 +23,6 @@
 
 <body>
 	<main id="app" class="app">
-		<delete-card-modal @toggle-delete-modal="toggleDeleteModal" v-if="showDeleteModal"></delete-card-modal>
 		<app-nav @toggle-nav="listenForNavToggle" @export-csv="handleExportAsCsv" @export-json="handleExportAsJson" :show-nav="showNav" :class="{navExpand: showNav}"></app-nav>
 		<app-header @toggle-nav="listenForNavToggle"></app-header>
 		<div class="app-body">
@@ -31,16 +30,7 @@
 		</div>
 		<footer class="footer"></footer>
 	</main>
-<!-- - -->
-<template id="delete-card-modal">
-	<div class="delete-card-modal-menu">
-		<div class="delete-modal-text">Delete Card?</div>
-		<div @click="deleteConfirmed" class="delete-confirm-button">Ok</div>
-		<div @click="deleteCanceled" class="delete-cancel-button">Cancel</div>
-	</div>
-	<div class="delete-card-modal-dimmer"></div>
-</template>
-<!-- - -->
+	<!-- - -->
 	<template id="app-nav">
 		<div class="app-nav">
 			<div class="nav-head">
@@ -58,12 +48,14 @@
 					Add Shift
 				</div>
 			</router-link>
+			<!-- <a class="export-csv-link" href="#"> -->
 					<div class="nav-link export-json-link" @click="exportJsonClicked" @click="closeNav">
 						Export JSON
 					</div>
 					<div class="nav-link export-csv-link" @click="exportCsvClicked" @click="closeNav">
 						Export CSV
 					</div>
+				<!-- </a> -->
 			<a class="contact-link nav-link"   href="#">Contact</a>
 			<a class="music-link nav-link" href="https://hamilsauce.github.io/music-library-app/">ham radio</a>
 			<a class="github-link nav-link" href="#">github</a>
@@ -215,7 +207,7 @@
 	</template>
 	<!-- - -->
   <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/FileSaver.js"></script>
-	<script src='./app.js' type="module"></script>
+	<script src='./vuescratch.js' type="module"></script>
 </body>
 
 </html>
