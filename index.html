@@ -98,24 +98,6 @@
 	<!-- !! Card -->
 	<template id="card">
 		<div class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }">
-			<div class="card-header-container">
-				<div class="card-header" v-if="isSelected">
-					<div v-if="!editMode" @click.stop="toggleEdit" class="header-button header-edit-button">
-						Edit
-					</div>
-					<div v-else class="card-edit-buttons">
-						<div @click.stop="saveEdit" class="header-button header-save-button">
-							Save
-						</div>
-						<div @click.stop="toggleEdit" class="header-button header-cancel-button">
-							Cancel
-						</div>
-					</div>
-					<div @click.stop="deleteCard" class="header-button header-edit-button">
-						Delete
-					</div>
-				</div>
-			</div>
 			<div class="card-date">
 				<div class="day-date">
 					{{shift.date | dayDate}}
@@ -124,10 +106,30 @@
 					{{shift.date | month}}
 				</div>
 			</div>
-			<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
-			<input v-else v-model="newShiftData.hours" class="card-hours" type="text"></input>
-			<div v-if="!editMode" class="card-details">{{ shift.details }}</div>
-			<textarea v-else v-model="newShiftData.details" class="card-details"></textarea>
+			<!-- <div class="card-right-column">
+				<div class="card-header-container">
+					<div class="card-header" v-if="isSelected">
+						<div v-if="!editMode" @click.stop="toggleEdit" class="header-button header-edit-button">
+							Edit
+						</div>
+						<div v-else class="card-edit-buttons">
+							<div @click.stop="saveEdit" class="header-button header-save-button">
+								Save
+							</div>
+							<div @click.stop="toggleEdit" class="header-button header-cancel-button">
+								Cancel
+							</div>
+						</div> -->
+						<div @click.stop="deleteCard" class="header-button header-edit-button">
+							Delete
+						</div>
+					</div>
+				</div>
+				<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
+				<input v-else v-model="newShiftData.hours" class="card-hours" type="text"></input>
+				<div v-if="!editMode" class="card-details">{{ shift.details }}</div>
+				<textarea v-else v-model="newShiftData.details" class="card-details"></textarea>
+			</div>
 		</div>
 	</template>
 	<!-- - -->
