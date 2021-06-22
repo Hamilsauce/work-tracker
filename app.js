@@ -41,8 +41,8 @@ const DeleteCardModal = Vue.component('delete-card-modal', {
 		deleteConfirmed() {
 			// this.deleteConfirmed = userChoice; //bool
 			// if (this.deleteConfirmed === true) store.commit('deleteCard');
-		console.log('poo');
-		
+			console.log('poo');
+
 			store.commit('deleteCard');
 			store.commit('toggleDeleteModal')
 			// this.$emit('toggle-delete-modal')
@@ -111,7 +111,9 @@ const AddShiftView = Vue.component('add-shift-view', {
 			newShift: {
 				date: null,
 				hours: null,
-				details: ''
+				details: '',
+				createdDate: null,
+
 			}
 		}
 	},
@@ -155,20 +157,37 @@ const Card = Vue.component('card', {
 	},
 	methods: {
 		emitCardSelected() { this.$emit('card-selected', this.shiftData.id) },
+		deleteCard() { store.commit('toggleDeleteModal') },
+		toggleEdit() {
+			if (this.editMode && this.isSelected) {
+				this.$emit('toggle-edit', -1)
 
-		deleteCard() {
-			// this.$emit('toggle-delete-modal')
-			store.commit('toggleDeleteModal')
-			// this.$emit('delete-selected', this.shiftData.id) 
+			} else {
+				this.$emit('toggle-edit', this.shiftData.id)
+
+			}
 		},
-
-		toggleEdit() { this.$emit('toggle-edit', this.shiftData.id) },
 		saveEdit() { this.$emit('save-edit', this.newShiftData) },
 		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
 	},
+	watch: {
+		editMode() {
+
+			console.log('card comp editcardid', this.editCardId)
+		}
+	},
 	computed: {
-		isSelected() { return this.selectedCardId == this.shiftData.id ? true : false },
-		editMode() { return this.editCardId == this.shiftData.id ? true : false }
+		isSelected() {
+			return this.selectedCardId == this.shiftData.id ? true : false
+		},
+		editMode() {
+			// this.toggleEdit()
+			// return this.editCardId == this.shiftData.id ? true : false
+			const edit = this.editCardId == this.shiftData.id && this.isSelected ? true : false
+			console.log(edit);
+			return edit
+
+		}
 	},
 	filters: {
 		dayDate(inputDate) {
@@ -205,7 +224,9 @@ const CardView = Vue.component('card-view', {
 	},
 	methods: {
 		handleSelectedCard(cardId) { store.commit('setSelectedCardId', cardId) },
-		toggleEditCard(cardId) { this.editCardId = this.editCardId === cardId ? -1 : cardId },
+		setEditCardId(cardId) {
+			this.editCardId = this.editCardId === cardId ? -1 : cardId
+		},
 		saveCardEdit(newData) {
 			newData.id === this.editCardId ?
 				store.commit('saveCardEdit', newData) :
@@ -232,16 +253,15 @@ const CardView = Vue.component('card-view', {
 						bDate.getMonth() - aDate.getMonth();
 				});
 
-			if (!this.searchInput) {
-				return sortedShifts;
-			} else {
-				const filterVal = dayjs(this.searchInput).format('MM/DD/YYYY');
-				const filteredShifts = sortedShifts.filter(shift => filterVal === dayjs(shift.date).format('MM/DD/YYYY'));
-				return filteredShifts
-			}
+			if (!this.searchInput) return sortedShifts;
+			const filterVal = dayjs(this.searchInput).format('MM/DD/YYYY');
+			const filteredShifts = sortedShifts.filter(shift => filterVal === dayjs(shift.date).format('MM/DD/YYYY'));
+  		return filteredShifts
 		}
 	},
 	watch: {
+		editCardId(newId, oldId) {},
+		selectedCardId(newId, oldId) { this.editCardId = newId !== oldId ? -1 : newId },
 		filteredWorkData(val) {},
 	},
 	mounted() {}

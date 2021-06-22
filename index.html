@@ -9,6 +9,7 @@
 	<link rel='stylesheet' href='../css/main.css'>
 	<link rel='stylesheet' href='../css/nav.css'>
 	<link rel='stylesheet' href='../css/card.css'>
+	<!-- <link rel='stylesheet' href='../css/card2.css'> -->
 	<link rel='stylesheet' href='../css/userform.css'>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -91,13 +92,51 @@
 				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input" class="card-search-input" value="" />
 			</div>
 			<div class="card-list">
-				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="toggleEditCard" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
+				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
 			</div>
 		</div>
 	</template>
 	<!-- !! Card -->
 	<template id="card">
-		<div class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }">
+		<div class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }" :data-edit-mode="editMode">
+			<!-- <div class="card-right-column">-->
+			<div class="card-header-container">
+				<div class="card-header" v-if="isSelected">
+					<div v-if="!editMode" @click.stop="toggleEdit" class="header-button header-edit-button">
+						Edit
+					</div>
+					<div v-else class="card-edit-buttons">
+						<div @click.stop="saveEdit" class="header-button header-save-button">
+							Save
+						</div>
+						<div @click.stop="toggleEdit" class="header-button header-cancel-button">
+							Cancel
+						</div>
+						<!-- 	</div> -->
+						<div @click.stop="deleteCard" class="header-button header-edit-button">
+							Delete
+						</div>
+					</div>
+				</div>
+			</div>
+			<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
+			<input v-if="editMode" v-model="newShiftData.hours" class="card-hours" type="text"></input>
+			<div  :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
+			<!-- <div v-if="editMode" contenteditable class="card-details">{{ shift.details }}</div> -->
+			<!-- <div v-else v-model="newShiftData.details" class="card-details"></div> -->
+			<!--<textarea v-else v-model="newShiftData.details" class="card-details"></textarea> -->
+			<div class="card-date">
+				<div class="day-date">
+					{{shift.date | dayDate}}
+				</div>
+				<div class="month">
+					{{shift.date | month}}
+				</div>
+			</div>
+		</div>
+	</template>
+	<template id="card2">
+		<div class="card2" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }">
 			<!-- <div class="card-right-column">-->
 			<div class="card-header-container">
 				<div class="card-header" v-if="isSelected">
@@ -121,7 +160,8 @@
 			<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
 			<input v-else v-model="newShiftData.hours" class="card-hours" type="text"></input>
 			<div v-if="!editMode" class="card-details">{{ shift.details }}</div>
-			<textarea v-else v-model="newShiftData.details" class="card-details"></textarea>
+			<div v-else v-model="newShiftData.details" class="card-details"></div>
+			<!--<textarea v-else v-model="newShiftData.details" class="card-details"></textarea> -->
 			<div class="card-date">
 				<div class="day-date">
 					{{shift.date | dayDate}}

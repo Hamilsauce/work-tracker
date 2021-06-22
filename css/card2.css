@@ -1,19 +1,17 @@
-.card {
+.card2 {
 	box-sizing: border-box;
 	display: grid;
 	grid-template-areas:
-		'date head head'
-		'date hrs hrs'
-		'date det det';
-	grid-template-columns: 1fr 2fr 1fr;
-	grid-template-rows: 30px 30px 1fr;
+		'date body';
+	grid-template-columns: 1fr 2fr;
+	/* grid-template-rows: auto; */
 	justify-content: space-between;
-	grid-column-gap: 10px;
-	grid-row-gap: 0px;
-	grid-row-gap: 5px;
+	/* grid-column-gap: 10px; */
+	/* grid-row-gap: 0px; */
+	/* grid-row-gap: 5px; */
 	/* height: fit-content; */
-	/* min-height: 110px; */
-	max-height: 150px;
+	min-height: 110px;
+	/* max-height: 150px; */
 	margin-top: 12px;
 	margin-bottom: 12px;
 	padding: 0px 10px 0px 0px;
@@ -21,37 +19,37 @@
 	border: 1px solid #B3B3B3BD;
 	border-radius: 2px;
 	box-shadow: 0 2px 5px 0px #60606050;
-	transition: 0.2s ease-in;
+	transition: 0.2s ease-out;
 }
 
-.card.activeCard {
-	box-shadow: 0 2px 5px #60606070;
+.card2.activeCard {
+	/* box-shadow: 0 2px 5px #60606070; */
 	border: 1px solid #727272;
-	height: fit-content;
-	max-height: 100%;
+	/* max-height: min-content; */
 	/* transform: scale(1.01, 1.02); */
 }
 
-.card-right-column {
+.card-body-right {
+	grid-area: body;
 	display: grid;
 	grid-template-areas:
-		'head head'
-		'hrs hrs'
-		'det det';
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr 2fr;
+		'head'
+		'hrs'
+		'det';
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
 	justify-content: space-between;
-	grid-row-gap: 5px;
-	/* height: fit-content; */
+	/* grid-row-gap: 5px; */
+	height: fit-content;
 	/* min-height: 110px;
+	max-height: 150px;
 	margin-top: 12px;
 	margin-bottom: 12px; */
-	/* height: 150px; */
 	padding: 0px 5px 5px 0px;
 	background: #FFFFFF;
 	border: 1px solid #B3B3B3BD;
 	border-radius: 2px;
-	box-shadow: 0 2px 5px 0px #60606050;
+	/* box-shadow: 0 2px 5px 0px #60606050; */
 	transition: 0.2s ease-out;
 }
 
@@ -62,6 +60,10 @@
 
 .card-header-container {
 	grid-area: head;
+	/* padding: 6px 0px 6px 0px; */
+	/* transition: 0.3s; */
+	/* transition: 0.3s; */
+	/* max-height: 25px; */
 	transition: 0.4s ease-out;
 }
 
@@ -75,13 +77,22 @@
 	flex-direction: row;
 	justify-content: flex-end;
 	column-gap: 10px;
+	/* padding: 5px 10px; */
+	/* max-height: 25px; */
+	/* padding: 0px 0px 15px 0px; */
+	/* min-height: 100px; */
+	/* border-bottom: 1px solid #B3B3B3BD; */
+	/* width: 255px; */
 	border-bottom: 2px solid #DDDDDD;
+
 }
 
 .card-edit-buttons {
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
+	/* column-gap: 10px; */
+	/* padding: 5px; */
 }
 
 .header-button {
@@ -89,12 +100,14 @@
 }
 
 .card-date {
+	grid-area: date;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 	justify-content: center;
-	grid-area: date;
 	grid-column: 1;
+	/* height: fit-content; */
+	/* width: fit-content; */
 	padding-right: 10px;
 	border-right: 2px solid #E6E6E6;
 	background: #F0F0F0;
@@ -104,23 +117,17 @@
 	white-space: nowrap;
 }
 
-.activeCard>.card-date {
-	
-	background: #727AD6;
-	box-shadow: 0px 0px 100px 10px inset #4D57C8;
-	color: white;
-	transition: 0.2s ease;
-}
-
 .card-date>.month {
 	font-size: 0.8em;
 	font-weight: 300;
 	letter-spacing: 1px;
 	line-height: 0.8;
+	/* text-align: right; */
 }
 
 .card-hours {
 	grid-area: hrs;
+	/* margin: 0px 10px 0px 0px; */
 	font-size: 1.2em;
 	font-weight: 500;
 	overflow: hidden;
@@ -129,16 +136,26 @@
 
 .card-details {
 	grid-area: det;
-	padding: 0px 0px 10px 0px;
+	padding: 0px 0px 0px 0px;
 	grid-column: 2 / span 2;
+	/* height: fit-content; */
+	max-height: 45px;
 	overflow: hidden;
-	margin: 0px 0px 10px 0px;
+	/* width: 255px; */
 }
 
 .activeCard>.card-details {
 	overflow: hidden;
-	/* min-height: fit-content; */
-	padding: 0px 0px 10px 0px;
-	/* height: 100px; */
+	/* height: 100%; */
+max-height: 100%;
+	padding: 0px 0px 6px 0px;
+}
+
+
+.activeCard>.card-date {
+	background: #4D57C8;
+	color: white;
+	transition: 0.2s ease;
+
 }
 
