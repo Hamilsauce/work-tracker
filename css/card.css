@@ -21,7 +21,8 @@
 	border: 1px solid #B3B3B3BD;
 	border-radius: 2px;
 	box-shadow: 0 2px 5px 0px #60606050;
-	transition: 0.2s ease-in;
+	transition: 0.1s ease;
+	transition-delay: 0.1s;
 }
 
 .card.activeCard {
@@ -29,6 +30,8 @@
 	border: 1px solid #727272;
 	height: fit-content;
 	max-height: 100%;
+	transition: 0.2s ease-in;
+	transition-delay: 0.2s;
 	/* transform: scale(1.01, 1.02); */
 }
 
@@ -135,10 +138,21 @@
 	margin: 0px 0px 10px 0px;
 }
 
+.card-details.editing {
+	/* grid-area: det; */
+	/* padding: 0px 0px 10px 0px; */
+	/* grid-column: 2 / span 2; */
+	/* overflow: hidden; */
+	/* margin: 0px 0px 10px 0px; */
+	background: #EDEDED;
+	border-radius: 3px;
+}
+
 .activeCard>.card-details {
 	overflow: hidden;
 	/* min-height: fit-content; */
-	padding: 0px 0px 10px 0px;
+	padding: 10px 10px 10px 10px;
+	
 	/* height: 100px; */
 }
 

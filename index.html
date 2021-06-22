@@ -121,7 +121,7 @@
 			</div>
 			<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
 			<input v-if="editMode" v-model="newShiftData.hours" class="card-hours" type="text"></input>
-			<div  :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
+			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
 			<!-- <div v-if="editMode" contenteditable class="card-details">{{ shift.details }}</div> -->
 			<!-- <div v-else v-model="newShiftData.details" class="card-details"></div> -->
 			<!--<textarea v-else v-model="newShiftData.details" class="card-details"></textarea> -->

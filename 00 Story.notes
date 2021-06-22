@@ -1,0 +1,18 @@
+CARD SELECTION AND TRANSITION
+	-	Create delay between last card 
+		deselection animation and new 
+		card's selection
+		
+	-	When card is selected, 
+		set view scrollheight to selected 
+		card's screen position
+	
+	
+	
+	
+	-
+	-
+	-
+	-
+	-
+	-
