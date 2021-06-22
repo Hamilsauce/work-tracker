@@ -22,7 +22,8 @@
 	border-radius: 2px;
 	box-shadow: 0 2px 5px 0px #60606050;
 	transition: 0.1s ease;
-	transition-delay: 0.1s;
+
+	transition-delay: 0.2s;
 }
 
 .card.activeCard {
@@ -31,7 +32,7 @@
 	height: fit-content;
 	max-height: 100%;
 	transition: 0.2s ease-in;
-	transition-delay: 0.2s;
+	transition-delay: 0.1s;
 	/* transform: scale(1.01, 1.02); */
 }
 
@@ -108,7 +109,7 @@
 }
 
 .activeCard>.card-date {
-	
+
 	background: #727AD6;
 	box-shadow: 0px 0px 100px 10px inset #4D57C8;
 	color: white;
@@ -152,7 +153,6 @@
 	overflow: hidden;
 	/* min-height: fit-content; */
 	padding: 10px 10px 10px 10px;
-	
+
 	/* height: 100px; */
 }
-

@@ -5,7 +5,8 @@
 	<meta charset="UTF-8">
 	<title>Work Track-o-Matic</title>
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
-	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css'>
+	<link rel='stylesheet'
+		href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css'>
 	<link rel='stylesheet' href='./css/main.css'>
 	<link rel='stylesheet' href='./css/nav.css'>
 	<link rel='stylesheet' href='./css/card.css'>
@@ -26,7 +27,8 @@
 	<main id="app" class="app">
 		<delete-card-modal v-if="showDeleteModal"></delete-card-modal>
 		<!-- <delete-card-modal @toggle-delete-modal="toggleDeleteModal" v-if="showDeleteModal"></delete-card-modal> -->
-		<app-nav @toggle-nav="listenForNavToggle" @export-csv="handleExportAsCsv" @export-json="handleExportAsJson" :show-nav="showNav" :class="{navExpand: showNav}"></app-nav>
+		<app-nav @toggle-nav="listenForNavToggle" @export-csv="handleExportAsCsv" @export-json="handleExportAsJson"
+			:show-nav="showNav" :class="{navExpand: showNav}"></app-nav>
 		<app-header @toggle-nav="listenForNavToggle"></app-header>
 		<div class="app-body">
 			<router-view></router-view>
@@ -78,7 +80,7 @@
 	<!-- - -->
 	<template id="app-header">
 		<div class="app-header">
-			<img @click="handleMenuClick" class="menu-button" src="../assets/ellipsis.svg" alt="menu-button" />
+			<img @click="handleMenuClick" class="menu-button" src="./assets/ellipsis.svg" alt="menu-button" />
 			<div class="header-title">
 				Work Tracker
 			</div>
@@ -89,16 +91,20 @@
 		<div class="card-view">
 			<div class="card-search-container">
 				<label for="card-search-input">Search Date</label>
-				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input" class="card-search-input" value="" />
+				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input"
+					class="card-search-input" value="" />
 			</div>
 			<div class="card-list">
-				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
+				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard"
+					@toggle-edit="setEditCardId" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId"
+					:edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
 			</div>
 		</div>
 	</template>
 	<!-- !! Card -->
 	<template id="card">
-		<div class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }" :data-edit-mode="editMode">
+		<div class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }"
+			:data-edit-mode="editMode">
 			<!-- <div class="card-right-column">-->
 			<div class="card-header-container">
 				<div class="card-header" v-if="isSelected">
@@ -121,7 +127,8 @@
 			</div>
 			<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
 			<input v-if="editMode" v-model="newShiftData.hours" class="card-hours" type="text"></input>
-			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
+			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}
+			</div>
 			<!-- <div v-if="editMode" contenteditable class="card-details">{{ shift.details }}</div> -->
 			<!-- <div v-else v-model="newShiftData.details" class="card-details"></div> -->
 			<!--<textarea v-else v-model="newShiftData.details" class="card-details"></textarea> -->
@@ -182,9 +189,11 @@
 				<label for="date-input">Date</label>
 				<input v-model="newShift.date" type="date" class="date-input" name="date-input" id="date-input" value="" />
 				<label for="hours-input">Hours</label>
-				<input v-model="newShift.hours" type="number" class="hours-input number-input" name="hours-input" id="hours-input" value="" />
+				<input v-model="newShift.hours" type="number" class="hours-input number-input" name="hours-input"
+					id="hours-input" value="" />
 				<label for="detail-input">Details</label>
-				<textarea v-model="newShift.details" rows="5" class="details-input text-input" name="details-input" id="details-input"></textarea>
+				<textarea v-model="newShift.details" rows="5" class="details-input text-input" name="details-input"
+					id="details-input"></textarea>
 				<div class="userform-button-container">
 					<input @click="handleFormSubmit" class="userform-submit-button" type="submit" value="Submit" />
 					<input @click="handleFormCancel" class="userform-cancel-button" type="button" value="Cancel" />
