@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./css/main.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="./css/nav.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="./css/userform.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="./css/card.css" type="text/css" media="all" />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.1/vue-router.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js'></script>
+	<title>Work Track</title>
+</head>
+
+<body>
+			<router-view to="/"></router-view>
+	<div id="app" class="app">
+		
+		<div class="nav"></div>
+		<div class="form-modal-container hide"></div>
+		<header class="header">
+			<img class="menu-button" src="./assets/ellipsis.svg" alt="menu-button" />
+			<div class="header-title">
+				Work Tracker
+			</div>
+		</header>
+		<div class="app-body">router link
+			
+		</div>
+		<footer class="footer"></footer>
+	</div>
+	
+	<script src="app.js" type="module" charset="utf-8"></script>
+	<!-- <script src="main.js" type="module" charset="utf-8" defer></script> -->
+</body>
+
+</html>

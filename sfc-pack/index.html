@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue.js Single-File JavaScript Component Demo</title>
+    <!-- <script src="node_modules/vue/dist/vue.min.js"></script> -->
+</head>
+<body>
+<div id="app">
+    <single-file-component v-for="thing in things" :message="message"></single-file-component>
+</div>
+</body>
+<script type="module" src="app.js"></script>
+<!-- <script nomodule src="/dist/build.js"></script> -->
+</html>

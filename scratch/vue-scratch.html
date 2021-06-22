@@ -9,7 +9,6 @@
 	<link rel='stylesheet' href='../css/main.css'>
 	<link rel='stylesheet' href='../css/nav.css'>
 	<link rel='stylesheet' href='../css/card.css'>
-	<!-- <link rel='stylesheet' href='../css/card2.css'> -->
 	<link rel='stylesheet' href='../css/userform.css'>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -24,8 +23,6 @@
 
 <body>
 	<main id="app" class="app">
-		<delete-card-modal v-if="showDeleteModal"></delete-card-modal>
-		<!-- <delete-card-modal @toggle-delete-modal="toggleDeleteModal" v-if="showDeleteModal"></delete-card-modal> -->
 		<app-nav @toggle-nav="listenForNavToggle" @export-csv="handleExportAsCsv" @export-json="handleExportAsJson" :show-nav="showNav" :class="{navExpand: showNav}"></app-nav>
 		<app-header @toggle-nav="listenForNavToggle"></app-header>
 		<div class="app-body">
@@ -33,19 +30,6 @@
 		</div>
 		<footer class="footer"></footer>
 	</main>
-	<!-- - -->
-	<template id="delete-card-modal">
-		<div class="delete-card-modal">
-			<div class="delete-card-modal-menu">
-				<div class="delete-modal-text">Delete Card?</div>
-				<div class="delete-modal-button-container">
-					<div @click="deleteConfirmed" class="delete-confirm-button delete-modal-button">Ok</div>
-					<div @click="deleteCanceled" class="delete-cancel-button delete-modal-button">Cancel</div>
-				</div>
-			</div>
-			<div class="delete-card-modal-dimmer"></div>
-		</div>
-	</template>
 	<!-- - -->
 	<template id="app-nav">
 		<div class="app-nav">
@@ -64,13 +48,15 @@
 					Add Shift
 				</div>
 			</router-link>
-			<div class="nav-link export-json-link" @click="exportJsonClicked" @click="closeNav">
-				Export JSON
-			</div>
-			<div class="nav-link export-csv-link" @click="exportCsvClicked" @click="closeNav">
-				Export CSV
-			</div>
-			<a class="contact-link nav-link" href="#">Contact</a>
+			<!-- <a class="export-csv-link" href="#"> -->
+					<div class="nav-link export-json-link" @click="exportJsonClicked" @click="closeNav">
+						Export JSON
+					</div>
+					<div class="nav-link export-csv-link" @click="exportCsvClicked" @click="closeNav">
+						Export CSV
+					</div>
+				<!-- </a> -->
+			<a class="contact-link nav-link"   href="#">Contact</a>
 			<a class="music-link nav-link" href="https://hamilsauce.github.io/music-library-app/">ham radio</a>
 			<a class="github-link nav-link" href="#">github</a>
 		</div>
@@ -92,14 +78,13 @@
 				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input" class="card-search-input" value="" />
 			</div>
 			<div class="card-list">
-				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
+				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="toggleEditCard" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
 			</div>
 		</div>
 	</template>
 	<!-- !! Card -->
 	<template id="card">
-		<div class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }" :data-edit-mode="editMode">
-			<!-- <div class="card-right-column">-->
+		<div class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }">
 			<div class="card-header-container">
 				<div class="card-header" v-if="isSelected">
 					<div v-if="!editMode" @click.stop="toggleEdit" class="header-button header-edit-button">
@@ -112,64 +97,24 @@
 						<div @click.stop="toggleEdit" class="header-button header-cancel-button">
 							Cancel
 						</div>
-						<!-- 	</div> -->
-						<div @click.stop="deleteCard" class="header-button header-edit-button">
-							Delete
-						</div>
+					</div>
+					<div @click.stop="deleteCard" class="header-button header-edit-button">
+						Delete
 					</div>
 				</div>
 			</div>
-			<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
-			<input v-if="editMode" v-model="newShiftData.hours" class="card-hours" type="text"></input>
-			<div  :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
-			<!-- <div v-if="editMode" contenteditable class="card-details">{{ shift.details }}</div> -->
-			<!-- <div v-else v-model="newShiftData.details" class="card-details"></div> -->
-			<!--<textarea v-else v-model="newShiftData.details" class="card-details"></textarea> -->
 			<div class="card-date">
 				<div class="day-date">
 					{{shift.date | dayDate}}
 				</div>
 				<div class="month">
 					{{shift.date | month}}
-				</div>
-			</div>
-		</div>
-	</template>
-	<template id="card2">
-		<div class="card2" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }">
-			<!-- <div class="card-right-column">-->
-			<div class="card-header-container">
-				<div class="card-header" v-if="isSelected">
-					<div v-if="!editMode" @click.stop="toggleEdit" class="header-button header-edit-button">
-						Edit
-					</div>
-					<div v-else class="card-edit-buttons">
-						<div @click.stop="saveEdit" class="header-button header-save-button">
-							Save
-						</div>
-						<div @click.stop="toggleEdit" class="header-button header-cancel-button">
-							Cancel
-						</div>
-						<!-- 	</div> -->
-						<div @click.stop="deleteCard" class="header-button header-edit-button">
-							Delete
-						</div>
-					</div>
 				</div>
 			</div>
 			<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
 			<input v-else v-model="newShiftData.hours" class="card-hours" type="text"></input>
 			<div v-if="!editMode" class="card-details">{{ shift.details }}</div>
-			<div v-else v-model="newShiftData.details" class="card-details"></div>
-			<!--<textarea v-else v-model="newShiftData.details" class="card-details"></textarea> -->
-			<div class="card-date">
-				<div class="day-date">
-					{{shift.date | dayDate}}
-				</div>
-				<div class="month">
-					{{shift.date | month}}
-				</div>
-			</div>
+			<textarea v-else v-model="newShiftData.details" class="card-details"></textarea>
 		</div>
 	</template>
 	<!-- - -->
@@ -261,8 +206,8 @@
 		</div>
 	</template>
 	<!-- - -->
-	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/FileSaver.js"></script>
-	<script src='./app.js' type="module"></script>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/FileSaver.js"></script>
+	<script src='./vuescratch.js' type="module"></script>
 </body>
 
 </html>
