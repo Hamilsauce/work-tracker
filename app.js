@@ -152,7 +152,7 @@ const Card = Vue.component('card', {
 				date: this.shift.date,
 				details: this.shift.details,
 				hours: this.shift.hours
-			}
+			},
 		}
 	},
 	methods: {
@@ -171,18 +171,29 @@ const Card = Vue.component('card', {
 		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
 	},
 	watch: {
+		refName(newV, oldV) {
+			console.log('ref');
+						console.log(this.refName);
+						console.log(newV, oldV);
+
+		},
 		editMode() {
 
 			console.log('card comp editcardid', this.editCardId)
 		}
 	},
 	computed: {
+		refName() {
+			console.log(this);
+			console.log(`item${this.shift.id}`);
+			return `item${this.shift.id}`
+			
+		},
+
 		isSelected() {
 			return this.selectedCardId == this.shiftData.id ? true : false
 		},
 		editMode() {
-			// this.toggleEdit()
-			// return this.editCardId == this.shiftData.id ? true : false
 			const edit = this.editCardId == this.shiftData.id && this.isSelected ? true : false
 			console.log(edit);
 			return edit
@@ -256,7 +267,7 @@ const CardView = Vue.component('card-view', {
 			if (!this.searchInput) return sortedShifts;
 			const filterVal = dayjs(this.searchInput).format('MM/DD/YYYY');
 			const filteredShifts = sortedShifts.filter(shift => filterVal === dayjs(shift.date).format('MM/DD/YYYY'));
-  		return filteredShifts
+			return filteredShifts
 		}
 	},
 	watch: {
