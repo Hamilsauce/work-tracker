@@ -8,8 +8,10 @@
 	user-select: none;
 }
 
+
 html {
 	font-family: 'Lato', sans-serif;
+	scroll-behavior: smooth;
 }
 
 .app {

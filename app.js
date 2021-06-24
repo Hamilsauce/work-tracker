@@ -156,7 +156,7 @@ const Card = Vue.component('card', {
 		}
 	},
 	methods: {
-		emitCardSelected() { this.$emit('card-selected', this.shiftData.id) },
+		emitCardSelected() { this.$emit('card-selected', this.shiftData.id, this.$refs[this.refName]) },
 		deleteCard() { store.commit('toggleDeleteModal') },
 		toggleEdit() {
 			if (this.editMode && this.isSelected) {
@@ -171,24 +171,13 @@ const Card = Vue.component('card', {
 		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
 	},
 	watch: {
-		refName(newV, oldV) {
-			console.log('ref');
-						console.log(this.refName);
-						console.log(newV, oldV);
-
-		},
+		refName(newV, oldV) {},
 		editMode() {
-
 			console.log('card comp editcardid', this.editCardId)
 		}
 	},
 	computed: {
-		refName() {
-			console.log(this);
-			console.log(`item${this.shift.id}`);
-			return `item${this.shift.id}`
-			
-		},
+		refName() { return `item${this.shift.id}` },
 
 		isSelected() {
 			return this.selectedCardId == this.shiftData.id ? true : false
@@ -230,11 +219,22 @@ const CardView = Vue.component('card-view', {
 		return {
 			searchInput: '',
 			editCardId: -1,
-			deleteIdArray: []
+			deleteIdArray: [],
+
 		}
 	},
 	methods: {
-		handleSelectedCard(cardId) { store.commit('setSelectedCardId', cardId) },
+		handleSelectedCard(cardId, cardRef) {
+
+			// this.cardViewElement.scrollTop = 0
+			// document.documentElement.scrollTop = 0
+			// this.cardViewElement.scrollTop = cardRef.scrollHeight
+			// document.documentElement.scrollTop = cardRef.scrollHeight
+			cardRef.scrollIntoView(true)
+			// document.documentElement.scrollTop = this.cardViewElement.scrollTop + cardRef.scrollHeight
+			// console.log(this.$refs[`item${cardId}`]);
+			store.commit('setSelectedCardId', cardId)
+		},
 		setEditCardId(cardId) {
 			this.editCardId = this.editCardId === cardId ? -1 : cardId
 		},
@@ -252,6 +252,7 @@ const CardView = Vue.component('card-view', {
 		}
 	},
 	computed: {
+		cardViewElement() { return this.$refs.cardView },
 		workHistory() { return store.getters.workHistory },
 		selectedCardId() { return store.getters.selectedCardId },
 		filteredWorkData() {
