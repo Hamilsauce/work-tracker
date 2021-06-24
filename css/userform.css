@@ -1,14 +1,8 @@
 .form-modal-container {
 	display: block;
-	/* position: fixed; */
-	/* top: 0; */
-	/* right: 0; */
 	height: 100%;
 	width: 100%;
 	padding: 5px;
-	/* background-blend-mode: color-dodge  */
-	;
-	/* background: #384F61DE; */
 	color: #000;
 	backdrop-filter: blur(2.5px);
 	overflow: hidden;
@@ -28,14 +22,10 @@
 	grid-template-columns: max-content 1fr;
 	grid-template-rows: auto;
 	grid-gap: 10px 2px;
-	/* align-items: space-around; */
 	justify-content: space-evenly;
-	/* padding-right: 10px; */
-	/* margin-right: 10px; */
 }
 
 .userform label {
-	/* background-blend-mode: exclusion; */
 	padding: 5px;
 	background: #1D4361D9;
 	color: #FFFFFF;
