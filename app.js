@@ -225,11 +225,8 @@ const CardView = Vue.component('card-view', {
 	},
 	methods: {
 		handleSelectedCard(cardId, cardRef) {
-
-			// this.cardViewElement.scrollTop = 0
-			// document.documentElement.scrollTop = 0
-			// this.cardViewElement.scrollTop = cardRef.scrollHeight
-			// document.documentElement.scrollTop = cardRef.scrollHeight
+			// this.cardViewElement.scrollTo(cardRef.clientY)
+			// document.documentElement.scrollTo(cardRef.scrollHeight)
 			cardRef.scrollIntoView(true)
 			// document.documentElement.scrollTop = this.cardViewElement.scrollTop + cardRef.scrollHeight
 			// console.log(this.$refs[`item${cardId}`]);
