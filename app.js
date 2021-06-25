@@ -27,7 +27,7 @@ const DeleteCardModal = Vue.component('delete-card-modal', {
 			store.commit('deleteCard');
 			store.commit('toggleDeleteModal')
 		},
-		deleteCanceled() {store.commit('toggleDeleteModal')},
+		deleteCanceled() { store.commit('toggleDeleteModal') },
 	},
 });
 
@@ -68,6 +68,7 @@ const AddShiftView = Vue.component('add-shift-view', {
 				hours: null,
 				details: '',
 				createdDate: null,
+				modifiedDate: null
 			}
 		}
 	},
@@ -76,6 +77,9 @@ const AddShiftView = Vue.component('add-shift-view', {
 			e.preventDefault()
 			if (this.validateForm()) {
 				this.newShift.date = dayjs(this.newShift.date).format('MM/DD/YYYY')
+				this.newShift.createdDate = dayjs().format('MM/DD/YYYY');
+				this.newShift.modifiedDate = dayjs().format('MM/DD/YYYY');
+			console.log(this.newShift);
 				store.dispatch('storeHistory', this.newShift)
 				router.push('/')
 			} else {
@@ -103,7 +107,9 @@ const Card = Vue.component('card', {
 				id: this.shift.id,
 				date: this.shift.date,
 				details: this.shift.details,
-				hours: this.shift.hours
+				hours: this.shift.hours,
+				createdDate: this.shift.createdDate,
+				modifiedDate: this.shift.modifiedDate,
 			},
 		}
 	},
@@ -117,7 +123,11 @@ const Card = Vue.component('card', {
 				this.$emit('toggle-edit', this.shiftData.id)
 			}
 		},
-		saveEdit() { this.$emit('save-edit', this.newShiftData) },
+		saveEdit() { 
+			this.shift.modifiedDate = dayjs().format('MM/DD/YYYY');
+			this.$emit('save-edit', this.newShiftData) 
+			
+		},
 		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
 	},
 	computed: {
@@ -159,8 +169,11 @@ const CardView = Vue.component('card-view', {
 	},
 	methods: {
 		handleSelectedCard(cardId, cardRef) {
-			cardRef.scrollIntoView(true)
 			store.commit('setSelectedCardId', cardId)
+			setTimeout(() => {
+				this.cardListElement.scrollTop = cardRef.offsetTop - 55
+				document.documentElement.scrollTop = cardRef.offsetTop - 55
+			}, 400)
 		},
 		setEditCardId(cardId) { this.editCardId = this.editCardId === cardId ? -1 : cardId },
 		saveCardEdit(newData) {
@@ -177,6 +190,7 @@ const CardView = Vue.component('card-view', {
 	},
 	computed: {
 		cardViewElement() { return this.$refs.cardView },
+		cardListElement() { return this.$refs.cardList },
 		workHistory() { return store.getters.workHistory },
 		selectedCardId() { return store.getters.selectedCardId },
 		filteredWorkData() {
@@ -190,7 +204,7 @@ const CardView = Vue.component('card-view', {
 				});
 
 			if (!this.searchInput) return sortedShifts;
-	
+
 			const filterVal = dayjs(this.searchInput).format('MM/DD/YYYY');
 			const filteredShifts = sortedShifts.filter(shift => filterVal === dayjs(shift.date).format('MM/DD/YYYY'));
 			return filteredShifts

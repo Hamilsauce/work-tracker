@@ -2,10 +2,10 @@
 	box-sizing: border-box;
 	display: grid;
 	grid-template-areas:
-		'date head head'
-		'date hrs hrs'
-		'date det det';
-	grid-template-columns: 1fr 2fr 1fr;
+		'date head'
+		'date hrs'
+		'date det ';
+	grid-template-columns: 90px 1fr;
 	grid-template-rows: 30px 30px 1fr;
 	grid-column-gap: 10px;
 	grid-row-gap: 5px;
@@ -18,7 +18,7 @@
 	border: 1px solid #B3B3B3BD;
 	border-radius: 2px;
 	box-shadow: 0 2px 5px 0px #60606050;
-	transition: 0.2s ease-out;
+	transition: 0.3s;
 	transition-delay: 0.0s;
 }
 
@@ -28,7 +28,7 @@
 	height: fit-content;
 	max-height: 100%;
 	transition: 0.2s ease-in;
-	transition-delay: 0.3s;
+	transition-delay: 0.4s;
 }
 
 .card-right-column {
@@ -73,7 +73,7 @@
 }
 
 .header-button {
-	padding: 5px 10px;
+	padding: 2px 10px 2px 10px;
 }
 
 .card-date {
@@ -84,19 +84,23 @@
 	align-items: flex-end;
 	justify-content: center;
 	padding-right: 10px;
+	padding-left: 10px;
 	border-right: 2px solid #E6E6E6;
 	background: #F0F0F0;
 	font-size: 1.5em;
 	font-weight: 700;
 	text-align: right;
 	white-space: nowrap;
+
 }
 
 .activeCard>.card-date {
 	background: #727AD6;
 	box-shadow: 0px 0px 100px 10px inset #4D57C8;
 	color: white;
-	transition: 0.2s ease;
+	transition: 0.3s ease;
+	transition-delay: 0.0s;
+
 }
 
 .card-date>.month {
@@ -106,28 +110,61 @@
 	line-height: 0.8;
 }
 
-.card-hours {
+.card-hours-container {
 	grid-area: hrs;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-column-gap: 5px;
+	justify-content: space-between;
+	max-width: 100%;
+	/* border-bottom: 1px solid #DDDDDD; */
+	padding: 0px 5px 0px 5px;
+
+	padding: 0px 0px 0px 0px;
 	font-size: 1.2em;
 	font-weight: 500;
-	overflow: hidden;
+	/* overflow: hidden; */
 	text-align: left;
+}
+
+.card-hours-container.editing {
+	grid-template-columns: 1fr;
+	
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+}
+.card-hours-value {
+	max-width: 100px;
+	padding: 0px 0px 0px 5px;
+	font-weight: 500;
+	overflow: hidden;
+	text-align: right;
+}
+.card-hours-value.editing {
+	max-width: 100%;
+	padding: 0px 5px 0px 5px;
+	font-weight: 500;
+	overflow: hidden;
+	text-align: right;
+	
 }
 
 .card-details {
 	grid-area: det;
-	padding: 0px 0px 10px 0px;
-	grid-column: 2 / span 2;
+	/* grid-column: 2 / span 2; */
+	padding: 5px 5px 5px 5px;
 	overflow: hidden;
 	margin: 0px 0px 10px 0px;
-}
-
-.card-details.editing {
-	background: #EDEDED;
 	border-radius: 3px;
 }
 
 .activeCard>.card-details {
 	overflow: hidden;
-	padding: 10px 10px 10px 10px;
+	/* padding: 10px 10px 10px 10px; */
+}
+
+.card-details.editing {
+	/* background: #EDEDED; */
+	/* font-style: italic; */
+	border: 1px solid #DDDDDD;
 }

@@ -1,12 +1,9 @@
-CARD SELECTION AND TRANSITION
-	-	Create delay between last card 
-		deselection animation and new 
-		card's selection
-		
-	-	When card is selected, 
-		set view scrollheight to selected 
-		card's screen position
-	
+WEEK DIVIDER
+	-	Card list should group cards by week,
+	  a divider/header before each week disp
+	  aying the start and end of the week
+	-	Collapse a week by tapping on 
+		week header/divider
 	
 	
 	

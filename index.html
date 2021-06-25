@@ -88,7 +88,7 @@
 				<label for="card-search-input">Search Date</label>
 				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input" class="card-search-input" value="" />
 			</div>
-			<div class="card-list">
+			<div ref="cardList" class="card-list">
 				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
 			</div>
 		</div>
@@ -115,10 +115,12 @@
 					</div>
 				</div>
 			</div>
-			<div v-if="!editMode" class="card-hours">{{ shift.hours }} hours</div>
-			<input v-if="editMode" v-model="newShiftData.hours" class="card-hours" type="text"></input>
-			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}
+			<div class="card-hours-container" v-bind:class="{ editing: editMode }">
+				<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-hours-value">{{ shift.hours }}</div>
+				<div v-if="!editMode" class="card-hours-postfix">Hours</div>
 			</div>
+			<!-- <input v-if="editMode" v-model="newShiftData.hours" class="card-hours" type="text"></input> -->
+			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
 			<div class="card-date">
 				<div class="day-date">
 					{{shift.date | dayDate}}
@@ -139,7 +141,7 @@
 				<label for="date-input">Date</label>
 				<input v-model="newShift.date" type="date" class="date-input" name="date-input" id="date-input" value="" />
 				<label for="hours-input">Hours</label>
-				<input v-model="newShift.hours" type="number" class="hours-input number-input" name="hours-input" id="hours-input" value="" />
+				<input v-model="newShift.hours" type="number" class="hours-input number-input" name="hours-input" id="hours-input" max="24" placeholder="0" value="" />
 				<label for="detail-input">Details</label>
 				<textarea v-model="newShift.details" rows="5" class="details-input text-input" name="details-input" id="details-input"></textarea>
 				<div class="userform-button-container">
