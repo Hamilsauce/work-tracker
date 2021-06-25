@@ -173,7 +173,7 @@ const CardView = Vue.component('card-view', {
 			setTimeout(() => {
 				this.cardListElement.scrollTop = cardRef.offsetTop - 55
 				document.documentElement.scrollTop = cardRef.offsetTop - 55
-			}, 400)
+			}, 200)
 		},
 		setEditCardId(cardId) { this.editCardId = this.editCardId === cardId ? -1 : cardId },
 		saveCardEdit(newData) {
