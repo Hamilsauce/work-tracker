@@ -14,7 +14,10 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.4/dayjs.min.js"></script>
+
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+<script src="https://unpkg.com/dayjs@1.8.21/plugin/weekOfYear.js"></script>
+<script>dayjs.extend(window.dayjs_plugin_weekOfYear)</script>	
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"></script>
 	<script src="./vue/vuex2.0.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.1/vue-router.js'></script>
@@ -89,11 +92,21 @@
 				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input" class="card-search-input" value="" />
 			</div>
 			<div ref="cardList" class="card-list">
-				<div v-if="workHistory.length === 0" class="empty-screen-notice" >
+				<div v-if="workHistory.length === 0" class="empty-screen-notice">
 					No work history found. Add a shift by going to the menu.
 				</div>
+				<week-group v-for="week in weekGroups" :week="week" :key="week.id"></week-group>
+			</div>
+		</div>
+	</template>
+	<!-- !! Week -->
+	<template id="week-group">
+		<div ref="weekGroup" class="week-group">
+			<div class="week-group-label"></div>
+			<div ref="weekList" class="week-list">
 				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
 			</div>
+		</div>
 		</div>
 	</template>
 	<!-- !! Card -->
@@ -144,7 +157,7 @@
 				<label for="date-input">Date</label>
 				<input v-model="newShift.date" type="date" class="date-input" name="date-input" id="date-input" value="" />
 				<label for="hours-input">Hours</label>
-				<input v-model="newShift.hours" type="number" class="hours-input number-input" name="hours-input" id="hours-input" max="24" placeholder="0" value="" />
+				<input v-model.number="newShift.hours" type="number" class="hours-input number-input" name="hours-input" id="hours-input" max="24" placeholder="0" value="" />
 				<label for="detail-input">Details</label>
 				<textarea v-model="newShift.details" rows="5" class="details-input text-input" name="details-input" id="details-input"></textarea>
 				<div class="userform-button-container">

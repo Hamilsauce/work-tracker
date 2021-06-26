@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+</head>
+
+<body>
+	
+	<template id="card-view">
+		<div ref="cardView" class="card-view">
+			<div class="card-search-container">
+				<label for="card-search-input">Search Date</label>
+				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input" class="card-search-input" value="" />
+			</div>
+			<div ref="cardList" class="card-list">
+				<div v-if="workHistory.length === 0" class="empty-screen-notice">
+					No work history found. Add a shift by going to the menu.
+				</div>
+				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
+			</div>
+		</div>
+	</template>
+	
+	
+
+</body>
+
+</html>

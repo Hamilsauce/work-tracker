@@ -13,13 +13,15 @@ export default {
 			console.log(state);
 			state.showDeleteModal = !state.showDeleteModal;
 		},
+		
 		addShiftToWorkHistory(state, newShift) {
 			if (newShift.date) {
 				state.workHistory.push({
 					...newShift,
-					createdDate: new Date().toDateString(),
+					createdDate: dayjs().format('MM/DD/YYYY'),
 					id: state.workHistory.length + 1,
-					modifiedDate: null
+					modifiedDate: dayjs().format('MM/DD/YYYY'),
+					hours: Number(newShift.hours)
 				});
 				localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
 			}
@@ -53,9 +55,12 @@ export default {
 		// },
 
 		saveCardEdit(state, editedCard) {
-			let oldCard = state.workHistory.find(c => c.id === editedCard.id)
-			oldCard.hours = editedCard.hours
-			oldCard.details = editedCard.details
+			let targetCard = state.workHistory.find(c => c.id === editedCard.id)
+			
+			targetCard.hours = editedCard.hours
+			targetCard.details = editedCard.details
+			targetCard.modifiedDate = dayjs().format('MM/DD/YYYY')
+			
 			localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
 		},
 	},
@@ -91,6 +96,8 @@ export default {
 				});
 			state.workHistory.forEach((shift, index, arr) => {
 				shift.id = arr.length - index
+				shift.hours = Number(shift.hours)
+				
 			})
 		}
 	}

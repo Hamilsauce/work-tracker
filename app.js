@@ -67,6 +67,7 @@ const AddShiftView = Vue.component('add-shift-view', {
 				date: null,
 				hours: null,
 				details: '',
+				weekNumber: null,
 				createdDate: null,
 				modifiedDate: null
 			}
@@ -77,9 +78,10 @@ const AddShiftView = Vue.component('add-shift-view', {
 			e.preventDefault()
 			if (this.validateForm()) {
 				this.newShift.date = dayjs(this.newShift.date).format('MM/DD/YYYY')
-				this.newShift.createdDate = dayjs().format('MM/DD/YYYY');
+				this.newShift.weekNumber = dayjs(this.newShift.date).week(),
+					this.newShift.createdDate = dayjs().format('MM/DD/YYYY');
 				this.newShift.modifiedDate = dayjs().format('MM/DD/YYYY');
-			console.log(this.newShift);
+
 				store.dispatch('storeHistory', this.newShift)
 				router.push('/')
 			} else {
@@ -108,11 +110,11 @@ const Card = Vue.component('card', {
 				date: this.shift.date,
 				details: this.shift.details,
 				hours: this.shift.hours,
-				createdDate: this.shift.createdDate,
-				modifiedDate: this.shift.modifiedDate,
+				// createdDate: this.shift.createdDate,
 			},
 		}
 	},
+
 	methods: {
 		emitCardSelected() { this.$emit('card-selected', this.shiftData.id, this.$refs[this.refName]) },
 		deleteCard() { store.commit('toggleDeleteModal') },
@@ -123,10 +125,10 @@ const Card = Vue.component('card', {
 				this.$emit('toggle-edit', this.shiftData.id)
 			}
 		},
-		saveEdit() { 
-			this.shift.modifiedDate = dayjs().format('MM/DD/YYYY');
-			this.$emit('save-edit', this.newShiftData) 
-			
+		saveEdit() {
+			// this.shift.modifiedDate = dayjs().format('MM/DD/YYYY');
+			this.$emit('save-edit', this.newShiftData)
+
 		},
 		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
 	},
@@ -170,6 +172,7 @@ const CardView = Vue.component('card-view', {
 	methods: {
 		handleSelectedCard(cardId, cardRef) {
 			store.commit('setSelectedCardId', cardId)
+
 			setTimeout(() => {
 				this.cardListElement.scrollTop = cardRef.offsetTop - 55
 				document.documentElement.scrollTop = cardRef.offsetTop - 55
@@ -191,7 +194,42 @@ const CardView = Vue.component('card-view', {
 	computed: {
 		cardViewElement() { return this.$refs.cardView },
 		cardListElement() { return this.$refs.cardList },
-		workHistory() { return store.getters.workHistory },
+		workHistory() {
+			console.log(store.getters.workHistory)
+			return store.getters.workHistory
+		},
+		weekGroups() {
+			// const workHistory = store.getters.workHistory
+			const groupObj = this.workHistory
+				// .map(shift => {
+				// 	return {
+				// 		...shift,
+				// 		weekNumber: dayjs(shift.date).week()
+				// 	}
+				// })
+				.reduce((weeks, shift) => {
+					const wNum = String(shift.weekNumber) || dayjs(shift.date).week()
+					// const weekNumber = dayjs(shift.date).week()
+					weeks[wNum] = weeks[wNum] || [];
+					// acc[`week${curr.weekNumber}`]
+					// weeks[wNum].push({
+					weeks[wNum].push({
+						...shift,
+						weekNumber: Number(wNum)
+					})
+
+					weeks[wNum]
+						.sort((a, b) => {
+							const aDate = new Date(a.date)
+							const bDate = new Date(b.date)
+							return bDate.getDate() - aDate.getDate();
+						});
+					return weeks
+				}, {})
+			console.log(groupObj);
+			return groupObj;
+		},
+
 		selectedCardId() { return store.getters.selectedCardId },
 		filteredWorkData() {
 			const sortedShifts = this.workHistory
@@ -214,6 +252,35 @@ const CardView = Vue.component('card-view', {
 		editCardId(newId, oldId) {},
 		selectedCardId(newId, oldId) { this.editCardId = newId !== oldId ? -1 : newId },
 		filteredWorkData(val) {},
+	},
+	mounted() {}
+});
+
+const WeekGroup = Vue.component('week-group', {
+	name: 'week-group',
+	template: '#week-group',
+	props: {
+		week: Array
+	},
+	data() {
+		return {
+			weekString: '',
+			editCardId: -1,
+			deleteIdArray: [],
+		}
+	},
+	methods: {},
+	computed: {
+		workHistory() { return store.getters.workHistory },
+		weekGroupElement() { return this.$refs.weekGroup },
+		cardListElement() { return this.$refs.cardList },
+		selectedCardId() { return store.getters.selectedCardId },
+		collapsed() {},
+	},
+	watch: {
+		// editCardId(newId, oldId) {},
+		// selectedCardId(newId, oldId) { this.editCardId = newId !== oldId ? -1 : newId },
+		// filteredWorkData(val) {},
 	},
 	mounted() {}
 });
@@ -241,9 +308,7 @@ const app = new Vue({
 		showDeleteModal() { return store.getters.showDeleteModal }
 	},
 
-	watch: {
-		workHistory() {}
-	},
+	watch: { workHistory() {} },
 	methods: {
 		handleExportAsJson() { exportAsJson(this.workHistory) },
 		handleExportAsCsv() { exportAsCsv(this.workHistory) },
