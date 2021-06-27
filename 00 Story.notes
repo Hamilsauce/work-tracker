@@ -1,22 +1,29 @@
+CLEAN UP
+	-	Have as much state set directly from Card Component as possible,
+		minimize event emits to parents/delete obsolete component methods/props
+
+FIX NAV not closing after X clicked, and not auto closing when route to add shift
+
+
 WEEK DIVIDER
 	-	Card list should group cards by week,
-	  a divider/header before each week 
-	  dispaying the start and end 
+	  a divider/header before each week
+	  dispaying the start and end
 	  of the week
-	  
-	-	Collapse a week by tapping on 
+
+	-	Collapse a week by tapping on
 		week header/divider
-	
-	-	
-	
+
+	-
+
 WEEKGROUP TOTALS BAR
 	-	Have a footer in weekgroup displaying
-		totals for days worked, hours worked, 
+		totals for days worked, hours worked,
 		and total earnings.
-	  
-	-	
-	
-	-	
+
+	-
+
+	-
 	-
 	-
 	-

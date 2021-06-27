@@ -19,7 +19,7 @@
 	border-radius: 2px;
 	box-shadow: 0 2px 5px 0px #60606050;
 	transition: 0.3s;
-	transition-delay: 0.0s;
+	transition-delay: 0.2s;
 }
 
 .card.activeCard {
@@ -28,7 +28,7 @@
 	height: fit-content;
 	max-height: 100%;
 	transition: 0.2s ease-in;
-	transition-delay: 0.4s;
+	transition-delay: 0.0s;
 }
 
 .card-right-column {
@@ -167,5 +167,5 @@
 	overflow: hidden;
 	padding: 0;
 	border: none;
-	transition: 1s;
+	transition: 0.2s;
 }

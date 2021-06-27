@@ -7,16 +7,15 @@ export default {
 		backup: [],
 		showDeleteModal: false,
 		showNav: false,
-		selectedCardScroll: null
+		selectedCardScroll: null,
+		selectedCard: null,
 	},
 
 	mutations: {
 		toggleShowNav(state) {
-			// console.log(state);
 			state.showNav = !state.showNav;
 		},
 		toggleDeleteModal(state) {
-			console.log(state);
 			state.showDeleteModal = !state.showDeleteModal;
 		},
 
@@ -47,6 +46,9 @@ export default {
 		setSelectedCardScroll(state, data) {
 			state.selectedCardScroll = data;
 		},
+		setSelectedCard(state, data) {
+			state.selectedCard = data;
+		},
 
 		deleteCard(state) {
 			state.workHistory = state.workHistory
@@ -55,13 +57,6 @@ export default {
 				})
 			localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
 		},
-		// deleteCard(state, idArray) {
-		// 	state.workHistory = state.workHistory
-		// 		.filter(item => {
-		// 			return !idArray.includes(item.id)
-		// 		})
-		// 	localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
-		// },
 
 		saveCardEdit(state, editedCard) {
 			let targetCard = state.workHistory.find(c => c.id === editedCard.id)
@@ -85,6 +80,9 @@ export default {
 		selectedCardScroll(state) {
 			return state.selectedCardScroll;
 		},
+		selectedCard(state) {
+			return state.selectedCard;
+		},
 		showNav(state) {
 			return state.showNav;
 		},
@@ -105,9 +103,10 @@ export default {
 			cardId,
 			cardRef
 		}) {
-			commit('setSelectedCardScroll', cardRef.offsetTop - 55)
+			commit('setSelectedCard', cardRef)
+			commit('setSelectedCardScroll', state.selectedCard.offsetTop - 55)
+			// commit('setSelectedCardScroll', cardRef.offsetTop - 55)
 			commit('setSelectedCardId', cardId)
-			console.log(state);
 		},
 
 		storeHistory({
