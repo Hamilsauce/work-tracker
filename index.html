@@ -134,9 +134,8 @@
 				<div class="week-totals-earnings">Earnings: ${{totals.earnings}}</div>
 			</div>
 			<div ref="weekList" class="week-list" :class="{ collapsed: collapsed }">
-				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard"
-					@toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId"
-					:edit-card-id="editCardId" :shift="shift"></card>
+				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @toggle-edit="setEditCardId"
+					v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
 			</div>
 		</div>
 	</template>
