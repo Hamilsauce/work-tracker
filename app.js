@@ -110,7 +110,6 @@ const Card = Vue.component('card', {
 				date: this.shift.date,
 				details: this.shift.details,
 				hours: this.shift.hours,
-				// createdDate: this.shift.createdDate,
 			},
 		}
 	},
@@ -125,21 +124,13 @@ const Card = Vue.component('card', {
 				this.$emit('toggle-edit', this.shiftData.id)
 			}
 		},
-		saveEdit() {
-			// this.shift.modifiedDate = dayjs().format('MM/DD/YYYY');
-			this.$emit('save-edit', this.newShiftData)
-
-		},
+		saveEdit() { this.$emit('save-edit', this.newShiftData) },
 		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
 	},
 	computed: {
 		refName() { return `item${this.shift.id}` },
 		isSelected() { return this.selectedCardId == this.shiftData.id ? true : false },
 		editMode() { return this.editCardId == this.shiftData.id && this.isSelected ? true : false },
-		shiftSpy() { 
-			console.log(this.shift);
-			return this.shift
-		}
 	},
 	filters: {
 		dayDate(inputDate) {
@@ -203,18 +194,9 @@ const CardView = Vue.component('card-view', {
 			return store.getters.workHistory
 		},
 		weekGroups() {
-			// const workHistory = store.getters.workHistory
 			const groupObj = this.workHistory
-				// .map(shift => {
-				// 	return {
-				// 		...shift,
-				// 		weekNumber: dayjs(shift.date).week()
-				// 	}
-				// })
 				.reduce((weeks, shift) => {
-					// console.log(String(dayjs(shift.date).week()));
 					const wNum = String(dayjs(shift.date).week())
-					// const wNum = String(shift.weekNumber) || String(dayjs(shift.date).week())
 					weeks[wNum] = weeks[wNum] || [];
 					weeks[wNum].push({
 						...shift,
@@ -227,12 +209,8 @@ const CardView = Vue.component('card-view', {
 							const bDate = new Date(b.date)
 							return bDate.getDate() - aDate.getDate();
 						});
-					// console.log(weeks);
 					return weeks
 				}, {})
-
-			// console.log(Object.entries(groupObj).map(([num, shifts]) => [Number(num),dayjs(groupObj['26'][0].date).weekday(0).format('MM/DD/YYYY'), shifts]).sort((a, b) => a[0] - b[0]));
-
 			return Object.entries(groupObj).map(([num, shifts]) => [Number(num), dayjs(shifts[0].date).weekday(0).format('MM/DD/YYYY'), shifts]).sort((a, b) => a[0] - b[0]);
 		},
 
@@ -265,7 +243,7 @@ const WeekGroup = Vue.component('week-group', {
 	name: 'week-group',
 	template: '#week-group',
 	props: {
-		week: Array, 
+		week: Array,
 		weekNumber: Number
 	},
 	data() {
@@ -273,14 +251,11 @@ const WeekGroup = Vue.component('week-group', {
 			weekString: '',
 			editCardId: -1,
 			deleteIdArray: [],
-		collapsed: false,
-			
+			collapsed: false
 		}
 	},
 	methods: {
-		collapseWeek() {
-			this.collapsed = !this.collapsed
-		},
+		collapseWeek() { this.collapsed = !this.collapsed },
 		handleSelectedCard(cardId, cardRef) {
 			store.commit('setSelectedCardId', cardId)
 
@@ -307,19 +282,17 @@ const WeekGroup = Vue.component('week-group', {
 		weekGroupElement() { return this.$refs.weekGroup },
 		cardListElement() { return this.$refs.cardList },
 		selectedCardId() { return store.getters.selectedCardId },
-		weekData() {
-			console.log(this.week);
-			return this.week;
+		totals() {
+			const totalHours = this.week.reduce((sum, curr) => { return sum = sum + Number(curr.hours) }, 0);
+			return {
+				payRate: 35,
+				days: this.week.length,
+				hours: this.week.reduce((sum, curr) => { return sum = sum + Number(curr.hours) }, 0),
+				earnings: Intl.NumberFormat('en-US').format(totalHours * 35)
+			}
 		}
 	},
-	watch: {
-		weekData(val) {
-			console.log(val);
-		}
-		// editCardId(newId, oldId) {},
-		// selectedCardId(newId, oldId) { this.editCardId = newId !== oldId ? -1 : newId },
-		// filteredWorkData(val) {},
-	},
+	watch: { weekData(val) {} },
 	mounted() {}
 });
 

@@ -114,11 +114,10 @@
 				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
 			</div>
 			<div ref="weekTotals" class="week-totals">
-				<div class="week-totals-days">Days{{}}</div>
-				<div class="week-totals-hours">Hours{{}}</div>
-				<div class="week-totals-earnings">Earnings{{}}</div>
+				<div class="week-totals-days">Days: {{totals.days}}</div>
+				<div class="week-totals-hours">Hours: {{totals.hours}}</div>
+				<div class="week-totals-earnings">Earnings: ${{totals.earnings}}</div>
 			</div>
-		</div>
 		</div>
 	</template>
 	<!-- !! Card -->
@@ -136,7 +135,6 @@
 						<div @click.stop="toggleEdit" class="header-button header-cancel-button">
 							Cancel
 						</div>
-						<!-- 	</div> -->
 						<div @click.stop="deleteCard" class="header-button header-edit-button">
 							Delete
 						</div>
@@ -147,7 +145,6 @@
 				<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-hours-value">{{ shift.hours }}</div>
 				<div v-if="!editMode" class="card-hours-postfix">Hours</div>
 			</div>
-			<!-- <input v-if="editMode" v-model="newShiftData.hours" class="card-hours" type="text"></input> -->
 			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
 			<div class="card-date">
 				<div class="day-date">

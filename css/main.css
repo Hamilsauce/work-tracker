@@ -168,11 +168,9 @@ html {
 	height: 100%;
 	padding: 0;
 	overflow: hidden;
-	/* transition: 1s; */
 }
 
 .week-list {
-	/* height: 100%; */
 	padding: 0;
 	overflow: hidden;
 	transition: 1s;
@@ -210,9 +208,5 @@ html {
 	flex-direction: row;
 	justify-content: space-between;
 	width: 100%;
-	/* transition: 1s;/ */
 	padding: px 5px 5px 5px;
-	/* border-bottom: 2px solid #E2E2E2; */
-	/* text-align: center; */
-	/* background: #F1F1F1; */
 }
