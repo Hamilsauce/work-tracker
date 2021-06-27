@@ -135,7 +135,11 @@ const Card = Vue.component('card', {
 	computed: {
 		refName() { return `item${this.shift.id}` },
 		isSelected() { return this.selectedCardId == this.shiftData.id ? true : false },
-		editMode() { return this.editCardId == this.shiftData.id && this.isSelected ? true : false }
+		editMode() { return this.editCardId == this.shiftData.id && this.isSelected ? true : false },
+		shiftSpy() { 
+			console.log(this.shift);
+			return this.shift
+		}
 	},
 	filters: {
 		dayDate(inputDate) {
@@ -208,11 +212,10 @@ const CardView = Vue.component('card-view', {
 				// 	}
 				// })
 				.reduce((weeks, shift) => {
-					const wNum = String(shift.weekNumber) || dayjs(shift.date).week()
-					// const weekNumber = dayjs(shift.date).week()
+					// console.log(String(dayjs(shift.date).week()));
+					const wNum = String(dayjs(shift.date).week())
+					// const wNum = String(shift.weekNumber) || String(dayjs(shift.date).week())
 					weeks[wNum] = weeks[wNum] || [];
-					// acc[`week${curr.weekNumber}`]
-					// weeks[wNum].push({
 					weeks[wNum].push({
 						...shift,
 						weekNumber: Number(wNum)
@@ -224,10 +227,13 @@ const CardView = Vue.component('card-view', {
 							const bDate = new Date(b.date)
 							return bDate.getDate() - aDate.getDate();
 						});
+					// console.log(weeks);
 					return weeks
 				}, {})
-			console.log(groupObj);
-			return groupObj;
+
+			// console.log(Object.entries(groupObj).map(([num, shifts]) => [Number(num),dayjs(groupObj['26'][0].date).weekday(0).format('MM/DD/YYYY'), shifts]).sort((a, b) => a[0] - b[0]));
+
+			return Object.entries(groupObj).map(([num, shifts]) => [Number(num), dayjs(shifts[0].date).weekday(0).format('MM/DD/YYYY'), shifts]).sort((a, b) => a[0] - b[0]);
 		},
 
 		selectedCardId() { return store.getters.selectedCardId },
@@ -251,7 +257,6 @@ const CardView = Vue.component('card-view', {
 	watch: {
 		editCardId(newId, oldId) {},
 		selectedCardId(newId, oldId) { this.editCardId = newId !== oldId ? -1 : newId },
-		filteredWorkData(val) {},
 	},
 	mounted() {}
 });
@@ -260,24 +265,57 @@ const WeekGroup = Vue.component('week-group', {
 	name: 'week-group',
 	template: '#week-group',
 	props: {
-		week: Array
+		week: Array, 
+		weekNumber: Number
 	},
 	data() {
 		return {
 			weekString: '',
 			editCardId: -1,
 			deleteIdArray: [],
+		collapsed: false,
+			
 		}
 	},
-	methods: {},
+	methods: {
+		collapseWeek() {
+			this.collapsed = !this.collapsed
+		},
+		handleSelectedCard(cardId, cardRef) {
+			store.commit('setSelectedCardId', cardId)
+
+			setTimeout(() => {
+				this.cardListElement.scrollTop = cardRef.offsetTop - 55
+				document.documentElement.scrollTop = cardRef.offsetTop - 55
+			}, 200)
+		},
+		setEditCardId(cardId) { this.editCardId = this.editCardId === cardId ? -1 : cardId },
+		saveCardEdit(newData) {
+			newData.id === this.editCardId ?
+				store.commit('saveCardEdit', newData) :
+				null;
+			this.editCardId = -1;
+		},
+		cancelCardEdit() { this.editCardId = -1 },
+		handleDeleteCard(cardId) {
+			this.deleteIdArray.push(cardId)
+			store.commit('deleteCard')
+		}
+	},
 	computed: {
 		workHistory() { return store.getters.workHistory },
 		weekGroupElement() { return this.$refs.weekGroup },
 		cardListElement() { return this.$refs.cardList },
 		selectedCardId() { return store.getters.selectedCardId },
-		collapsed() {},
+		weekData() {
+			console.log(this.week);
+			return this.week;
+		}
 	},
 	watch: {
+		weekData(val) {
+			console.log(val);
+		}
 		// editCardId(newId, oldId) {},
 		// selectedCardId(newId, oldId) { this.editCardId = newId !== oldId ? -1 : newId },
 		// filteredWorkData(val) {},

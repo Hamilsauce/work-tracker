@@ -162,3 +162,57 @@ html {
 	background: #4D57C8;
 	z-index: 20;
 }
+
+.week-group {
+	margin: 0 0 20px 0;
+	height: 100%;
+	padding: 0;
+	overflow: hidden;
+	/* transition: 1s; */
+}
+
+.week-list {
+	/* height: 100%; */
+	padding: 0;
+	overflow: hidden;
+	transition: 1s;
+}
+
+.week-list.collapsed {
+	transition: 1s;
+	height: 0;
+}
+
+.collapsed>.card {
+	height: 0;
+	max-height: 0;
+	min-zoom: 0;
+	overflow: hidden;
+	padding: 0;
+	border: none;
+	transition: 1s;
+
+}
+
+.week-group-label {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	transition: 1s;
+	padding: 5px 5px 1px 5px;
+	border-bottom: 2px solid #E2E2E2;
+	text-align: center;
+	background: #F1F1F1;
+}
+.week-totals {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	/* transition: 1s;/ */
+	padding: px 5px 5px 5px;
+	/* border-bottom: 2px solid #E2E2E2; */
+	/* text-align: center; */
+	/* background: #F1F1F1; */
+}

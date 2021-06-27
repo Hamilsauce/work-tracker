@@ -14,10 +14,13 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-<script src="https://unpkg.com/dayjs@1.8.21/plugin/weekOfYear.js"></script>
-<script>dayjs.extend(window.dayjs_plugin_weekOfYear)</script>	
+	<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+	<script src="https://unpkg.com/dayjs@1.8.21/plugin/weekOfYear.js"></script>
+	<script src="https://unpkg.com/dayjs@1.8.21/plugin/weekday.js"></script>
+	<script>
+		dayjs.extend(window.dayjs_plugin_weekOfYear)
+		dayjs.extend(window.dayjs_plugin_weekday)
+	</script>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"></script>
 	<script src="./vue/vuex2.0.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.1/vue-router.js'></script>
@@ -95,16 +98,25 @@
 				<div v-if="workHistory.length === 0" class="empty-screen-notice">
 					No work history found. Add a shift by going to the menu.
 				</div>
-				<week-group v-for="week in weekGroups" :week="week" :key="week.id"></week-group>
+				<week-group v-for="week in weekGroups" :week="week[2]" :weekNumber="week[0]" :key="week[0]">poop</week-group>
 			</div>
 		</div>
 	</template>
 	<!-- !! Week -->
 	<template id="week-group">
 		<div ref="weekGroup" class="week-group">
-			<div class="week-group-label"></div>
-			<div ref="weekList" class="week-list">
-				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in filteredWorkData" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift" :key="shift.id"></card>
+			<div class="week-group-label" @click="collapseWeek">
+				<div class="week-label-text"> Week {{weekNumber || week[0].weekNumber}}</div>
+				<img class="expand-icon" v-if="!collapsed" src="./assets/expand-less.svg" alt="menu-button" />
+				<img class="expand-icon" v-else src="./assets/expand-more.svg" alt="menu-button" />
+			</div>
+			<div ref="weekList" class="week-list" :class="{ collapsed: collapsed }">
+				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
+			</div>
+			<div ref="weekTotals" class="week-totals">
+				<div class="week-totals-days">Days{{}}</div>
+				<div class="week-totals-hours">Hours{{}}</div>
+				<div class="week-totals-earnings">Earnings{{}}</div>
 			</div>
 		</div>
 		</div>

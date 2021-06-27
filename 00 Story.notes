@@ -8,6 +8,15 @@ WEEK DIVIDER
 		week header/divider
 	
 	-	
+	
+WEEKGROUP TOTALS BAR
+	-	Have a footer in weekgroup displaying
+		totals for days worked, hours worked, 
+		and total earnings.
+	  
+	-	
+	
+	-	
 	-
 	-
 	-
