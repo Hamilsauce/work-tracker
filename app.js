@@ -1,11 +1,30 @@
 import storeObj from './store/index.js'
-import { workHistory } from './data/work-data.js'
-import { exportAsJson, exportAsCsv } from './services/fileSaver.js'
+import {
+	workHistory
+} from './data/work-data.js'
+import {
+	exportAsJson,
+	exportAsCsv
+} from './services/fileSaver.js'
 
-const products = [
-	{ id: 1, name: 'Angular', description: 'Superheroic JavaScript MVW Framework.', price: 100 },
-	{ id: 2, name: 'Ember', description: 'A framework for creating ambitious web applications.', price: 100 },
-	{ id: 3, name: 'React', description: 'A JavaScript Library for building user interfaces.', price: 100 }
+const products = [{
+		id: 1,
+		name: 'Angular',
+		description: 'Superheroic JavaScript MVW Framework.',
+		price: 100
+	},
+	{
+		id: 2,
+		name: 'Ember',
+		description: 'A framework for creating ambitious web applications.',
+		price: 100
+	},
+	{
+		id: 3,
+		name: 'React',
+		description: 'A JavaScript Library for building user interfaces.',
+		price: 100
+	}
 ];
 
 function findProduct(productId) {
@@ -27,17 +46,36 @@ const DeleteCardModal = Vue.component('delete-card-modal', {
 			store.commit('deleteCard');
 			store.commit('toggleDeleteModal')
 		},
-		deleteCanceled() { store.commit('toggleDeleteModal') },
+		deleteCanceled() {
+			store.commit('toggleDeleteModal')
+		},
 	},
 });
 
 const AppNav = Vue.component('app-nav', {
 	template: '#app-nav',
-	props: { showNav: Boolean },
+	props: {
+		// showNav: Boolean
+	},
+	computed: {
+		showNav() {
+			console.log(store.getters.showNav);
+			return store.getters.showNav
+			// return store.getters.showDeleteModal
+		}
+	},
 	methods: {
-		closeNav() { setTimeout(() => { this.$emit('toggle-nav', false) }, 200) },
-		exportJsonClicked() { this.$emit('export-json') },
-		exportCsvClicked() { this.$emit('export-csv') }
+		closeNav() {
+			setTimeout(() => {
+				this.$emit('toggle-nav', false)
+			}, 200)
+		},
+		exportJsonClicked() {
+			this.$emit('export-json')
+		},
+		exportCsvClicked() {
+			this.$emit('export-csv')
+		}
 	},
 });
 
@@ -49,7 +87,50 @@ const AppHeader = Vue.component('app-header', {
 		}
 	},
 	methods: {
-		handleMenuClick() { this.$emit('toggle-nav', true) }
+		handleMenuClick() {
+			store.commit('toggleShowNav')
+			console.log(store.getters.showNav);
+			// this.$emit('toggle-nav', true)
+		}
+	}
+});
+
+const ModalDimmer = Vue.component('modal-dimmer', {
+	template: '#modal-dimmer',
+	props: {
+		// showNav: Boolean
+	},
+	data() {
+		return {
+			// showDimmer: false
+		}
+	},
+	computed: {
+		showNav() {
+			console.log('dimmer clicked');
+			return store.getters.showNav
+		},
+		showDimmer() {
+			console.log('dimmer clicked');
+			return this.showNav === true || store.getters.showDeleteModal === true ? true : false;
+		},
+	},
+	watch: {
+		showDimmer() {
+			console.log(this.showDimmer);
+		}
+	},
+	methods: {
+		handleDimmerClick() {
+			console.log('clicked dimmer');
+			if (this.showNav) {
+				store.commit('toggleShowNav')
+
+			} else if (store.getters.showDeleteModal) {
+				store.commit('toggleDeleteModal')
+
+			}
+		}
 	}
 });
 
@@ -88,8 +169,12 @@ const AddShiftView = Vue.component('add-shift-view', {
 				return
 			}
 		},
-		handleFormCancel() { router.push('/') },
-		validateForm() { return !this.newShift.date || !this.newShift.hours ? false : true }
+		handleFormCancel() {
+			router.push('/')
+		},
+		validateForm() {
+			return !this.newShift.date || !this.newShift.hours ? false : true
+		}
 	},
 });
 
@@ -115,8 +200,16 @@ const Card = Vue.component('card', {
 	},
 
 	methods: {
-		emitCardSelected() { this.$emit('card-selected', this.shiftData.id, this.$refs[this.refName]) },
-		deleteCard() { store.commit('toggleDeleteModal') },
+		emitCardSelected() {
+			// this.$emit('card-selected', [this.shiftData.id, this.cardRef])
+			store.dispatch('handleSelectedCard', {
+				cardId: this.shiftData.id,
+				cardRef: this.cardRef
+			})
+		},
+		deleteCard() {
+			store.commit('toggleDeleteModal')
+		},
 		toggleEdit() {
 			if (this.editMode && this.isSelected) {
 				this.$emit('toggle-edit', -1)
@@ -124,13 +217,26 @@ const Card = Vue.component('card', {
 				this.$emit('toggle-edit', this.shiftData.id)
 			}
 		},
-		saveEdit() { this.$emit('save-edit', this.newShiftData) },
-		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
+		saveEdit() {
+			this.$emit('save-edit', this.newShiftData)
+		},
+		cancelEditCard() {
+			this.$emit('cancel-edit', this.shiftData.id)
+		},
 	},
 	computed: {
-		refName() { return `item${this.shift.id}` },
-		isSelected() { return this.selectedCardId == this.shiftData.id ? true : false },
-		editMode() { return this.editCardId == this.shiftData.id && this.isSelected ? true : false },
+		refName() {
+			return `item${this.shift.id}`
+		},
+		cardRef() {
+			return this.$refs[this.refName]
+		},
+		isSelected() {
+			return this.selectedCardId == this.shiftData.id ? true : false
+		},
+		editMode() {
+			return this.editCardId == this.shiftData.id && this.isSelected ? true : false
+		},
 	},
 	filters: {
 		dayDate(inputDate) {
@@ -165,30 +271,48 @@ const CardView = Vue.component('card-view', {
 		}
 	},
 	methods: {
-		handleSelectedCard(cardId, cardRef) {
-			store.commit('setSelectedCardId', cardId)
-
-			setTimeout(() => {
-				this.cardListElement.scrollTop = cardRef.offsetTop - 55
-				document.documentElement.scrollTop = cardRef.offsetTop - 55
-			}, 200)
+		// handleSelectedCard([cardId, cardRef]) {
+		// 	console.log('card');
+		// 	// store.commit('setSelectedCardId', cardId)
+		// 	store.dispatch('handleSelectedCard', {
+		// 		cardId: cardId,
+		// 		cardRef: cardRef
+		// 	})
+		// 	setTimeout(() => {
+		// 		this.cardListElement.scrollTop = store.getters.selectedScroll
+		// 		document.documentElement.scrollTop = cardRef.offsetTop - 55
+		// 	}, 200)
+		// },
+		setEditCardId(cardId) {
+			this.editCardId = this.editCardId === cardId ? -1 : cardId
 		},
-		setEditCardId(cardId) { this.editCardId = this.editCardId === cardId ? -1 : cardId },
 		saveCardEdit(newData) {
 			newData.id === this.editCardId ?
 				store.commit('saveCardEdit', newData) :
 				null;
 			this.editCardId = -1;
 		},
-		cancelCardEdit() { this.editCardId = -1 },
+		cancelCardEdit() {
+			this.editCardId = -1
+		},
 		handleDeleteCard(cardId) {
 			this.deleteIdArray.push(cardId)
 			store.commit('deleteCard')
 		}
 	},
 	computed: {
-		cardViewElement() { return this.$refs.cardView },
-		cardListElement() { return this.$refs.cardList },
+		selectedCardId() {
+			return store.getters.selectedCardId
+		},
+		selectedScroll() {
+			return store.getters.selectedScroll
+		},
+		cardViewElement() {
+			return this.$refs.cardView
+		},
+		cardListElement() {
+			return this.$refs.cardList
+		},
 		workHistory() {
 			console.log(store.getters.workHistory)
 			return store.getters.workHistory
@@ -214,7 +338,6 @@ const CardView = Vue.component('card-view', {
 			return Object.entries(groupObj).map(([num, shifts]) => [Number(num), dayjs(shifts[0].date).weekday(0).format('MM/DD/YYYY'), shifts]).sort((a, b) => a[0] - b[0]);
 		},
 
-		selectedCardId() { return store.getters.selectedCardId },
 		filteredWorkData() {
 			const sortedShifts = this.workHistory
 				.sort((a, b) => {
@@ -234,7 +357,16 @@ const CardView = Vue.component('card-view', {
 	},
 	watch: {
 		editCardId(newId, oldId) {},
-		selectedCardId(newId, oldId) { this.editCardId = newId !== oldId ? -1 : newId },
+		selectedCardId(newId, oldId) {
+			this.editCardId = newId !== oldId ? -1 : newId
+		},
+		selectedScroll() {
+			console.log('scroll watcher');
+			console.log(store.getters.selectedScroll);
+			this.cardListElement.scrollTop = store.getters.selectedScroll
+			document.documentElement.scrollTop = cardRef.offsetTop - 55
+
+		}
 	},
 	mounted() {}
 });
@@ -255,51 +387,84 @@ const WeekGroup = Vue.component('week-group', {
 		}
 	},
 	methods: {
-		collapseWeek() { this.collapsed = !this.collapsed },
-		handleSelectedCard(cardId, cardRef) {
-			store.commit('setSelectedCardId', cardId)
-
+		collapseWeek() {
+			this.collapsed = !this.collapsed
+		},
+		handleSelectedCard([cardId, cardRef]) {
+			console.log('card');
+			// store.commit('setSelectedCardId', cardId)
+			store.dispatch('handleSelectedCard', {
+				cardId: cardId,
+				cardRef: cardRef
+			})
 			setTimeout(() => {
 				this.cardListElement.scrollTop = cardRef.offsetTop - 55
 				document.documentElement.scrollTop = cardRef.offsetTop - 55
 			}, 200)
 		},
-		setEditCardId(cardId) { this.editCardId = this.editCardId === cardId ? -1 : cardId },
+		setEditCardId(cardId) {
+			this.editCardId = this.editCardId === cardId ? -1 : cardId
+		},
 		saveCardEdit(newData) {
 			newData.id === this.editCardId ?
 				store.commit('saveCardEdit', newData) :
 				null;
 			this.editCardId = -1;
 		},
-		cancelCardEdit() { this.editCardId = -1 },
+		cancelCardEdit() {
+			this.editCardId = -1
+		},
 		handleDeleteCard(cardId) {
 			this.deleteIdArray.push(cardId)
 			store.commit('deleteCard')
 		}
 	},
 	computed: {
-		workHistory() { return store.getters.workHistory },
-		weekGroupElement() { return this.$refs.weekGroup },
-		cardListElement() { return this.$refs.cardList },
-		selectedCardId() { return store.getters.selectedCardId },
+		workHistory() {
+			return store.getters.workHistory
+		},
+		weekGroupElement() {
+			return this.$refs.weekGroup
+		},
+		cardListElement() {
+			return this.$refs.cardList
+		},
+		selectedCardId() {
+			return store.getters.selectedCardId
+		},
 		totals() {
-			const totalHours = this.week.reduce((sum, curr) => { return sum = sum + Number(curr.hours) }, 0);
+			const totalHours = this.week.reduce((sum, curr) => {
+				return sum = sum + Number(curr.hours)
+			}, 0);
 			return {
 				payRate: 35,
 				days: this.week.length,
-				hours: this.week.reduce((sum, curr) => { return sum = sum + Number(curr.hours) }, 0),
+				hours: this.week.reduce((sum, curr) => {
+					return sum = sum + Number(curr.hours)
+				}, 0),
 				earnings: Intl.NumberFormat('en-US').format(totalHours * 35)
 			}
 		}
 	},
-	watch: { weekData(val) {} },
+	watch: {
+		weekData(val) {}
+	},
 	mounted() {}
 });
 
 const router = new VueRouter({
-	routes: [
-		{ path: '/', component: CardView, name: 'card-view', props: true },
-		{ path: '/add-shift-view', component: AddShiftView, name: 'add-shift-view', props: true },
+	routes: [{
+			path: '/',
+			component: CardView,
+			name: 'card-view',
+			props: true
+		},
+		{
+			path: '/add-shift-view',
+			component: AddShiftView,
+			name: 'add-shift-view',
+			props: true
+		},
 	]
 });
 
@@ -311,19 +476,34 @@ const app = new Vue({
 	data() {
 		return {
 			workData: workHistory,
-			showNav: false,
+			// showNav: false,
 		}
 	},
 	computed: {
-		workHistory() { return store.getters.workHistory },
-		showDeleteModal() { return store.getters.showDeleteModal }
+		workHistory() {
+			return store.getters.workHistory
+		},
+		showNav() {
+			return store.getters.showNav
+		},
+		showDeleteModal() {
+			return store.getters.showDeleteModal
+		}
 	},
 
-	watch: { workHistory() {} },
+	watch: {
+		workHistory() {}
+	},
 	methods: {
-		handleExportAsJson() { exportAsJson(this.workHistory) },
-		handleExportAsCsv() { exportAsCsv(this.workHistory) },
-		listenForNavToggle(data) { this.showNav = data },
+		handleExportAsJson() {
+			exportAsJson(this.workHistory)
+		},
+		handleExportAsCsv() {
+			exportAsCsv(this.workHistory)
+		},
+		// listenForNavToggle(data) {
+		// 	this.showNav = data
+		// },
 	},
 	created() {
 		store.dispatch('fetchLocalStorageData')

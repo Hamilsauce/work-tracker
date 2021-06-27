@@ -5,15 +5,21 @@ export default {
 		workHistory: [],
 		selectedCardId: 0,
 		backup: [],
-		showDeleteModal: false
+		showDeleteModal: false,
+		showNav: false,
+		selectedCardScroll: null
 	},
 
 	mutations: {
+		toggleShowNav(state) {
+			// console.log(state);
+			state.showNav = !state.showNav;
+		},
 		toggleDeleteModal(state) {
 			console.log(state);
 			state.showDeleteModal = !state.showDeleteModal;
 		},
-		
+
 		addShiftToWorkHistory(state, newShift) {
 			if (newShift.date) {
 				state.workHistory.push({
@@ -38,6 +44,9 @@ export default {
 		setSelectedCardId(state, id) {
 			state.selectedCardId = id;
 		},
+		setSelectedCardScroll(state, data) {
+			state.selectedCardScroll = data;
+		},
 
 		deleteCard(state) {
 			state.workHistory = state.workHistory
@@ -56,11 +65,11 @@ export default {
 
 		saveCardEdit(state, editedCard) {
 			let targetCard = state.workHistory.find(c => c.id === editedCard.id)
-			
+
 			targetCard.hours = editedCard.hours
 			targetCard.details = editedCard.details
 			targetCard.modifiedDate = dayjs().format('MM/DD/YYYY')
-			
+
 			localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
 		},
 	},
@@ -73,6 +82,12 @@ export default {
 		selectedCardId(state) {
 			return state.selectedCardId;
 		},
+		selectedCardScroll(state) {
+			return state.selectedCardScroll;
+		},
+		showNav(state) {
+			return state.showNav;
+		},
 		showDeleteModal(state) {
 			return state.showDeleteModal;
 		}
@@ -83,8 +98,22 @@ export default {
 			const lsData = JSON.parse(localStorage.getItem('workHistory')) || [];
 			context.commit('setWorkHistory', lsData)
 		},
+		handleSelectedCard({
+			commit,
+			state
+		}, {
+			cardId,
+			cardRef
+		}) {
+			commit('setSelectedCardScroll', cardRef.offsetTop - 55)
+			commit('setSelectedCardId', cardId)
+			console.log(state);
+		},
 
-		storeHistory({ commit, state }, newData) {
+		storeHistory({
+			commit,
+			state
+		}, newData) {
 			commit('addShiftToWorkHistory', newData)
 			state.workHistory
 				.sort((a, b) => {
@@ -97,7 +126,7 @@ export default {
 			state.workHistory.forEach((shift, index, arr) => {
 				shift.id = arr.length - index
 				shift.hours = Number(shift.hours)
-				
+
 			})
 		}
 	}

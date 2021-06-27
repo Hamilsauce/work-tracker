@@ -5,11 +5,14 @@
 	<meta charset="UTF-8">
 	<title>Work Track-o-Matic</title>
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
-	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css'>
+	<link rel='stylesheet'
+		href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css'>
 	<link rel='stylesheet' href='./css/main.css'>
 	<link rel='stylesheet' href='./css/nav.css'>
 	<link rel='stylesheet' href='./css/card.css'>
 	<link rel='stylesheet' href='./css/userform.css'>
+	<link rel='stylesheet' href='./css/delete-card-modal.css'>
+	<link rel='stylesheet' href='./css/week-group.css'>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="description" content="">
@@ -29,14 +32,18 @@
 <body>
 	<main id="app" class="app">
 		<delete-card-modal v-if="showDeleteModal"></delete-card-modal>
-		<app-nav @toggle-nav="listenForNavToggle" @export-csv="handleExportAsCsv" @export-json="handleExportAsJson" :show-nav="showNav" :class="{navExpand: showNav}"></app-nav>
-		<app-header @toggle-nav="listenForNavToggle"></app-header>
+		<app-nav @export-csv="handleExportAsCsv" @export-json="handleExportAsJson" :class="{navExpand: showNav}"></app-nav>
+		<app-header></app-header>
 		<div class="app-body">
 			<router-view></router-view>
 		</div>
 		<footer class="footer"></footer>
+		<modal-dimmer></modal-dimmer>
 	</main>
 	<!-- - -->
+
+
+	<!-- !!DeleteModal -->
 	<template id="delete-card-modal">
 		<div class="delete-card-modal">
 			<div class="delete-card-modal-menu">
@@ -46,10 +53,11 @@
 					<div @click="deleteCanceled" class="delete-cancel-button delete-modal-button">Cancel</div>
 				</div>
 			</div>
-			<div class="delete-card-modal-dimmer"></div>
+			<!-- <div class="modal-dimmer"></div> -->
 		</div>
 	</template>
 	<!-- - -->
+	<!-- !!AppNav -->
 	<template id="app-nav">
 		<div class="app-nav">
 			<div class="nav-head">
@@ -76,23 +84,33 @@
 			<a class="contact-link nav-link" href="#">Contact</a>
 			<a class="music-link nav-link" href="https://hamilsauce.github.io/music-library-app/">ham radio</a>
 			<a class="github-link nav-link" href="#">github</a>
+			<!-- <div class="modal-dimmer"></div> -->
 		</div>
+
 	</template>
 	<!-- - -->
+	<!-- !!Dimmer -->
+	<template id="modal-dimmer">
+		<div class="modal-dimmer" :class="{hide: !showDimmer}" @click="handleDimmerClick"></div>
+	</template>
+	<!-- - -->
+	<!-- !!AppHeader -->
 	<template id="app-header">
 		<div class="app-header">
-			<img @click="handleMenuClick" class="menu-button" src="./assets/ellipsis.svg" alt="menu-button" />
+			<img @click="handleMenuClick" class="menu-toggle-button" src="./assets/ellipsis.svg" alt="menu-toggle-button" />
 			<div class="header-title">
 				Work Tracker
 			</div>
 		</div>
 	</template>
 	<!-- - -->
+	<!-- !!CardView -->
 	<template id="card-view">
 		<div ref="cardView" class="card-view">
 			<div class="card-search-container">
 				<label for="card-search-input">Search Date</label>
-				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input" class="card-search-input" value="" />
+				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input"
+					class="card-search-input" value="" />
 			</div>
 			<div ref="cardList" class="card-list">
 				<div v-if="workHistory.length === 0" class="empty-screen-notice">
@@ -102,27 +120,30 @@
 			</div>
 		</div>
 	</template>
-	<!-- !! Week -->
+	<!-- !!WeekGroup -->
 	<template id="week-group">
 		<div ref="weekGroup" class="week-group">
 			<div class="week-group-label" @click="collapseWeek">
 				<div class="week-label-text"> Week {{weekNumber || week[0].weekNumber}}</div>
-				<img class="expand-icon" v-if="!collapsed" src="./assets/expand-less.svg" alt="menu-button" />
-				<img class="expand-icon" v-else src="./assets/expand-more.svg" alt="menu-button" />
-			</div>
-			<div ref="weekList" class="week-list" :class="{ collapsed: collapsed }">
-				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
+				<img class="expand-icon" v-if="!collapsed" src="./assets/expand-less.svg" alt="expand-week-toggle" />
+				<img class="expand-icon" v-else src="./assets/expand-more.svg" alt="expand-week-toggle" />
 			</div>
 			<div ref="weekTotals" class="week-totals">
 				<div class="week-totals-days">Days: {{totals.days}}</div>
 				<div class="week-totals-hours">Hours: {{totals.hours}}</div>
 				<div class="week-totals-earnings">Earnings: ${{totals.earnings}}</div>
 			</div>
+			<div ref="weekList" class="week-list" :class="{ collapsed: collapsed }">
+				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard"
+					@toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId"
+					:edit-card-id="editCardId" :shift="shift"></card>
+			</div>
 		</div>
 	</template>
-	<!-- !! Card -->
+	<!-- !!Card -->
 	<template id="card">
-		<div :ref="refName" class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }" :data-edit-mode="editMode">
+		<div :ref="refName" class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }"
+			:data-edit-mode="editMode">
 			<div class="card-header-container">
 				<div class="card-header" v-if="isSelected">
 					<div v-if="!editMode" @click.stop="toggleEdit" class="header-button header-edit-button">
@@ -142,10 +163,12 @@
 				</div>
 			</div>
 			<div class="card-hours-container" v-bind:class="{ editing: editMode }">
-				<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-hours-value">{{ shift.hours }}</div>
+				<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-hours-value">{{ shift.hours }}
+				</div>
 				<div v-if="!editMode" class="card-hours-postfix">Hours</div>
 			</div>
-			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
+			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}
+			</div>
 			<div class="card-date">
 				<div class="day-date">
 					{{shift.date | dayDate}}
@@ -157,6 +180,7 @@
 		</div>
 	</template>
 	<!-- - -->
+	<!-- !!AddShiftView -->
 	<template id="add-shift-view">
 		<div class="form-modal-container">
 			<h3 class="form-modal-header">
@@ -166,9 +190,11 @@
 				<label for="date-input">Date</label>
 				<input v-model="newShift.date" type="date" class="date-input" name="date-input" id="date-input" value="" />
 				<label for="hours-input">Hours</label>
-				<input v-model.number="newShift.hours" type="number" class="hours-input number-input" name="hours-input" id="hours-input" max="24" placeholder="0" value="" />
+				<input v-model.number="newShift.hours" type="number" class="hours-input number-input" name="hours-input"
+					id="hours-input" max="24" placeholder="0" value="" />
 				<label for="detail-input">Details</label>
-				<textarea v-model="newShift.details" rows="5" class="details-input text-input" name="details-input" id="details-input"></textarea>
+				<textarea v-model="newShift.details" rows="5" class="details-input text-input" name="details-input"
+					id="details-input"></textarea>
 				<div class="userform-button-container">
 					<input @click="handleFormSubmit" class="userform-submit-button" type="submit" value="Submit" />
 					<input @click="handleFormCancel" class="userform-cancel-button" type="button" value="Cancel" />
