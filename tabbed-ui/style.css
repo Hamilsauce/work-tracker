@@ -55,7 +55,12 @@
 		color: #FFFFFFBF;
 }
 .app-body {
-	background: #E8E8E8;
+	display: grid;
+grid-template-rows: auto 1fr;
+	justify-content:  center;
+	height: 100%;
+	width: 100%;
+	/* background: #AA5858; */
 }
 .app-footer {
 	background: #949494;
@@ -90,11 +95,12 @@
 	display: grid;
 	grid-template-rows: 1fr;
 	grid-template-columns: repeat(4, 1fr);
-	grid-gap: 10px;
-	justify-content: space-evenly;
-	margin: auto;
-	padding: 10px;
+	grid-gap: 15px;
+	justify-content: space-around;
+	margin: 0;
+	padding: 10px 0;
 	text-align: center;
+	height: fit-content;
 	
 	/* border-bottom: 1px solid #6969696E; */
 }
@@ -107,6 +113,22 @@
 .view-button:hover {
 	border-bottom: 1px solid #5A899C;
 	/* background: #5A899C; */
-	color: #5A899C;
+	/* color: #FFFFFF; */
 	font-weight: 500;
+}
+
+.content{
+	/* padding: 0 10px; */
+}
+
+
+.content-view {
+	display: none;
+	width: 100%;
+	height: 100%;
+	/* background: #BEC946; */
+}
+
+.show {
+	display: block;
 }

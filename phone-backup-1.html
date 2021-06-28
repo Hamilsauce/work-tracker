@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Work Track-o-Matic</title>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css'>
+	<link rel='stylesheet' href='./css/main.css'>
+	<link rel='stylesheet' href='./css/nav.css'>
+	<link rel='stylesheet' href='./css/card.css'>
+	<link rel='stylesheet' href='./css/userform.css'>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+	<script src="https://unpkg.com/dayjs@1.8.21/plugin/weekOfYear.js"></script>
+	<script src="https://unpkg.com/dayjs@1.8.21/plugin/weekday.js"></script>
+	<script>
+		dayjs.extend(window.dayjs_plugin_weekOfYear)
+		dayjs.extend(window.dayjs_plugin_weekday)
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"></script>
+	<script src="./vue/vuex2.0.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.1/vue-router.js'></script>
+</head>
+
+<body>
+	<main id="app" class="app">
+		<delete-card-modal v-if="showDeleteModal"></delete-card-modal>
+		<app-nav @toggle-nav="listenForNavToggle" @export-csv="handleExportAsCsv" @export-json="handleExportAsJson" :show-nav="showNav" :class="{navExpand: showNav}"></app-nav>
+		<app-header @toggle-nav="listenForNavToggle"></app-header>
+		<div class="app-body">
+			<router-view></router-view>
+		</div>
+		<footer class="footer"></footer>
+	</main>
+	<!-- - -->
+	<template id="delete-card-modal">
+		<div ref="deleteModal" class="delete-card-modal">
+			<div class="delete-card-modal-menu">
+				<div class="delete-modal-text">Delete Card?</div>
+				<div class="delete-modal-button-container">
+					<div @click="deleteConfirmed" class="delete-confirm-button delete-modal-button">Ok</div>
+					<div @click="deleteCanceled" class="delete-cancel-button delete-modal-button">Cancel</div>
+				</div>
+			</div>
+			<div class="delete-card-modal-dimmer"></div>
+		</div>
+	</template>
+	<!-- - -->
+	<template id="app-nav">
+		<div class="app-nav">
+			<div class="nav-head">
+				<div @click="closeNav" class="close-nav">
+					X
+				</div>
+			</div>
+			<router-link class="home-link" v-bind:to="'/'">
+				<div class="nav-link" @click="closeNav">
+					Home
+				</div>
+			</router-link>
+			<router-link class="new-card-link" v-bind:to="'/add-shift-view'">
+				<div class="nav-link" @click="closeNav">
+					Add Shift
+				</div>
+			</router-link>
+			<div class="nav-link export-json-link" @click="exportJsonClicked" @click="closeNav">
+				Export JSON
+			</div>
+			<div class="nav-link export-csv-link" @click="exportCsvClicked" @click="closeNav">
+				Export CSV
+			</div>
+			<a class="contact-link nav-link" href="#">Contact</a>
+			<a class="music-link nav-link" href="https://hamilsauce.github.io/music-library-app/">ham radio</a>
+			<a class="github-link nav-link" href="#">github</a>
+		</div>
+	</template>
+	<!-- - -->
+	<template id="app-header">
+		<div class="app-header">
+			<img @click="handleMenuClick" class="menu-button" src="./assets/ellipsis.svg" alt="menu-button" />
+			<div class="header-title">
+				Work Tracker
+			</div>
+		</div>
+	</template>
+	<!-- - -->
+	<template id="card-view">
+		<div ref="cardView" class="card-view">
+			<div class="card-search-container">
+				<label for="card-search-input">Search Date</label>
+				<input v-model="searchInput" type="date" name="card-search-input" id="card-search-input" class="card-search-input" value="" />
+			</div>
+			<div ref="cardList" class="card-list">
+				<div v-if="workHistory.length === 0" class="empty-screen-notice">
+					No work history found. Add a shift by going to the menu.
+				</div>
+				<week-group v-for="week in weekGroups" :week="week[2]" :weekNumber="week[0]" :key="week[0]">poop</week-group>
+			</div>
+		</div>
+	</template>
+	<!-- !! Week -->
+	<template id="week-group">
+		<div ref="weekGroup" class="week-group">
+			<div class="week-group-label" @click="collapseWeek">
+				<div class="week-label-text"> Week {{weekNumber || week[0].weekNumber}}</div>
+				<img class="expand-icon" v-if="!collapsed" src="./assets/expand-less.svg" alt="menu-button" />
+				<img class="expand-icon" v-else src="./assets/expand-more.svg" alt="menu-button" />
+			</div>
+			<div ref="weekList" class="week-list" :class="{ collapsed: collapsed }">
+				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @card-selected="handleSelectedCard" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
+			</div>
+			<div ref="weekTotals" class="week-totals">
+				<div class="week-totals-days">Days: {{totals.days}}</div>
+				<div class="week-totals-hours">Hours: {{totals.hours}}</div>
+				<div class="week-totals-earnings">Earnings: ${{totals.earnings}}</div>
+			</div>
+		</div>
+	</template>
+	<!-- !! Card -->
+	<template id="card">
+		<div :ref="refName" class="card" @click.stop="emitCardSelected" v-bind:class="{ activeCard: isSelected }" :data-edit-mode="editMode">
+			<div class="card-header-container">
+				<div class="card-header" v-if="isSelected">
+					<div v-if="!editMode" @click.stop="toggleEdit" class="header-button header-edit-button">
+						Edit
+					</div>
+					<div v-else class="card-edit-buttons">
+						<div @click.stop="saveEdit" class="header-button header-save-button">
+							Save
+						</div>
+						<div @click.stop="toggleEdit" class="header-button header-cancel-button">
+							Cancel
+						</div>
+						<div @click.stop="deleteCard" class="header-button header-edit-button">
+							Delete
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-hours-container" v-bind:class="{ editing: editMode }">
+				<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-hours-value">{{ shift.hours }}</div>
+				<div v-if="!editMode" class="card-hours-postfix">Hours</div>
+			</div>
+			<div v-bind:class="{ editing: editMode }" :contenteditable="editMode" class="card-details">{{ shift.details }}</div>
+			<div class="card-date">
+				<div class="day-date">
+					{{shift.date | dayDate}}
+				</div>
+				<div class="month">
+					{{shift.date | month}}
+				</div>
+			</div>
+		</div>
+	</template>
+	<!-- - -->
+	<template id="add-shift-view">
+		<div class="form-modal-container">
+			<h3 class="form-modal-header">
+				Add Shift
+			</h3>
+			<form class="userform">
+				<label for="date-input">Date</label>
+				<input v-model="newShift.date" type="date" class="date-input" name="date-input" id="date-input" value="" />
+				<label for="hours-input">Hours</label>
+				<input v-model.number="newShift.hours" type="number" class="hours-input number-input" name="hours-input" id="hours-input" max="24" placeholder="0" value="" />
+				<label for="detail-input">Details</label>
+				<textarea v-model="newShift.details" rows="5" class="details-input text-input" name="details-input" id="details-input"></textarea>
+				<div class="userform-button-container">
+					<input @click="handleFormSubmit" class="userform-submit-button" type="submit" value="Submit" />
+					<input @click="handleFormCancel" class="userform-cancel-button" type="button" value="Cancel" />
+				</div>
+			</form>
+		</div>
+	</template>
+	<!-- - -->
+	<template id="add-product">
+		<div>
+			<h2>Add new product</h2>
+			<form v-on:submit="createProduct">
+				<div class="form-group">
+					<label for="add-name">Name</label>
+					<input class="form-control" id="add-name" v-model="product.name" required />
+				</div>
+				<div class="form-group">
+					<label for="add-description">Description</label>
+					<textarea class="form-control" id="add-description" rows="10" v-model="product.description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="add-price">Price, <span class="glyphicon glyphicon-euro"></span></label>
+					<input type="number" class="form-control" id="add-price" v-model="product.price" />
+				</div>
+				<button type="submit" class="btn btn-primary">Create</button>
+				<router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
+			</form>
+		</div>
+	</template>
+	<!-- - -->
+	<template id="product">
+		<div>
+			<h2>{{ product.name }}</h2>
+			<b>Description: </b>
+			<div>{{ product.description }}</div>
+			<b>Price:</b>
+			<div>{{ product.price }}<span class="glyphicon glyphicon-euro"></span></div>
+			<br />
+			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+			<router-link v-bind:to="'/'">Back to product list</router-link>
+		</div>
+	</template>
+	<!-- - -->
+	<template id="product-edit">
+		<div>
+			<h2>Edit product</h2>
+			<form v-on:submit="updateProduct">
+				<div class="form-group">
+					<label for="edit-name">Name</label>
+					<input class="form-control" id="edit-name" v-model="product.name" required />
+				</div>
+				<div class="form-group">
+					<label for="edit-description">Description</label>
+					<textarea class="form-control" id="edit-description" rows="3" v-model="product.description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="edit-price">Price, <span class="glyphicon glyphicon-euro"></span></label>
+					<input type="number" class="form-control" id="edit-price" v-model="product.price" />
+				</div>
+				<button type="submit" class="btn btn-primary">Save</button>
+				<router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
+			</form>
+		</div>
+	</template>
+	<!-- - -->
+	<template id="product-delete">
+		<div>
+			<h2>Delete product {{ product.name }}</h2>
+			<form v-on:submit="deleteProduct">
+				<p>The action cannot be undone.</p>
+				<button type="submit" class="btn btn-danger">Delete</button>
+				<router-link class="btn btn-default" v-bind:to="'/'">Cancel</router-link>
+			</form>
+		</div>
+	</template>
+	<!-- - -->
+	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/FileSaver.js"></script>
+	<script src='./app.js' type="module"></script>
+</body>
+
+</html>
+
+<!-- APP.JS -->
+
+import storeObj from './store/index.js'
+import { workHistory } from './data/work-data.js'
+import { exportAsJson, exportAsCsv } from './services/fileSaver.js'
+
+const products = [
+	{ id: 1, name: 'Angular', description: 'Superheroic JavaScript MVW Framework.', price: 100 },
+	{ id: 2, name: 'Ember', description: 'A framework for creating ambitious web applications.', price: 100 },
+	{ id: 3, name: 'React', description: 'A JavaScript Library for building user interfaces.', price: 100 }
+];
+
+function findProduct(productId) {
+	return products[findProductKey(productId)];
+};
+
+function findProductKey(productId) {
+	for (var key = 0; key < products.length; key++) {
+		if (products[key].id == productId) {
+			return key;
+		}
+	}
+};
+
+const DeleteCardModal = Vue.component('delete-card-modal', {
+	template: '#delete-card-modal',
+	methods: {
+		deleteConfirmed() {
+			store.commit('deleteCard');
+			store.commit('toggleDeleteModal')
+		},
+		listenForModalToggle() {
+			console.log(this.modalRef);
+			if (store.getters.showDeleteModal) {
+				this.modalRef = this.modalScrollHeight
+			}
+		},
+		deleteCanceled() { store.commit('toggleDeleteModal') },
+	},
+	computed: {
+		modalScrollHeight() { return store.getters.cardScrollHeight },
+		modalRef() {
+			console.log(this.$refs.deleteModal);
+			return this.$refs.deleteModal
+		},
+	},
+	watch: {
+		modalScrollHeight() {
+			console.log(this.modalRef);
+			this.modalRef.style.top = this.modalScrollHeight
+		}
+	},
+	created() {
+		this.listenForModalToggle()
+	}
+
+});
+
+const AppNav = Vue.component('app-nav', {
+	template: '#app-nav',
+	props: { showNav: Boolean },
+	methods: {
+		closeNav() { setTimeout(() => { this.$emit('toggle-nav', false) }, 200) },
+		exportJsonClicked() { this.$emit('export-json') },
+		exportCsvClicked() { this.$emit('export-csv') }
+	},
+});
+
+const AppHeader = Vue.component('app-header', {
+	template: '#app-header',
+	data() {
+		return {
+			title: 'Work Tracker'
+		}
+	},
+	methods: {
+		handleMenuClick() { this.$emit('toggle-nav', true) }
+	}
+});
+
+//	!! AddShift
+
+const AddShiftView = Vue.component('add-shift-view', {
+	name: 'add-shift-view',
+	template: '#add-shift-view',
+	props: {
+		data: String //work history array passed as json
+	},
+	data() {
+		return {
+			newShift: {
+				date: null,
+				hours: null,
+				details: '',
+				weekNumber: null,
+				createdDate: null,
+				modifiedDate: null
+			}
+		}
+	},
+	methods: {
+		handleFormSubmit(e) {
+			e.preventDefault()
+			if (this.validateForm()) {
+				this.newShift.date = dayjs(this.newShift.date).format('MM/DD/YYYY')
+				this.newShift.weekNumber = dayjs(this.newShift.date).week(),
+					this.newShift.createdDate = dayjs().format('MM/DD/YYYY');
+				this.newShift.modifiedDate = dayjs().format('MM/DD/YYYY');
+
+				store.dispatch('storeHistory', this.newShift)
+				router.push('/')
+			} else {
+				return
+			}
+		},
+		handleFormCancel() { router.push('/') },
+		validateForm() { return !this.newShift.date || !this.newShift.hours ? false : true }
+	},
+});
+
+//	!! Card
+
+const Card = Vue.component('card', {
+	template: '#card',
+	props: {
+		shift: Object,
+		selectedCardId: Number,
+		editCardId: Number
+	},
+	data() {
+		return {
+			shiftData: this.shift,
+			newShiftData: {
+				id: this.shift.id,
+				date: this.shift.date,
+				details: this.shift.details,
+				hours: this.shift.hours,
+			},
+		}
+	},
+
+	methods: {
+		emitCardSelected() { this.$emit('card-selected', this.shiftData.id, this.$refs[this.refName]) },
+		deleteCard() {
+			// console.log(this.$refs[this.refName] );
+
+			const cardScrollPosition = this.cardRef.offsetTop - 55
+			// console.log(cardScrollPosition);
+			store.commit('toggleDeleteModal', cardScrollPosition)
+		},
+		toggleEdit() {
+			if (this.editMode && this.isSelected) {
+				this.$emit('toggle-edit', -1)
+			} else {
+				this.$emit('toggle-edit', this.shiftData.id)
+			}
+		},
+		saveEdit() { this.$emit('save-edit', this.newShiftData) },
+		cancelEditCard() { this.$emit('cancel-edit', this.shiftData.id) },
+	},
+	computed: {
+		refName() { return `item${this.shift.id}` },
+		isSelected() { return this.selectedCardId == this.shiftData.id ? true : false },
+		editMode() { return this.editCardId == this.shiftData.id && this.isSelected ? true : false },
+		cardRef() {
+			return this.$refs[this.refName]
+
+		},
+	},
+	filters: {
+		dayDate(inputDate) {
+			const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+			const newDate = new Date(inputDate)
+			const day = days[newDate.getDay()];
+			const date = newDate.getDate();
+			const fDate = `${date} ${day}`;
+			return fDate;
+		},
+		month(inputDate) {
+			const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', ]
+			const newDate = new Date(inputDate)
+			const mo = months[newDate.getMonth()];
+			const fDate = `${mo}`;
+			return fDate;
+		}
+	}
+});
+
+//	!! CardView
+
+const CardView = Vue.component('card-view', {
+	name: 'card-view',
+	template: '#card-view',
+	props: {},
+	data() {
+		return {
+			searchInput: '',
+			editCardId: -1,
+			deleteIdArray: [],
+		}
+	},
+	methods: {
+		handleSelectedCard(cardId, cardRef) {
+			store.commit('setSelectedCardId', cardId)
+
+			setTimeout(() => {
+				this.cardListElement.scrollTop = cardRef.offsetTop - 55
+				document.documentElement.scrollTop = cardRef.offsetTop - 55
+			}, 200)
+		},
+		setEditCardId(cardId) { this.editCardId = this.editCardId === cardId ? -1 : cardId },
+		saveCardEdit(newData) {
+			newData.id === this.editCardId ?
+				store.commit('saveCardEdit', newData) :
+				null;
+			this.editCardId = -1;
+		},
+		cancelCardEdit() { this.editCardId = -1 },
+		handleDeleteCard(cardId) {
+			this.deleteIdArray.push(cardId)
+			store.commit('deleteCard')
+		}
+	},
+	computed: {
+		cardViewElement() { return this.$refs.cardView },
+		cardListElement() { return this.$refs.cardList },
+		workHistory() {
+			console.log(store.getters.workHistory)
+			return store.getters.workHistory
+		},
+		weekGroups() {
+			const groupObj = this.workHistory
+				.reduce((weeks, shift) => {
+					const wNum = String(dayjs(shift.date).week())
+					weeks[wNum] = weeks[wNum] || [];
+					weeks[wNum].push({
+						...shift,
+						weekNumber: Number(wNum)
+					})
+
+					weeks[wNum]
+						.sort((a, b) => {
+							const aDate = new Date(a.date)
+							const bDate = new Date(b.date)
+							return bDate.getDate() - aDate.getDate();
+						});
+					return weeks
+				}, {})
+			return Object.entries(groupObj).map(([num, shifts]) => [Number(num), dayjs(shifts[0].date).weekday(0).format('MM/DD/YYYY'), shifts]).sort((a, b) => a[0] - b[0]);
+		},
+
+		selectedCardId() { return store.getters.selectedCardId },
+		filteredWorkData() {
+			const sortedShifts = this.workHistory
+				.sort((a, b) => {
+					const aDate = new Date(a.date)
+					const bDate = new Date(b.date)
+					return bDate.getMonth() - aDate.getMonth() == 0 ?
+						bDate.getDate() - aDate.getDate() :
+						bDate.getMonth() - aDate.getMonth();
+				});
+
+			if (!this.searchInput) return sortedShifts;
+
+			const filterVal = dayjs(this.searchInput).format('MM/DD/YYYY');
+			const filteredShifts = sortedShifts.filter(shift => filterVal === dayjs(shift.date).format('MM/DD/YYYY'));
+			return filteredShifts
+		}
+	},
+	watch: {
+		editCardId(newId, oldId) {},
+		selectedCardId(newId, oldId) { this.editCardId = newId !== oldId ? -1 : newId },
+	},
+	mounted() {}
+});
+
+const WeekGroup = Vue.component('week-group', {
+	name: 'week-group',
+	template: '#week-group',
+	props: {
+		week: Array,
+		weekNumber: Number
+	},
+	data() {
+		return {
+			weekString: '',
+			editCardId: -1,
+			deleteIdArray: [],
+			collapsed: false
+		}
+	},
+	methods: {
+		collapseWeek() { this.collapsed = !this.collapsed },
+		handleSelectedCard(cardId, cardRef) {
+			store.commit('setSelectedCardId', cardId)
+
+			setTimeout(() => {
+				this.cardListElement.scrollTop = cardRef.offsetTop - 55
+				document.documentElement.scrollTop = cardRef.offsetTop - 55
+			}, 200)
+		},
+		setEditCardId(cardId) { this.editCardId = this.editCardId === cardId ? -1 : cardId },
+		saveCardEdit(newData) {
+			newData.id === this.editCardId ?
+				store.commit('saveCardEdit', newData) :
+				null;
+			this.editCardId = -1;
+		},
+		cancelCardEdit() { this.editCardId = -1 },
+		handleDeleteCard(cardId) {
+			this.deleteIdArray.push(cardId)
+			store.commit('deleteCard')
+		}
+	},
+	computed: {
+		workHistory() { return store.getters.workHistory },
+		weekGroupElement() { return this.$refs.weekGroup },
+		cardListElement() { return this.$refs.cardList },
+		selectedCardId() { return store.getters.selectedCardId },
+		totals() {
+			const totalHours = this.week.reduce((sum, curr) => { return sum = sum + Number(curr.hours) }, 0);
+			return {
+				payRate: 35,
+				days: this.week.length,
+				hours: this.week.reduce((sum, curr) => { return sum = sum + Number(curr.hours) }, 0),
+				earnings: Intl.NumberFormat('en-US').format(totalHours * 35)
+			}
+		}
+	},
+	watch: { weekData(val) {} },
+	mounted() {}
+});
+
+const router = new VueRouter({
+	routes: [
+		{ path: '/', component: CardView, name: 'card-view', props: true },
+		{ path: '/add-shift-view', component: AddShiftView, name: 'add-shift-view', props: true },
+	]
+});
+
+const store = new Vuex.Store(storeObj)
+const EventBus = new Vue();
+
+const app = new Vue({
+	router: router,
+	data() {
+		return {
+			workData: workHistory,
+			showNav: false,
+		}
+	},
+	computed: {
+		workHistory() { return store.getters.workHistory },
+		showDeleteModal() { return store.getters.showDeleteModal }
+	},
+
+	watch: { workHistory() {} },
+	methods: {
+		handleExportAsJson() { exportAsJson(this.workHistory) },
+		handleExportAsCsv() { exportAsCsv(this.workHistory) },
+		listenForNavToggle(data) { this.showNav = data },
+	},
+	created() {
+		store.dispatch('fetchLocalStorageData')
+	}
+}).$mount('#app')
+
+
+// const ProductEdit = Vue.extend({
+// 	template: '#product-edit',
+// 	data() {
+// 		return {
+// 			product: findProduct(this.$route.params.product_id)
+// 		}
+// 	},
+// 	methods: {
+// 		updateProduct() {
+// 			const product = this.product;
+
+// 			products[findProductKey(product.id)] = {
+// 				id: product.id,
+// 				name: product.name,
+// 				description: product.description,
+// 				price: product.price
+// 			};
+// 			router.push('/');
+// 		}
+// 	}
+// });
+
+// const ProductDelete = Vue.extend({
+// 	template: '#product-delete',
+// 	data: function() {
+// 		return { product: findProduct(this.$route.params.product_id) };
+// 	},
+// 	methods: {
+// 		deleteProduct() {
+// 			products.splice(findProductKey(this.$route.params.product_id), 1);
+// 			router.push('/');
+// 		}
+// 	}
+// });
+
+// const AddProduct = Vue.extend({
+// 	template: '#add-product',
+// 	data() {
+// 		return {
+// 			product: {
+// 				name: '',
+// 				description: '',
+// 				price: ''
+// 			}
+// 		}
+// 	},
+// 	methods: {
+// 		createProduct() {
+// 			let product = this.product;
+// 			products.push({
+// 				id: Math.random().toString().split('.')[1],
+// 				name: product.name,
+// 				description: product.description,
+// 				price: product.price
+// 			});
+// 			router.push('/');
+// 		}
+// 	}
+// });
+
+<!-- STORE INDEX.JS -->
+
+// import { workHistory } from '../data/work-data.js'
+
+export default {
+	state: {
+		workHistory: [],
+		selectedCardId: 0,
+		backup: [],
+		showDeleteModal: false,
+		cardScrollHeight: null
+	},
+
+	mutations: {
+		toggleDeleteModal(state, cardScroll) {
+			console.log(state);
+			state.cardScrollHeight = cardScroll
+			state.showDeleteModal = !state.showDeleteModal;
+		},
+		
+		addShiftToWorkHistory(state, newShift) {
+			if (newShift.date) {
+				state.workHistory.push({
+					...newShift,
+					createdDate: dayjs().format('MM/DD/YYYY'),
+					id: state.workHistory.length + 1,
+					modifiedDate: dayjs().format('MM/DD/YYYY'),
+					hours: Number(newShift.hours)
+				});
+				localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
+			}
+		},
+
+		setWorkHistory(state, lsData) {
+			if (!lsData) {
+				state.workHistory = workHistory;
+			} else {
+				state.workHistory = lsData;
+			}
+		},
+
+		setSelectedCardId(state, id) {
+			state.selectedCardId = id;
+		},
+
+		deleteCard(state) {
+			state.workHistory = state.workHistory
+				.filter(item => {
+					return item.id !== state.selectedCardId
+				})
+			localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
+		},
+		// deleteCard(state, idArray) {
+		// 	state.workHistory = state.workHistory
+		// 		.filter(item => {
+		// 			return !idArray.includes(item.id)
+		// 		})
+		// 	localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
+		// },
+
+		saveCardEdit(state, editedCard) {
+			let targetCard = state.workHistory.find(c => c.id === editedCard.id)
+			
+			targetCard.hours = editedCard.hours
+			targetCard.details = editedCard.details
+			targetCard.modifiedDate = dayjs().format('MM/DD/YYYY')
+			
+			localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
+		},
+	},
+
+	getters: {
+		workHistory(state) {
+			return state.workHistory;
+		},
+
+		selectedCardId(state) {
+			return state.selectedCardId;
+		},
+		showDeleteModal(state) {
+			return state.showDeleteModal;
+		}
+	},
+
+	actions: {
+		fetchLocalStorageData(context) {
+			const lsData = JSON.parse(localStorage.getItem('workHistory')) || [];
+			context.commit('setWorkHistory', lsData)
+		},
+
+		storeHistory({ commit, state }, newData) {
+			commit('addShiftToWorkHistory', newData)
+			state.workHistory
+				.sort((a, b) => {
+					const aDate = new Date(a.date)
+					const bDate = new Date(b.date)
+					return bDate.getMonth() - aDate.getMonth() == 0 ?
+						bDate.getDate() - aDate.getDate() :
+						bDate.getMonth() - aDate.getMonth();
+				});
+			state.workHistory.forEach((shift, index, arr) => {
+				shift.id = arr.length - index
+				shift.hours = Number(shift.hours)
+				
+			})
+		}
+	}
+}
