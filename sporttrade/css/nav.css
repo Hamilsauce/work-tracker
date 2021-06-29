@@ -2,12 +2,12 @@
 	position: fixed;
 	display: flex;
 	flex-direction: column;
-	width: 0px;
+	width: 200px;
 	height: 100%;
 	background: #4C4C58;
-	background: #4D57C8;
+	/* background: #4D57C8; */
 	color: #FFFFFF00;
-	border-right: 1px solid #21295F82;
+	border-right: 1px solid rgba(255, 255, 255, 0);
 	overflow-x: hidden;
 	transition: 0.3s ease-out;
 	z-index: 200;
@@ -17,6 +17,7 @@
 	width: 250px;
 	color: white;
 	box-shadow: 3px 0px 10px 0px #08143340;
+	border-right: 1px solid #21295F82;
 }
 
 .navExpand {
