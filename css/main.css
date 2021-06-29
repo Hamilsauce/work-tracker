@@ -105,3 +105,14 @@ html {
 	z-index: -1;
 
 }
+
+.overlay-container {
+	width: 300px;
+	height: 500px;z-index: 200;
+	
+}
+/* .chart-overlay{
+	width: 300px;
+	height: 500px;
+	z-index: 100;
+} */

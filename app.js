@@ -253,14 +253,17 @@ const CardView = Vue.component('card-view', {
 		weekGroups() {
 			const groupObj = this.workHistory
 				.reduce((weeks, shift) => {
-					const wNum = String(dayjs(shift.date).week())
-					weeks[wNum] = weeks[wNum] || [];
-					weeks[wNum].push({
+					// group shifts by week number, by creating or updating object props
+					const weekNum = String(dayjs(shift.date).week())
+					// create prop array if doesnt exist
+					weeks[weekNum] = weeks[weekNum] || [];
+					// push new week to array
+					weeks[weekNum].push({
 						...shift,
-						weekNumber: Number(wNum)
+						weekNumber: Number(weekNum)
 					})
 
-					weeks[wNum]
+					weeks[weekNum]
 						.sort((a, b) => {
 							const aDate = new Date(a.date)
 							const bDate = new Date(b.date)
@@ -369,6 +372,64 @@ const WeekGroup = Vue.component('week-group', {
 	watch: {},
 	mounted() {}
 });
+
+const ChartOverlay = new Vue({
+	name: 'chart-overlay',
+	template: '#chart-overlay',
+	props: {
+		totals: Object,
+		weekNumber: Number
+	},
+	data() {
+		return {
+			elem: this.$refs.chartOverlay
+
+		}
+	},
+	computed: {
+		canvasElement() {
+			return this.$refs.chartOverlay;
+		},
+		weekId() {
+			// return store.getters.week
+		},
+		totals() {
+			console.log(this.totals);
+		}
+	},
+
+	watch: {},
+	methods: {
+		chart() {
+			console.log('chart');
+			const ctx = this.elem.getContext('2d');
+			const chart = new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: ['red', 'green', 'blue'],
+					datasets: [{
+						label: '# of Votes',
+						data: [12, 19, 3],
+						backgroundColor: ['red', 'green', 'blue'],
+						borderColor: ['red', 'green', 'blue'],
+						borderWidth: 1
+		}]
+				},
+				options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } }
+			});
+		}
+	},
+	created() {
+		console.log(this.totals);
+		
+	},
+	mounted() {
+		console.log('chart mount');
+		this.chart();
+		console.log(this.elem);
+	}
+});
+
 
 const router = new VueRouter({
 	routes: [{
