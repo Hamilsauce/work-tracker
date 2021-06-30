@@ -1,10 +1,15 @@
 .week-group {
+	/* display: flex; */
+	/* flex-direction: column; */
+	/* flex-wrap: nowrap; */
+	height: 100%;
   margin: 0 0 20px 0;
   padding: 0;
   overflow: hidden;
   border-bottom: 2px solid transparent;
-  height: fit-content;
+  /* height: fit-content; */
   border-bottom: 2px solid #b9b9b9;
+  transition: 0.4s;
 }
 
 .week-group:hover {
@@ -19,15 +24,11 @@
   color: white;
 }
 
-
-
-
 .week-group.collapsed {
   margin: 0 0 20px 0;
   height: 100%;
   padding: 0;
   overflow: hidden;
-  /* transition: 1s; */
   height: 0%;
 }
 
