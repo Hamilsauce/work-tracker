@@ -42,7 +42,7 @@
 
 .week-list.collapsed {
   transition: 0.5s;
-  height: 0%;
+  height: 0;
 }
 
 
