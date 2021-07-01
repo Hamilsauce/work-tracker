@@ -1,34 +1,84 @@
-// select elements
-var elements = Array.from(document.querySelectorAll('svg .svg'));
+let timerFunction = null;
+let rowHeight = 20;
 
-// add event listeners
-elements.forEach(function (el) {
-  el.addEventListener("touchstart", start);
-  el.addEventListener("mousedown", start);
-  el.addEventListener("touchmove", move);
-  el.addEventListener("mousemove", move);
+const startAnimation = () => {
+	if (timerFunction == null) {
+		timerFunction = setInterval(animate, 20);
+	}
+}
+
+const stopAnimation = () => {
+	if (timerFunction != null) {
+		clearInterval(timerFunction);
+		timerFunction = null;
+	}
+}
+
+const animate = () => {
+	let circle = document.getElementById("circle1");
+	let x = circle.getAttribute("cx");
+	let newX = 4 + parseInt(x);
+	if (rowHeight > 100) {
+		rowHeight = 20
+	}
+
+	if (newX > 360) {
+		newX = 20;
+		rowHeight += 20;
+	}
+	circle.setAttribute("cy", rowHeight);
+	circle.setAttribute("cx", newX);
+}
+
+
+// !!!!MOUSE PAINTING
+
+let clicks = 0;
+let radius = 2;
+
+function paintWithMouse(e) {
+	const targ = e.target
+	if (!targ.closest('#svg')) return;
+	const eraseMode = e.ctrlKey;
+
+	if ((targ.id === 'svg' || targ.classList.contains('circle')) && !eraseMode) {
+		if (targ.children.length > 250) {
+			const firstCircleChild = [...targ.children].find(child => child.classList.contains('circle'));
+			targ.removeChild(firstCircleChild);
+    }
+
+		let newStroke = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		newStroke.setAttribute("r", radius);
+		newStroke.setAttribute("cx", e.x);
+		newStroke.setAttribute("cy", e.y);
+		newStroke.setAttribute("fill", "#000");
+		newStroke.classList.add('circle', `circle${targ.children.length + 1}`)
+    targ.appendChild(newStroke)
+
+	} else if (targ.classList.contains('circle') && eraseMode) {
+		svgEl = targ.parentElement;
+		svg.removeChild(targ)
+	}
+}
+
+document.addEventListener('mousedown', function (e) {
+  e.stopPropagation()
+	const targ = e.target
+	if (!targ.closest('#svg') && !targ.classList.contains('circle')) return;
+	paintWithMouse(e)
+	if (targ.id === 'svg' || targ.classList.contains('circle')) {
+		if (clicks <= 5) {
+			++clicks
+			radius += clicks;
+		} else {
+			clicks = 0;
+			radius = 2;
+		}
+	}
+
+  document.addEventListener('mousemove', paintWithMouse, true);
+
+	document.addEventListener('mouseup', function (e) {
+		document.removeEventListener("mousemove", paintWithMouse, true);
+	});
 })
-
-// event listener functions
-
-function start(e) {
-  console.log(e);
-  // just an example
-}
-
-function move(e) {
-  console.log(e);
-  // just an example
-}
-
-var a = document.getElementById("svg");
-a.addEventListener("load", function () {
-  var svgDoc = a.contentDocument;
-  var els = svgDoc.querySelectorAll(".myclass");
-  for (var i = 0, length = els.length; i < length; i++) {
-    els[i].addEventListener("click",
-      function () {
-        console.log("clicked");
-      }, false);
-  }
-}, false);

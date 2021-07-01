@@ -26,59 +26,101 @@ const animate = () => {
 		newX = 20;
 		rowHeight += 20;
 	}
-
 	circle.setAttribute("cy", rowHeight);
 	circle.setAttribute("cx", newX);
 }
+
+
+
 let clicks = 0;
+let radius = 2;
 
-document.addEventListener('mousedown', function(e) {
-	if (!e.target.closest('#svg')) return;
-	console.log(e.target.id);
-	if (e.target.id === 'svg') {
-		let newRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-		newRect.setAttribute("x", e.clientX);
-		newRect.setAttribute("y", e.clientY);
-		newRect.setAttribute("width", "2");
-		newRect.setAttribute("height", "2");
-		newRect.setAttribute("fill", "#5cceee");
-		e.target.appendChild(newRect)
+// document.addEventListener('click', function (e) {
+// 	if (!e.target.closest('#svg')) return;
+// 	if (e.target.id === 'svg' || e.target.classList.contains('circle')) {
+// 		if (clicks <= 10) {
+// 			++clicks
+// 			radius += clicks;
+// 		} else {
+// 			clicks = 0;
+// 			radius = 2;
+// 		}
+// 	}
+// }, false);
+
+function paintWithMouse(e) {
+
+	const targ = e.target
+	if (!targ.closest('#svg')) return;
+	const eraseMode = e.ctrlKey;
+	console.log(e.ctrlKey);
+
+	// console.log('e target mousemove',e.target);
+
+	if ((targ.id === 'svg' || targ.classList.contains('circle')) && !eraseMode) {
+		if (targ.children.length > 250) {
+			const firstCircleChild = [...targ.children].find(child => child.classList.contains('circle'));
+			targ.removeChild(firstCircleChild);
+			// console.log('removed child circle');
+		}
+		let newStroke = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+		newStroke.setAttribute("r", radius);
+		newStroke.setAttribute("cx", e.x);
+		newStroke.setAttribute("cy", e.y);
+		newStroke.setAttribute("fill", "#000");
+		newStroke.classList.add('circle', `circle${targ.children.length + 1}`)
+		targ.appendChild(newStroke)
+	} else if (targ.classList.contains('circle') && eraseMode) {
+		svgEl = targ.parentElement;
+		console.log('erase', targ, svgEl);
+		svg.removeChild(targ)
+	}
+}
+
+
+
+document.addEventListener('mousedown', function (e) {
+	const targ = e.target
+	if (!targ.closest('#svg') && !targ.classList.contains('circle')) return;
+	paintWithMouse(e)
+	if (targ.id === 'svg' || targ.classList.contains('circle')) {
+		if (clicks <= 10) {
+			++clicks
+			radius += clicks;
+		} else {
+			clicks = 0;
+			radius = 2;
+		}
 	}
 
-}, false);
-document.addEventListener('mousemove', function(e) {
-	if (!e.target.closest('#svg')) return;
-	console.log(e);
-	if (e.target.id === 'svg') {
-		let newRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-		newRect.setAttribute("x", e.clientX);
-		newRect.setAttribute("y", e.clientY);
-		newRect.setAttribute("width", "200");
-		newRect.setAttribute("height", "200");
-		newRect.setAttribute("fill", "#5cceee");
-		newRect.addEventListener('click', function(e) {
-			if (clicks > 5) {
-				newRect.setAttribute("width", "200");
-				newRect.setAttribute("height", "200");
-				let w = `${Number(newRect.getAttribute("width")) + 20}`;
-				let h = `${Number(newRect.getAttribute("height")) + 20}`;
-				// let h = Number(newRect.getAttribute("height")) + 20;
-console.log(w,h);
-				newRect.setAttribute("width", w)
-				newRect.setAttribute("height", h);
+	document.addEventListener('mousemove', paintWithMouse, true);
 
-			}
-			else {
-			}
-			e.target.appendChild(newRect)
-
-		}, false);
-	}
+	document.addEventListener('mouseup', function (e) {
+		document.removeEventListener("mousemove", paintWithMouse, true);
+	});
 })
 
 
-// svg.addEventListener('click', e => {
-// 	console.log(e);
-// 	console.log(e.target);
 
+// document.addEventListener('click', function (e) {
+// 	const targ = e.target
+// 	console.log(targ);
+// 	if (!targ.closest('#svg') || targ.classList.contains('circle')) return;
+
+// 	if (targ.id === 'svg' || targ.classList.contains('circle')) {
+// 		if (clicks <= 10) {
+// 			++clicks
+// 			radius += clicks;
+// 		} else {
+// 			clicks = 0;
+// 			radius = 2;
+// 		}
+
+// 	}
+// paintWithMouse(e)
+// 	// document.addEventListener('mousemove', paintWithMouse, true);
+
+// 	// document.addEventListener('mouseup', function (e) {
+// 	// 	document.removeEventListener("mousemove", paintWithMouse, true);
+// 	});
 // })
