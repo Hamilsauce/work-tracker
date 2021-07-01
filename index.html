@@ -124,7 +124,7 @@
 		<div ref="weekGroup" class="week-group">
 			<div class="week-group-label" @click="collapseWeek">
 				<div class="week-label-text"> Week {{weekNumber || week[0].weekNumber}}</div>
-				<img class="expand-icon" v-if="!collapsed" src="./assets/expand-less.svg" alt="expand-week-toggle" />
+				<img class="expand-icon" v-if="!collapse" src="./assets/expand-less.svg" alt="expand-week-toggle" />
 				<img class="expand-icon" v-else src="./assets/expand-more.svg" alt="expand-week-toggle" />
 			</div>
 			<div ref="weekTotals" class="week-totals">
@@ -132,16 +132,16 @@
 				<div class="week-totals-hours">Hours: {{totals.hours}}</div>
 				<div class="week-totals-earnings">Earnings: ${{totals.earnings}}</div>
 			</div>
-			<div ref="weekList" class="week-list" :class="{ collapsed: collapsed }">
+			<div ref="weekList" class="week-list" :class="{ collapse: collapse }">
 				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
 			</div>
-			<chart-overlay :weekNumber="weekNumber" :totals="totals"></chart-overlay>
+			<!-- <chart-overlay :weekNumber="weekNumber" :totals="totals"></chart-overlay> -->
 		</div>
 	</template>
 	<!-- !!Chart -->
 	<template id="chart-overlay">
 		<div class="overly-container">
-			<canvas ref="chartOverlay" class="chart-overlay"></canvas>
+			<canvas width="150" height="100" ref="chartOverlay" id="chart" class="chart-overlay"></canvas>
 		</div>
 	</template>
 	<!-- !!Card -->

@@ -3,13 +3,15 @@
 	display: flex;
 	flex-direction: column;
 	/* width: 200px; */
+	width: 0%;
 	height: 100%;
-	background: #4C4C58;
+	/* background: #4C4C58; */
 	/* background: #4D57C8; */
+	backdrop-filter: blur(7px);
 	color: #FFFFFF00;
 	border-right: 1px solid rgba(255, 255, 255, 0);
 	overflow-x: hidden;
-	transition: 0.3s ease-out;
+	transition: 0.4s;
 	z-index: 200;
 }
 
@@ -21,8 +23,9 @@
 }
 
 .navExpand {
-	/* width: 67%; */
+	width: 100%;
 	color: white;
+	z-index: 600;
 }
 
 .nav-head {

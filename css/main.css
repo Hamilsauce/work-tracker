@@ -74,6 +74,9 @@ html {
 	display: grid;
 	grid-template-rows: auto;
 	grid-template-columns: 1fr;
+	/* display: flex;
+		flex-direction: column; */
+	row-gap: 10px;
 	justify-content: flex-start;
 	min-height: fit-content;
 	height: fit-content;
@@ -108,10 +111,20 @@ html {
 }
 
 .overlay-container {
+	position: absolute;
+	top: 10%;
+	left: 10%;
+	right: 0;
 	width: 300px;
-	height: 500px;z-index: 200;
-	
+	height: 250px;
+	background: #42445A;
+	z-index: 50;
 }
+
+.hide {
+	display: none;
+}
+
 /* .chart-overlay{
 	width: 300px;
 	height: 500px;

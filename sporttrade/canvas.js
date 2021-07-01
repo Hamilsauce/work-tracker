@@ -11,18 +11,19 @@ const menuButton = document.querySelector('.header-menu-button');
 const nav = document.querySelector('.app-nav');
 const navClose = document.querySelector('.close-nav');
 const activeOption = null;
+console.log(...optionButtons);
 
 menuButton
 	.addEventListener('click', ({ target }) => {
 		console.log('click');
-	nav.classList.add('.navExpand')
+	nav.classList.add('navExpand')
 	});
 navClose
 	.addEventListener('click', ({ target }) => {
-	nav.classList.remove('.navExpand')
+	nav.classList.remove('navExpand')
 	});
 
-[...optionButtons].forEach(b => {
+optionButtons.forEach(b => {
 	// console.log(b);
 	b.addEventListener('click', ({ target }) => {
 		console.log(target);

@@ -191,13 +191,13 @@ body {
 	font-weight: 600;
 	letter-spacing: 1px;
 	text-align: center;
-	opacity: 0.3;
+	opacity: 0.75;
 	transition: 0.15s;
 	z-index: 1;
 }
 
 .active-option {
-	opacity: 0.7;
+	opacity: 1;
 }
 
 canvas {

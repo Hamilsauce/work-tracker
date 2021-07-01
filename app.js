@@ -34,7 +34,7 @@ const AppNav = Vue.component('app-nav', {
 	methods: {
 		closeNav() {
 			setTimeout(() => {
-				this.$emit('toggle-nav', false)
+				store.commit('toggleShowNav')
 			}, 200)
 		},
 		exportJsonClicked() {
@@ -319,12 +319,12 @@ const WeekGroup = Vue.component('week-group', {
 			weekString: '',
 			editCardId: -1,
 			deleteIdArray: [],
-			collapsed: false
+			collapse: false
 		}
 	},
 	methods: {
 		collapseWeek() {
-			this.collapsed = !this.collapsed
+			this.collapse = !this.collapse
 		},
 		setEditCardId(cardId) {
 			this.editCardId = this.editCardId === cardId ? -1 : cardId
@@ -373,7 +373,7 @@ const WeekGroup = Vue.component('week-group', {
 	mounted() {}
 });
 
-const ChartOverlay = new Vue({
+const ChartOverlay = Vue.component('chart-overlay', {
 	name: 'chart-overlay',
 	template: '#chart-overlay',
 	props: {
