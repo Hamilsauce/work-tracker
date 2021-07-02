@@ -125,8 +125,9 @@ export default {
 			state.workHistory.forEach((shift, index, arr) => {
 				shift.id = arr.length - index
 				shift.hours = Number(shift.hours)
-
 			})
+			
+				localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
 		}
 	}
 }

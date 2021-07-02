@@ -133,7 +133,8 @@
 				<div class="week-totals-earnings">Earnings: ${{totals.earnings}}</div>
 			</div>
 			<div ref="weekList" class="week-list" :class="{ collapse: collapse }">
-				<card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
+				<card @delete-selected="handleDeleteCard" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
+				<!-- <card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card> -->
 			</div>
 			<!-- <chart-overlay :weekNumber="weekNumber" :totals="totals"></chart-overlay> -->
 		</div>
@@ -153,7 +154,7 @@
 						Edit
 					</div>
 					<div v-else class="card-edit-buttons">
-						<div @click.stop="saveEdit" class="header-button header-save-button">
+						<div @click.stop="saveEdit"  class="header-button header-save-button">
 							Save
 						</div>
 						<div @click.stop="toggleEdit" class="header-button header-cancel-button">

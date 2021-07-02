@@ -161,10 +161,14 @@ const Card = Vue.component('card', {
 			store.commit('toggleDeleteModal')
 		},
 		toggleEdit() {
-			this.editMode && this.isSelected ? this.$emit('toggle-edit', -1) : this.$emit('toggle-edit', this.shiftData.id);
+			this.editMode && this.isSelected ? this.$emit('toggle-edit', this.shift.id) : this.$emit('toggle-edit', this.shiftData.id);
 		},
 		saveEdit() {
-			this.$emit('save-edit', this.newShiftData)
+			store.commit('saveCardEdit', this.newShiftData);
+			
+			this.toggleEdit()
+			
+			// this.$emit('save-edit', this.newShiftData)
 		},
 		cancelEditCard() {
 			this.$emit('cancel-edit', this.shiftData.id)
