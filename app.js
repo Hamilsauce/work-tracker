@@ -165,9 +165,9 @@ const Card = Vue.component('card', {
 		},
 		saveEdit() {
 			store.commit('saveCardEdit', this.newShiftData);
-			
+
 			this.toggleEdit()
-			
+
 			// this.$emit('save-edit', this.newShiftData)
 		},
 		cancelEditCard() {
@@ -323,10 +323,27 @@ const WeekGroup = Vue.component('week-group', {
 			weekString: '',
 			editCardId: -1,
 			deleteIdArray: [],
-			collapse: false
+			collapse: false,
+			totals2: {}
 		}
 	},
 	methods: {
+
+		getTotals() {
+			const totalHours = this.week.reduce((sum, curr) => {
+				return sum = sum + Number(curr.hours)
+			}, 0);
+
+			this.totals2 = {
+				payRate: 35,
+				days: this.week.length,
+				hours: this.week.reduce((sum, curr) => {
+					return sum = sum + Number(curr.hours)
+				}, 0),
+				earnings: Intl.NumberFormat('en-US').format(totalHours * 35)
+			}
+		},
+
 		collapseWeek() {
 			this.collapse = !this.collapse
 		},
@@ -349,6 +366,7 @@ const WeekGroup = Vue.component('week-group', {
 	},
 
 	computed: {
+
 		workHistory() {
 			return store.getters.workHistory
 		},
@@ -373,40 +391,55 @@ const WeekGroup = Vue.component('week-group', {
 			}
 		}
 	},
-	watch: {},
-	mounted() {}
+	watch: {
+		week() {
+
+		}
+	},
+	mounted() {
+		// console.log('week');
+		// console.log(this.week);
+		// console.log(this.totals);
+
+	}
 });
 
 const ChartOverlay = Vue.component('chart-overlay', {
 	name: 'chart-overlay',
 	template: '#chart-overlay',
 	props: {
-		totals: Object,
-		weekNumber: Number
+		wTotals: Object,
+		weekNumber: Number,
+		week: Array
+
 	},
 	data() {
 		return {
-			elem: this.$refs.chartOverlay
-
+			elem: this.$refs.chart
 		}
 	},
 	computed: {
 		canvasElement() {
-			return this.$refs.chartOverlay;
+			// this.$refs.chart
+
+			return this.$refs.chart;
 		},
 		weekId() {
 			// return store.getters.week
 		},
 		totals() {
-			console.log(this.totals);
+			// console.log(this.totals);
 		}
 	},
 
-	watch: {},
+	watch: {
+
+	},
 	methods: {
 		chart() {
 			console.log('chart');
-			const ctx = this.elem.getContext('2d');
+			// console.log(	this.canvasElement);
+			const ctx = this.canvasElement.getContext('2d');
 			const chart = new Chart(ctx, {
 				type: 'bar',
 				data: {
@@ -424,13 +457,12 @@ const ChartOverlay = Vue.component('chart-overlay', {
 		}
 	},
 	created() {
-		console.log(this.totals);
-		
+
 	},
 	mounted() {
-		console.log('chart mount');
+		// console.log('chart mount');
+		console.log('totes', this.week);
 		this.chart();
-		console.log(this.elem);
 	}
 });
 

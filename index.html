@@ -136,13 +136,13 @@
 				<card @delete-selected="handleDeleteCard" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
 				<!-- <card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card> -->
 			</div>
-			<!-- <chart-overlay :weekNumber="weekNumber" :totals="totals"></chart-overlay> -->
+			<chart-overlay :week="week" :weekNumber="weekNumber" :wTotals="totals2"></chart-overlay>
 		</div>
 	</template>
 	<!-- !!Chart -->
 	<template id="chart-overlay">
-		<div class="overly-container">
-			<canvas width="150" height="100" ref="chartOverlay" id="chart" class="chart-overlay"></canvas>
+		<div class="chart-container">
+			<canvas class="chart" width="250" height="200" ref="chart" id="chart" ></canvas>
 		</div>
 	</template>
 	<!-- !!Card -->
@@ -205,6 +205,14 @@
 		</div>
 	</template>
 	<!-- - -->
+
+	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/FileSaver.js"></script>
+	<script src='./app.js' type="module"></script>
+</body>
+
+</html>
+
+<!-- 
 	<template id="add-product">
 		<div>
 			<h2>Add new product</h2>
@@ -226,7 +234,7 @@
 			</form>
 		</div>
 	</template>
-	<!-- - -->
+
 	<template id="product">
 		<div>
 			<h2>{{ product.name }}</h2>
@@ -239,7 +247,6 @@
 			<router-link v-bind:to="'/'">Back to product list</router-link>
 		</div>
 	</template>
-	<!-- - -->
 	<template id="product-edit">
 		<div>
 			<h2>Edit product</h2>
@@ -261,7 +268,6 @@
 			</form>
 		</div>
 	</template>
-	<!-- - -->
 	<template id="product-delete">
 		<div>
 			<h2>Delete product {{ product.name }}</h2>
@@ -272,9 +278,4 @@
 			</form>
 		</div>
 	</template>
-	<!-- - -->
-	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/FileSaver.js"></script>
-	<script src='./app.js' type="module"></script>
-</body>
-
-</html>
+	-->
