@@ -60,7 +60,6 @@ html {
 /* || Content */
 
 .card-view {
-	display: flex;
 	display: grid;
 	grid-template-rows: auto;
 	grid-template-columns: 1fr;

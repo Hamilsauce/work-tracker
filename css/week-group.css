@@ -96,3 +96,26 @@
   transition: 0.5s;
 	
 }
+
+
+canvas {
+	z-index: 500;
+	margin: auto;
+	border: 1px solid #5F5F5F;
+	background: yellow;
+}
+
+.chart-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%; 
+	transition: 1s;
+	z-index: 500;
+}
+
+.hide {
+	height: 0px;
+	overflow: hidden;
+	z-index: 500;
+}

@@ -9,10 +9,11 @@
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="./css/canvas.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="./css/nav.css" type="text/css" media="all" />
+	<!-- <link rel="stylesheet" href="./css/chart.css" type="text/css" media="all" /> -->
+	<script src='https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js'></script>
 </head>
 
 <body>
-	
 	<div class="app-nav">
 		<div class="nav-head">
 			<div @click="closeNav" class="close-nav">
@@ -64,7 +65,14 @@
 			<!-- </div> -->
 		</div>
 		<div class="content-container">
-			<div class="card">Phillies at WAS national</div>
+			<div class="card">
+				<div class="">
+					Phillies at WAS national
+				</div>
+				<div class="chart-container hide">
+					<canvas class="chart" width="250" height="200" id="chart"></canvas>
+				</div>
+			</div>
 			<div class="card">Phillies at WAS national</div>
 			<div class="card">Buy</div>
 			<div class="card">Buy</div>

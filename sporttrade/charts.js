@@ -16,8 +16,19 @@
 	
 	const card = document.querySelector('.card')
 	const chartContainer = document.querySelector('.chart-container')
+	const chart = document.querySelector('.chart')
 	
 	card.addEventListener('click', e => {
-		chartContainer.classList.toggle('hide')
+		// chartContainer.classList.toggle('hide')
+	})
+	
+	chartContainer.addEventListener('click', e => {
+		console.log('container click');
+		// chartContainer.classList.toggle('hide')
+	})
+	
+	chart.addEventListener('click', e => {
+		// chartContainer.classList.toggle('hide')
+		console.log('chart click');
 	})
 	
