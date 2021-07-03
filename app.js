@@ -454,14 +454,14 @@ const ChartOverlay = Vue.component('chart-overlay', {
 			console.log('chart');
 			const labels = Object.keys(this.totals.data).map(_ => `${_[0].toUpperCase()}${_.slice(1)}`)
 			console.log(labels);
-// const [dayDates, dayHours]
+			// const [dayDates, dayHours]
 			// console.log(	this.canvasElement);
 			const ctx = this.canvasElement.getContext('2d');
 			const chart = new Chart(ctx, {
 				type: 'pie',
 				data: {
-				labels: this.hoursPerDay.map(_ => _[0]),
-				// labels: labels,
+					labels: this.hoursPerDay.map(_ => `${_[0]} Hours`),
+					// labels: labels,
 					datasets: [{
 						label: 'Totals',
 						data: this.hoursPerDay.map(_ => _[1]),
@@ -471,7 +471,13 @@ const ChartOverlay = Vue.component('chart-overlay', {
 						borderWidth: 1
 					}]
 				},
-				options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } }
+				// options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } }
+				options: {
+					legend: {
+						position: 'left'
+					}
+				}
+				
 			});
 		}
 	},

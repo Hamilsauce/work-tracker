@@ -9,9 +9,10 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   /* border-bottom: 2px solid transparent; */
-  /* height: fit-content; */
+  height: fit-content;
+  /* min-height: 177px; */
   /* border-bottom: 4px solid #D8D8D8; */
   /* border-radius: 5px 5px 5px 5px; */
   transition: 0.4s;
@@ -103,14 +104,14 @@
 
 canvas {
 	z-index: 500;
-	margin: auto;
-	border: 1px solid #5F5F5F;
-	background: yellow;
+	/* margin: auto; */
+	/* border: 1px solid #5F5F5F; */
+	/* background: yellow; */
 }
 
 .chart-container {
-	position: absolute;
-	top: 20%;
+	/* position: absolute; */
+	top: 40%;
 	left: 0;
 	/* height: 100%; */ 
 	/* width: 100%; */
