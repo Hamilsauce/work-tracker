@@ -1,6 +1,6 @@
 // import { workHistory } from '../data/work-data.js'
 
-export default {
+const storeObj = {
 	state: {
 		workHistory: [],
 		selectedCardId: 0,
@@ -130,4 +130,10 @@ export default {
 				localStorage.setItem('workHistory', JSON.stringify(state.workHistory))
 		}
 	}
+};
+
+export const store = new Vuex.Store(storeObj);
+
+{
+	store
 }
