@@ -6,6 +6,7 @@ export default {
 		weekNumber: Number,
 		week: Array,
 		collapse: false
+		
 	},
 	data() {
 		return {
