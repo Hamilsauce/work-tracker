@@ -324,10 +324,13 @@ const WeekGroup = Vue.component('week-group', {
 			editCardId: -1,
 			deleteIdArray: [],
 			collapse: false,
-			totals2: {}
+			showChart: false
 		}
 	},
 	methods: {
+		toggleChart() {
+			this.showChart = !this.showChart;
+		},
 
 		getTotals() {
 			const totalHours = this.week.reduce((sum, curr) => {
@@ -420,37 +423,53 @@ const ChartOverlay = Vue.component('chart-overlay', {
 	},
 	computed: {
 		canvasElement() {
-			// this.$refs.chart
-
 			return this.$refs.chart;
 		},
-		weekId() {
-			// return store.getters.week
-		},
+		weekId() {},
 		totals() {
-			// console.log(this.totals);
+			const totalHours = this.week.reduce((sum, curr) => {
+				return sum = sum + Number(curr.hours)
+			}, 0);
+			return {
+				weekNumber: this.weekNumber,
+				payRate: 35,
+				data: {
+					days: this.week.length,
+					hours: this.week.reduce((sum, curr) => {
+						return sum = sum + Number(curr.hours)
+					}, 0),
+					earnings: Intl.NumberFormat('en-US').format(totalHours * 35)
+				}
+			}
+		},
+		hoursPerDay() {
+			return this.week.map(day => [day.date, day.hours])
 		}
 	},
-
 	watch: {
 
 	},
 	methods: {
-		chart() {
+		chart(chartType = 'bar') {
 			console.log('chart');
+			const labels = Object.keys(this.totals.data).map(_ => `${_[0].toUpperCase()}${_.slice(1)}`)
+			console.log(labels);
+// const [dayDates, dayHours]
 			// console.log(	this.canvasElement);
 			const ctx = this.canvasElement.getContext('2d');
 			const chart = new Chart(ctx, {
-				type: 'bar',
+				type: 'pie',
 				data: {
-					labels: ['red', 'green', 'blue'],
+				labels: this.hoursPerDay.map(_ => _[0]),
+				// labels: labels,
 					datasets: [{
-						label: '# of Votes',
-						data: [12, 19, 3],
+						label: 'Totals',
+						data: this.hoursPerDay.map(_ => _[1]),
+						// data: Object.values(this.totals.data),
 						backgroundColor: ['red', 'green', 'blue'],
 						borderColor: ['red', 'green', 'blue'],
 						borderWidth: 1
-		}]
+					}]
 				},
 				options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } }
 			});
@@ -461,7 +480,7 @@ const ChartOverlay = Vue.component('chart-overlay', {
 	},
 	mounted() {
 		// console.log('chart mount');
-		console.log('totes', this.week);
+		console.log('totes', this.totals);
 		this.chart();
 	}
 });

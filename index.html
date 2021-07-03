@@ -127,7 +127,7 @@
 				<img class="expand-icon" v-if="!collapse" src="./assets/expand-less.svg" alt="expand-week-toggle" />
 				<img class="expand-icon" v-else src="./assets/expand-more.svg" alt="expand-week-toggle" />
 			</div>
-			<div ref="weekTotals" class="week-totals">
+			<div ref="weekTotals" @click="toggleChart" class="week-totals">
 				<div class="week-totals-days">Days: {{totals.days}}</div>
 				<div class="week-totals-hours">Hours: {{totals.hours}}</div>
 				<div class="week-totals-earnings">Earnings: ${{totals.earnings}}</div>
@@ -136,13 +136,14 @@
 				<card @delete-selected="handleDeleteCard" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card>
 				<!-- <card @delete-selected="handleDeleteCard" @save-edit="saveCardEdit" @toggle-edit="setEditCardId" v-for="shift in week" :selected-card-id="selectedCardId" :edit-card-id="editCardId" :shift="shift"></card> -->
 			</div>
-			<chart-overlay :week="week" :weekNumber="weekNumber" :wTotals="totals2"></chart-overlay>
+			<chart-overlay :week="week" v-if="showChart" :class="{hide: !showChart}" :weekNumber="weekNumber"></chart-overlay>
+			<!-- :class="{hide: !showChart}" -->
 		</div>
 	</template>
 	<!-- !!Chart -->
 	<template id="chart-overlay">
 		<div class="chart-container">
-			<canvas class="chart" width="250" height="200" ref="chart" id="chart" ></canvas>
+			<canvas class="chart" width="300" height="200" ref="chart" id="chart"></canvas>
 		</div>
 	</template>
 	<!-- !!Card -->
@@ -154,7 +155,7 @@
 						Edit
 					</div>
 					<div v-else class="card-edit-buttons">
-						<div @click.stop="saveEdit"  class="header-button header-save-button">
+						<div @click.stop="saveEdit" class="header-button header-save-button">
 							Save
 						</div>
 						<div @click.stop="toggleEdit" class="header-button header-cancel-button">
@@ -205,13 +206,11 @@
 		</div>
 	</template>
 	<!-- - -->
-
 	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/FileSaver.js"></script>
 	<script src='./app.js' type="module"></script>
 </body>
 
 </html>
-
 <!-- 
 	<template id="add-product">
 		<div>
