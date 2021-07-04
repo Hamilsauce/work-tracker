@@ -1,3 +1,14 @@
+let arrowMode = false;
+document.querySelector('.arrow-checkbox')
+	.addEventListener('change', e => {
+		arrowMode = e.target.checked;
+		let targ = e.target;
+		console.log(arrowMode);
+	})
+
+
+
+
 let timerFunction = null;
 let rowHeight = 20;
 
@@ -69,7 +80,6 @@ function paintWithFinger(e) {
 const startTouch = (e) => {
 	const { target, touches } = e
 	if (!target.closest('#svg') && !target.classList.contains('circle')) return;
-
 	if (touches && touches.length === 1 && (target.id === 'svg' || target.classList.contains('circle'))) {
 		paintWithMouse(e)
 		if (clicks <= 5) {
@@ -80,13 +90,11 @@ const startTouch = (e) => {
 			radius = 2;
 		}
 		document.addEventListener('touchmove', paintWithFinger, true);
-
 		document.addEventListener('touchend', function(e) {
 			document.removeEventListener("touchmove", paintWithMouse, true);
 		});
 	}
 }
-
 document.addEventListener('touchstart', startTouch)
 
 
