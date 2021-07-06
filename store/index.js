@@ -9,9 +9,13 @@ const storeObj = {
 		showNav: false,
 		selectedCardScroll: null,
 		selectedCard: null,
+		activeRoute: 'cardView'
 	},
 
 	mutations: {
+		updateActiveRoute(state, data) {
+			state.activeRoute = data;
+		},
 		toggleShowNav(state) {
 			state.showNav = !state.showNav;
 		},

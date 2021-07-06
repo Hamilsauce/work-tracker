@@ -1,3 +1,5 @@
+import { store } from '../store/index.js'
+
 export default {
 	template: '#card',
 	props: {
@@ -17,6 +19,12 @@ export default {
 		}
 	},
 	methods: {
+		updateHours(e) {
+			this.newShiftData.hours = parseInt(e.target.textContent)
+		},
+		updateDetails(e) {
+			this.newShiftData.details = e.target.textContent
+		},
 		emitCardSelected() {
 			store.dispatch('handleSelectedCard', {
 				cardId: this.shiftData.id,
@@ -26,10 +34,9 @@ export default {
 		deleteCard() {
 			store.commit('toggleDeleteModal')
 		},
-		toggleEdit() {
-			this.editMode && this.isSelected ? this.$emit('toggle-edit', this.shift.id) : this.$emit('toggle-edit', this.shiftData.id);
-		},
+		toggleEdit() { this.editMode && this.isSelected ? this.$emit('toggle-edit', this.shift.id) : this.$emit('toggle-edit', this.shiftData.id) },
 		saveEdit() {
+			console.log(this.newShiftData);
 			store.commit('saveCardEdit', this.newShiftData);
 
 			this.toggleEdit()

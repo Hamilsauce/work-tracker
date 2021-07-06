@@ -7,12 +7,12 @@
 		'date hrs'
 		'date det ';
 	grid-template-columns: 90px 1fr;
-	grid-template-rows: 30px 30px 1fr 1fr;
+	grid-template-rows: 30px 30px 1fr;
 	grid-column-gap: 10px;
 	grid-row-gap: 5px;
 	justify-content: space-between;
-	height: 120px;
-	/* max-height: 120px; */
+	height: fit-content;
+	max-height: 160px;
 	margin-top: 12px;
 	margin-bottom: 12px;
 	padding: 0px 10px 0px 0px;
@@ -21,7 +21,7 @@
 	border-radius: 2px;
 	box-shadow: 0 2px 5px 0px #60606050;
 	transition: 0.2s;
-	overflow: hidden;
+	/* overflow: hidden; */
 	/* transition-delay: 0.2s; */
 }
 
@@ -29,7 +29,7 @@
 	box-shadow: 0 2px 5px #60606070;
 	border: 1px solid #727272;
 	min-height: 120px;
-	max-height: 100%;
+	max-height: fit-content;
 	/* height: 100%; */
 	transition: 0.2s;
 	/* transition-delay: 0.0s; */
@@ -150,14 +150,19 @@
 
 .card-details {
 	grid-area: det;
-	padding: 5px 5px 5px 5px;
+	/* height: 100%; */
+	max-height: 80px;
+	padding: 5px 5px 0px 5px;
 	overflow: hidden;
 	margin: 0px 0px 10px 0px;
 	border-radius: 3px;
+	transition: 0.2s;
 }
 
 .activeCard>.card-details {
-	overflow: hidden;
+	max-height: 100%;
+	
+	/* overflow: hidden; */
 }
 
 .card-details.editing {

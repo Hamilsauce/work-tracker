@@ -43,10 +43,19 @@ const app = new Vue({
 	router: router,
 	data() { return { workData: workHistory, } },
 	computed: {
+		activeRoute() { return store.getters.activeRoute },
 		workHistory() { return store.getters.workHistory },
 		showNav() { return store.getters.showNav },
 		showDeleteModal() { return store.getters.showDeleteModal }
 	},
+	watch: {
+		activeRoute(newVal) {
+			console.log('newval', newVal);
+			router.push(`/${newVal}`)
+			
+		}
+	},
+	
 	methods: { 
 		handleExportAsJson() { exportAsJson(this.workHistory) },
 		handleExportAsCsv() { exportAsCsv(this.workHistory) },

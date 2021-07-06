@@ -1,3 +1,5 @@
+import {store} from '../store/index.js'
+
 export default {
 	name: 'add-shift-view',
 	template: '#add-shift-view',
@@ -25,8 +27,10 @@ export default {
 				this.newShift.createdDate = dayjs().format('MM/DD/YYYY');
 				this.newShift.modifiedDate = dayjs().format('MM/DD/YYYY');
 
-				store.dispatch('storeHistory', this.newShift)
-				router.push('/')
+				store.dispatch('storeHistory', this.newShift);
+				// this.$emit('shift-submitted')
+				// router.push('/');
+				store.commit('updateActiveRoute', 'cardView')
 			}
 		},
 		handleFormCancel() {
