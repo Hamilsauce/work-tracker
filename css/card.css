@@ -90,17 +90,19 @@
 	padding-right: 10px;
 	padding-left: 10px;
 	border-right: 2px solid #E6E6E6;
-	background: #F0F0F0;
+	background: #425A99D1;
+  box-shadow: 0px 0px 300px 0px inset #4D57C8D9;
+	
 	font-size: 1.5em;
 	font-weight: 700;
 	text-align: right;
+	color: white;
 	white-space: nowrap;
 }
 
 .activeCard>.card-date {
 	background: #727AD6;
 	box-shadow: 0px 0px 100px 10px inset #4D57C8;
-	color: white;
 	transition: 0.3s ease;
 	transition-delay: 0.0s;
 }
