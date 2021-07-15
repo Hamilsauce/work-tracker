@@ -73,14 +73,18 @@
 
 
 .week-totals {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  /* flex-direction: row; */
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+  
   width: 100%;
   padding: 2px 15px 10px 15px;
   /* border-bottom: 1px solid #d7d7d7; */
   font-size: 0.9em;
   font-weight: 600;
+  text-align: center;
   background: white;
 	color: #00000054;
   
