@@ -1,1 +1,525 @@
-{"data":{"blocks":[{"@type":"@builder.io/sdk:Element","id":"builder-ptdjt9adzkp","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px","justifyContent":"flex-start","alignItems":"flex-start","height":"640px","width":"360px","backgroundColor":"rgba(255, 255, 255, 1)"}},"layerName":"","meta":{"figmaLayerId":"2:2"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-kg4915q2ry","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px"}},"layerName":"","meta":{"figmaLayerId":"2:22"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-tj0tpcwhuuo","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px","height":"640px","width":"360px","backgroundColor":"rgba(234, 234, 234, 1)"}},"layerName":"","meta":{"figmaLayerId":"0:3"}},{"@type":"@builder.io/sdk:Element","id":"builder-ym2cz2df8d7","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px","height":"41.45077896118164px","width":"360px","backgroundColor":"rgba(90, 137, 156, 1)"}},"layerName":"","meta":{"figmaLayerId":"0:16"}},{"@type":"@builder.io/sdk:Element","id":"builder-kmpymp6b2om","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px"}},"layerName":"","meta":{"figmaLayerId":"2:5"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-5xhv315cr1t","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px","height":"145.0777130126953px","width":"360px","backgroundColor":"rgba(90, 137, 156, 1)"}},"layerName":"","meta":{"figmaLayerId":"0:4"}},{"@type":"@builder.io/sdk:Element","id":"builder-dndqm1qt85","responsiveStyles":{"large":{"display":"flex","maxWidth":"175px"}},"layerName":"","meta":{"figmaLayerId":"2:21"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-2b459p531ov","responsiveStyles":{"large":{"display":"flex","maxWidth":"175px","height":"0.8290155529975891px","width":"175px","backgroundColor":"rgba(255, 255, 255, 0.5)"}},"layerName":"","meta":{"figmaLayerId":"0:6"}},{"@type":"@builder.io/sdk:Element","id":"builder-oyuutsi4vkn","responsiveStyles":{"large":{"maxWidth":"41px","color":"rgba(255, 255, 255, 0.75)","fontSize":"16px","letterSpacing":"0%","textAlign":"left","fontFamily":"Times New Roman, sans-serif"}},"layerName":"","meta":{"figmaLayerId":"0:19"},"component":{"name":"Text","options":{"text":"search"}}}]}]},{"@type":"@builder.io/sdk:Element","id":"builder-om0zmpde6bc","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px"}},"layerName":"","meta":{"figmaLayerId":"2:20"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-ktitbqpir1","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px","height":"38.13471603393555px","width":"360px","backgroundColor":"rgba(255, 255, 255, 0)"}},"layerName":"","meta":{"figmaLayerId":"2:19"}},{"@type":"@builder.io/sdk:Element","id":"builder-i3l4d9co4qh","responsiveStyles":{"large":{"display":"flex","maxWidth":"285px"}},"layerName":"","meta":{"figmaLayerId":"2:4"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-xr26l35no1j","responsiveStyles":{"large":{"display":"flex","maxWidth":"51px"}},"layerName":"","meta":{"figmaLayerId":"2:16"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-795z569pjs5","responsiveStyles":{"large":{"display":"flex","maxWidth":"50.57091522216797px","height":"0.69084632396698px","width":"50.57091522216797px","backgroundColor":"rgba(210, 210, 210, 1)"}},"layerName":"","meta":{"figmaLayerId":"2:17"}},{"@type":"@builder.io/sdk:Element","id":"builder-ny3pctlzjv","responsiveStyles":{"large":{"maxWidth":"51px","color":"rgba(0, 0, 0, 1)","fontSize":"15px","letterSpacing":"0%","textAlign":"center","fontFamily":"Times New Roman, sans-serif"}},"layerName":"","meta":{"figmaLayerId":"2:18"},"component":{"name":"Text","options":{"text":"Games"}}}]},{"@type":"@builder.io/sdk:Element","id":"builder-g353ery39u7","responsiveStyles":{"large":{"display":"flex","maxWidth":"51px"}},"layerName":"","meta":{"figmaLayerId":"2:13"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-simu5svn4rp","responsiveStyles":{"large":{"display":"flex","maxWidth":"50.57091522216797px","height":"0.69084632396698px","width":"50.57091522216797px","backgroundColor":"rgba(210, 210, 210, 1)"}},"layerName":"","meta":{"figmaLayerId":"2:14"}},{"@type":"@builder.io/sdk:Element","id":"builder-7bgdnvs3f1","responsiveStyles":{"large":{"maxWidth":"51px","color":"rgba(0, 0, 0, 1)","fontSize":"15px","letterSpacing":"0%","textAlign":"center","fontFamily":"Times New Roman, sans-serif"}},"layerName":"","meta":{"figmaLayerId":"2:15"},"component":{"name":"Text","options":{"text":"Games"}}}]},{"@type":"@builder.io/sdk:Element","id":"builder-72a67rpjkde","responsiveStyles":{"large":{"display":"flex","maxWidth":"51px"}},"layerName":"","meta":{"figmaLayerId":"2:10"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-ytofsfbav8","responsiveStyles":{"large":{"display":"flex","maxWidth":"50.57091522216797px","height":"0.69084632396698px","width":"50.57091522216797px","backgroundColor":"rgba(210, 210, 210, 1)"}},"layerName":"","meta":{"figmaLayerId":"2:11"}},{"@type":"@builder.io/sdk:Element","id":"builder-s5r4dnfdwu","responsiveStyles":{"large":{"maxWidth":"51px","color":"rgba(0, 0, 0, 1)","fontSize":"15px","letterSpacing":"0%","textAlign":"center","fontFamily":"Times New Roman, sans-serif"}},"layerName":"","meta":{"figmaLayerId":"2:12"},"component":{"name":"Text","options":{"text":"Games"}}}]},{"@type":"@builder.io/sdk:Element","id":"builder-b9iq6ajbk8","responsiveStyles":{"large":{"display":"flex","maxWidth":"51px"}},"layerName":"","meta":{"figmaLayerId":"2:6"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-xsudeulkqf7","responsiveStyles":{"large":{"display":"flex","maxWidth":"50.57091522216797px","height":"0.69084632396698px","width":"50.57091522216797px","backgroundColor":"rgba(210, 210, 210, 1)"}},"layerName":"","meta":{"figmaLayerId":"0:8"}},{"@type":"@builder.io/sdk:Element","id":"builder-6pn2p8gvub","responsiveStyles":{"large":{"maxWidth":"51px","color":"rgba(0, 0, 0, 1)","fontSize":"15px","letterSpacing":"0%","textAlign":"center","fontFamily":"Times New Roman, sans-serif"}},"layerName":"","meta":{"figmaLayerId":"0:20"},"component":{"name":"Text","options":{"text":"Games"}}}]}]}]},{"@type":"@builder.io/sdk:Element","id":"builder-5egwgy7e7e2","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px"}},"layerName":"","meta":{"figmaLayerId":"2:3"},"children":[{"@type":"@builder.io/sdk:Element","id":"builder-o0lu46mfrtg","responsiveStyles":{"large":{"display":"flex","maxWidth":"360px","height":"39.792747497558594px","width":"360px","backgroundColor":"rgba(90, 137, 156, 1)"}},"layerName":"","meta":{"figmaLayerId":"0:5"}},{"@type":"@builder.io/sdk:Element","id":"builder-3agx0wj50fw","responsiveStyles":{"large":{"maxWidth":"30px","color":"rgba(255, 255, 255, 1)","fontSize":"15px","letterSpacing":"0%","textAlign":"left","fontFamily":"Times New Roman, sans-serif"}},"layerName":"","meta":{"figmaLayerId":"0:17"},"component":{"name":"Text","options":{"text":"back"}}},{"@type":"@builder.io/sdk:Element","id":"builder-83fik4vab5w","responsiveStyles":{"large":{"maxWidth":"36px","color":"rgba(255, 255, 255, 1)","fontSize":"16px","letterSpacing":"0%","textAlign":"left","fontFamily":"Times New Roman, sans-serif"}},"layerName":"","meta":{"figmaLayerId":"0:18"},"component":{"name":"Text","options":{"text":"menu"}}}]}]}]}]}}
+{
+  "data": {
+    "blocks": [
+      {
+        "@type": "@builder.io/sdk:Element",
+        "id": "builder-ptdjt9adzkp",
+        "responsiveStyles": {
+          "large": {
+            "display": "flex",
+            "maxWidth": "360px",
+            "justifyContent": "flex-start",
+            "alignItems": "flex-start",
+            "height": "640px",
+            "width": "360px",
+            "backgroundColor": "rgba(255, 255, 255, 1)"
+          }
+        },
+        "layerName": "",
+        "meta": {
+          "figmaLayerId": "2:2"
+        },
+        "children": [
+          {
+            "@type": "@builder.io/sdk:Element",
+            "id": "builder-kg4915q2ry",
+            "responsiveStyles": {
+              "large": {
+                "display": "flex",
+                "maxWidth": "360px"
+              }
+            },
+            "layerName": "",
+            "meta": {
+              "figmaLayerId": "2:22"
+            },
+            "children": [
+              {
+                "@type": "@builder.io/sdk:Element",
+                "id": "builder-tj0tpcwhuuo",
+                "responsiveStyles": {
+                  "large": {
+                    "display": "flex",
+                    "maxWidth": "360px",
+                    "height": "640px",
+                    "width": "360px",
+                    "backgroundColor": "rgba(234, 234, 234, 1)"
+                  }
+                },
+                "layerName": "",
+                "meta": {
+                  "figmaLayerId": "0:3"
+                }
+              },
+              {
+                "@type": "@builder.io/sdk:Element",
+                "id": "builder-ym2cz2df8d7",
+                "responsiveStyles": {
+                  "large": {
+                    "display": "flex",
+                    "maxWidth": "360px",
+                    "height": "41.45077896118164px",
+                    "width": "360px",
+                    "backgroundColor": "rgba(90, 137, 156, 1)"
+                  }
+                },
+                "layerName": "",
+                "meta": {
+                  "figmaLayerId": "0:16"
+                }
+              },
+              {
+                "@type": "@builder.io/sdk:Element",
+                "id": "builder-kmpymp6b2om",
+                "responsiveStyles": {
+                  "large": {
+                    "display": "flex",
+                    "maxWidth": "360px"
+                  }
+                },
+                "layerName": "",
+                "meta": {
+                  "figmaLayerId": "2:5"
+                },
+                "children": [
+                  {
+                    "@type": "@builder.io/sdk:Element",
+                    "id": "builder-5xhv315cr1t",
+                    "responsiveStyles": {
+                      "large": {
+                        "display": "flex",
+                        "maxWidth": "360px",
+                        "height": "145.0777130126953px",
+                        "width": "360px",
+                        "backgroundColor": "rgba(90, 137, 156, 1)"
+                      }
+                    },
+                    "layerName": "",
+                    "meta": {
+                      "figmaLayerId": "0:4"
+                    }
+                  },
+                  {
+                    "@type": "@builder.io/sdk:Element",
+                    "id": "builder-dndqm1qt85",
+                    "responsiveStyles": {
+                      "large": {
+                        "display": "flex",
+                        "maxWidth": "175px"
+                      }
+                    },
+                    "layerName": "",
+                    "meta": {
+                      "figmaLayerId": "2:21"
+                    },
+                    "children": [
+                      {
+                        "@type": "@builder.io/sdk:Element",
+                        "id": "builder-2b459p531ov",
+                        "responsiveStyles": {
+                          "large": {
+                            "display": "flex",
+                            "maxWidth": "175px",
+                            "height": "0.8290155529975891px",
+                            "width": "175px",
+                            "backgroundColor": "rgba(255, 255, 255, 0.5)"
+                          }
+                        },
+                        "layerName": "",
+                        "meta": {
+                          "figmaLayerId": "0:6"
+                        }
+                      },
+                      {
+                        "@type": "@builder.io/sdk:Element",
+                        "id": "builder-oyuutsi4vkn",
+                        "responsiveStyles": {
+                          "large": {
+                            "maxWidth": "41px",
+                            "color": "rgba(255, 255, 255, 0.75)",
+                            "fontSize": "16px",
+                            "letterSpacing": "0%",
+                            "textAlign": "left",
+                            "fontFamily": "Times New Roman, sans-serif"
+                          }
+                        },
+                        "layerName": "",
+                        "meta": {
+                          "figmaLayerId": "0:19"
+                        },
+                        "component": {
+                          "name": "Text",
+                          "options": {
+                            "text": "search"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "@type": "@builder.io/sdk:Element",
+                "id": "builder-om0zmpde6bc",
+                "responsiveStyles": {
+                  "large": {
+                    "display": "flex",
+                    "maxWidth": "360px"
+                  }
+                },
+                "layerName": "",
+                "meta": {
+                  "figmaLayerId": "2:20"
+                },
+                "children": [
+                  {
+                    "@type": "@builder.io/sdk:Element",
+                    "id": "builder-ktitbqpir1",
+                    "responsiveStyles": {
+                      "large": {
+                        "display": "flex",
+                        "maxWidth": "360px",
+                        "height": "38.13471603393555px",
+                        "width": "360px",
+                        "backgroundColor": "rgba(255, 255, 255, 0)"
+                      }
+                    },
+                    "layerName": "",
+                    "meta": {
+                      "figmaLayerId": "2:19"
+                    }
+                  },
+                  {
+                    "@type": "@builder.io/sdk:Element",
+                    "id": "builder-i3l4d9co4qh",
+                    "responsiveStyles": {
+                      "large": {
+                        "display": "flex",
+                        "maxWidth": "285px"
+                      }
+                    },
+                    "layerName": "",
+                    "meta": {
+                      "figmaLayerId": "2:4"
+                    },
+                    "children": [
+                      {
+                        "@type": "@builder.io/sdk:Element",
+                        "id": "builder-xr26l35no1j",
+                        "responsiveStyles": {
+                          "large": {
+                            "display": "flex",
+                            "maxWidth": "51px"
+                          }
+                        },
+                        "layerName": "",
+                        "meta": {
+                          "figmaLayerId": "2:16"
+                        },
+                        "children": [
+                          {
+                            "@type": "@builder.io/sdk:Element",
+                            "id": "builder-795z569pjs5",
+                            "responsiveStyles": {
+                              "large": {
+                                "display": "flex",
+                                "maxWidth": "50.57091522216797px",
+                                "height": "0.69084632396698px",
+                                "width": "50.57091522216797px",
+                                "backgroundColor": "rgba(210, 210, 210, 1)"
+                              }
+                            },
+                            "layerName": "",
+                            "meta": {
+                              "figmaLayerId": "2:17"
+                            }
+                          },
+                          {
+                            "@type": "@builder.io/sdk:Element",
+                            "id": "builder-ny3pctlzjv",
+                            "responsiveStyles": {
+                              "large": {
+                                "maxWidth": "51px",
+                                "color": "rgba(0, 0, 0, 1)",
+                                "fontSize": "15px",
+                                "letterSpacing": "0%",
+                                "textAlign": "center",
+                                "fontFamily": "Times New Roman, sans-serif"
+                              }
+                            },
+                            "layerName": "",
+                            "meta": {
+                              "figmaLayerId": "2:18"
+                            },
+                            "component": {
+                              "name": "Text",
+                              "options": {
+                                "text": "Games"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "@type": "@builder.io/sdk:Element",
+                        "id": "builder-g353ery39u7",
+                        "responsiveStyles": {
+                          "large": {
+                            "display": "flex",
+                            "maxWidth": "51px"
+                          }
+                        },
+                        "layerName": "",
+                        "meta": {
+                          "figmaLayerId": "2:13"
+                        },
+                        "children": [
+                          {
+                            "@type": "@builder.io/sdk:Element",
+                            "id": "builder-simu5svn4rp",
+                            "responsiveStyles": {
+                              "large": {
+                                "display": "flex",
+                                "maxWidth": "50.57091522216797px",
+                                "height": "0.69084632396698px",
+                                "width": "50.57091522216797px",
+                                "backgroundColor": "rgba(210, 210, 210, 1)"
+                              }
+                            },
+                            "layerName": "",
+                            "meta": {
+                              "figmaLayerId": "2:14"
+                            }
+                          },
+                          {
+                            "@type": "@builder.io/sdk:Element",
+                            "id": "builder-7bgdnvs3f1",
+                            "responsiveStyles": {
+                              "large": {
+                                "maxWidth": "51px",
+                                "color": "rgba(0, 0, 0, 1)",
+                                "fontSize": "15px",
+                                "letterSpacing": "0%",
+                                "textAlign": "center",
+                                "fontFamily": "Times New Roman, sans-serif"
+                              }
+                            },
+                            "layerName": "",
+                            "meta": {
+                              "figmaLayerId": "2:15"
+                            },
+                            "component": {
+                              "name": "Text",
+                              "options": {
+                                "text": "Games"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "@type": "@builder.io/sdk:Element",
+                        "id": "builder-72a67rpjkde",
+                        "responsiveStyles": {
+                          "large": {
+                            "display": "flex",
+                            "maxWidth": "51px"
+                          }
+                        },
+                        "layerName": "",
+                        "meta": {
+                          "figmaLayerId": "2:10"
+                        },
+                        "children": [
+                          {
+                            "@type": "@builder.io/sdk:Element",
+                            "id": "builder-ytofsfbav8",
+                            "responsiveStyles": {
+                              "large": {
+                                "display": "flex",
+                                "maxWidth": "50.57091522216797px",
+                                "height": "0.69084632396698px",
+                                "width": "50.57091522216797px",
+                                "backgroundColor": "rgba(210, 210, 210, 1)"
+                              }
+                            },
+                            "layerName": "",
+                            "meta": {
+                              "figmaLayerId": "2:11"
+                            }
+                          },
+                          {
+                            "@type": "@builder.io/sdk:Element",
+                            "id": "builder-s5r4dnfdwu",
+                            "responsiveStyles": {
+                              "large": {
+                                "maxWidth": "51px",
+                                "color": "rgba(0, 0, 0, 1)",
+                                "fontSize": "15px",
+                                "letterSpacing": "0%",
+                                "textAlign": "center",
+                                "fontFamily": "Times New Roman, sans-serif"
+                              }
+                            },
+                            "layerName": "",
+                            "meta": {
+                              "figmaLayerId": "2:12"
+                            },
+                            "component": {
+                              "name": "Text",
+                              "options": {
+                                "text": "Games"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "@type": "@builder.io/sdk:Element",
+                        "id": "builder-b9iq6ajbk8",
+                        "responsiveStyles": {
+                          "large": {
+                            "display": "flex",
+                            "maxWidth": "51px"
+                          }
+                        },
+                        "layerName": "",
+                        "meta": {
+                          "figmaLayerId": "2:6"
+                        },
+                        "children": [
+                          {
+                            "@type": "@builder.io/sdk:Element",
+                            "id": "builder-xsudeulkqf7",
+                            "responsiveStyles": {
+                              "large": {
+                                "display": "flex",
+                                "maxWidth": "50.57091522216797px",
+                                "height": "0.69084632396698px",
+                                "width": "50.57091522216797px",
+                                "backgroundColor": "rgba(210, 210, 210, 1)"
+                              }
+                            },
+                            "layerName": "",
+                            "meta": {
+                              "figmaLayerId": "0:8"
+                            }
+                          },
+                          {
+                            "@type": "@builder.io/sdk:Element",
+                            "id": "builder-6pn2p8gvub",
+                            "responsiveStyles": {
+                              "large": {
+                                "maxWidth": "51px",
+                                "color": "rgba(0, 0, 0, 1)",
+                                "fontSize": "15px",
+                                "letterSpacing": "0%",
+                                "textAlign": "center",
+                                "fontFamily": "Times New Roman, sans-serif"
+                              }
+                            },
+                            "layerName": "",
+                            "meta": {
+                              "figmaLayerId": "0:20"
+                            },
+                            "component": {
+                              "name": "Text",
+                              "options": {
+                                "text": "Games"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "@type": "@builder.io/sdk:Element",
+                "id": "builder-5egwgy7e7e2",
+                "responsiveStyles": {
+                  "large": {
+                    "display": "flex",
+                    "maxWidth": "360px"
+                  }
+                },
+                "layerName": "",
+                "meta": {
+                  "figmaLayerId": "2:3"
+                },
+                "children": [
+                  {
+                    "@type": "@builder.io/sdk:Element",
+                    "id": "builder-o0lu46mfrtg",
+                    "responsiveStyles": {
+                      "large": {
+                        "display": "flex",
+                        "maxWidth": "360px",
+                        "height": "39.792747497558594px",
+                        "width": "360px",
+                        "backgroundColor": "rgba(90, 137, 156, 1)"
+                      }
+                    },
+                    "layerName": "",
+                    "meta": {
+                      "figmaLayerId": "0:5"
+                    }
+                  },
+                  {
+                    "@type": "@builder.io/sdk:Element",
+                    "id": "builder-3agx0wj50fw",
+                    "responsiveStyles": {
+                      "large": {
+                        "maxWidth": "30px",
+                        "color": "rgba(255, 255, 255, 1)",
+                        "fontSize": "15px",
+                        "letterSpacing": "0%",
+                        "textAlign": "left",
+                        "fontFamily": "Times New Roman, sans-serif"
+                      }
+                    },
+                    "layerName": "",
+                    "meta": {
+                      "figmaLayerId": "0:17"
+                    },
+                    "component": {
+                      "name": "Text",
+                      "options": {
+                        "text": "back"
+                      }
+                    }
+                  },
+                  {
+                    "@type": "@builder.io/sdk:Element",
+                    "id": "builder-83fik4vab5w",
+                    "responsiveStyles": {
+                      "large": {
+                        "maxWidth": "36px",
+                        "color": "rgba(255, 255, 255, 1)",
+                        "fontSize": "16px",
+                        "letterSpacing": "0%",
+                        "textAlign": "left",
+                        "fontFamily": "Times New Roman, sans-serif"
+                      }
+                    },
+                    "layerName": "",
+                    "meta": {
+                      "figmaLayerId": "0:18"
+                    },
+                    "component": {
+                      "name": "Text",
+                      "options": {
+                        "text": "menu"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
