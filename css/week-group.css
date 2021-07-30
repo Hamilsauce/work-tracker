@@ -1,7 +1,4 @@
 .week-group {
-	/* display: flex; */
-	/* flex-direction: column; */
-	/* flex-wrap: nowrap; */
 	position: relative;
 	height: 100%;
   margin: 0 0 0px 0;
@@ -111,15 +108,18 @@ canvas {
 	z-index: 500;
 	/* margin: auto; */
 	/* border: 1px solid #5F5F5F; */
-	background: #FFFFFF;
+	z-index: 500;
+	
 }
 
 .chart-container {
-	/* position: absolute; */
-	top: 40%;
+	position: absolute;
+	top: 75px;
 	left: 0;
 	/* height: 100%; */ 
 	/* width: 100%; */
+	background: #FFFFFF;
+	background: linear-gradient(#fff 70%, #FFFFFF00 90%);
 	transition: 1s;
 	z-index: 500;
 }
