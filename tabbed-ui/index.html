@@ -5,50 +5,50 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="style.css" type="text/css" media="all" />
-	<title>Card thing</title>
+	<title>Tabbed UI With Ham Router</title>
 </head>
 
 <body>
 	<div class="app">
 		<header class="app-header">
-		<div class="title-bar">
-			<div>back</div>
-			<div>menu</div>
-		</div>
+			<div class="title-bar">
+				<div class="back-button">back</div>
+				<div>menu</div>
+			</div>
 			<div class="search-container">
 				<label for="search-input">search</label>
-				<input type="text" class="search-input" name="search-input" id="search-input<ul></ul>" value="" placeholder="what do you need?" />
+				<input type="text" class="search-input" name="search-input" id="search-input<ul></ul>" value=""
+					placeholder="what do you need?" />
 			</div>
 		</header>
 		<div class="app-body">
 			<div class="view-menu">
-				<div data-content-name="games" class="view-button">Games</div>
-				<div data-content-name="players" class="view-button">Players</div>
-				<div data-content-name="details" class="view-button">Details</div>
-				<div data-content-name="settings" class="view-button">Settings</div>
+				<div data-content-name="games" data-router-path="games" class="view-button">Games</div>
+				<div data-content-name="players" data-router-path="players" class="view-button">Players</div>
+				<div data-content-name="details" data-router-path="details" class="view-button">Details</div>
+				<div data-content-name="settings" data-router-path="settings" class="view-button">Settings</div>
 			</div>
 			<div class="router-view">
-			<!-- 	<div data-content-name="games" class="content-view">Games</div>
-			<div data-content-name="players" class="content-view">Players</div>
-			<div data-content-name="details" class="content-view">Details</div>
-			<div data-content-name="settings" class="content-view">Settings </div> -->
 			</div>
-<!-- 			<div class="content">
-	<div data-content-name="games" class="content-view">Games</div>
-	<div data-content-name="players" class="content-view">Players</div>
-	<div data-content-name="details" class="content-view">Details</div>
-	<div data-content-name="settings" class="content-view">Settings </div>
-</div>
- -->		</div>
+		</div>
 		<footer class="app-footer"></footer>
-		<!-- <div class="card">
-			<div class="card-left">
-			</div>
-			<div class="card-right">
-			</div>
-		</div> -->
 	</div>
+
 	<script src="script.js" type="module" charset="utf-8"></script>
+
+	<!-- @ViewTemplates -->
+	<template id="games-view-template" data-content-name="games" class="content-view">
+		<div data-content-name="games" id="games-view" class="view-button">Games</div>
+	</template>
+	<template id="players-view-template" data-content-name="players" class="content-view">
+		<div data-content-name="players" id="players-view" class="view-button">Players</div>
+	</template>
+	<template id="details-view-template" data-content-name="details" class="content-view">
+		<div data-content-name="details" id="details-view" class="view-button">Details</div>
+	</template>
+	<template id="settings-view-template" data-content-name="settings" class="content-view">
+		<div data-content-name="settings" id="settings-view" class="view-button">Settings</div>
+	</template>
 </body>
 
 </html>

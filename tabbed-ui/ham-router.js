@@ -1,79 +1,165 @@
 export class HamRouter {
-	constructor(routerView = null, parentElement = null, paths = [], routerLinks = null) {
-		this._parentElement = parentElement;
+	constructor(routerView = null, routes = [], routerLinks = null) {
 		this._routerView = routerView;
-		this.routerLinks = routerLinks;
-		this._paths = new Map(Object.entries(paths));
-		this._activeRoute;
+		this._parentElement = this.routerView.parentElement || null;
+		this._routerLinks = routerLinks;
+		this._routes = this.createRouteMap(routes);
+		this._activeRoute = new ActiveRoute(this.routes.get('games'));
 		this._routeHistory = [];
-		console.log('p el', this.parentElement);
-		this.initialize(this.routerView, this.parentElement)
+
+		this.initialize(this.routerView, this.parentElement, this.routerLinks);
 	}
 
-	initialize(routerView, parent) {
-		console.log('init');
-		if (!parent) console.log('No parent passed to parent for router.');
-		
-		if (!routerView) {
-			if (!document.querySelector('.router-view')) {
-				console.log('No parent passed to router.');
-				return;
+	initialize(routerView, parent, routerLinks) {
+		if (!parent) console.log('No parent element passed to HamRouter.');
 
-			}
-		};
+		//* set up router links
+		if (!routerLinks) {
+			console.log('No link elements passed to HamRouter.');
+		} else {
+			routerLinks.forEach(b => {
+				b.addEventListener('click', e => {
+					const routeLinkEvent = new CustomEvent('routerLinkClicked', {
+						bubbles: true,
+						detail: {
+							router: {
+								path: b.dataset.routerPath
+							}
+						}
+					});
+					e.target.dispatchEvent(routeLinkEvent);
+				});
+			});
+		}
 
-		parent.addEventListener('routerLinkClicked', e => {
-			this.routeChange(e.detail);
-			// const routeChangeEvent = new CustomEvent('routeChange', { bubbles: true, detail: { poo: 'poo' } });
-			// e.target.dispatchEvent(routeChangeEvent);
-			this.activeRoute;
+		//* listen for router link clicks on window
+		window.addEventListener('routerLinkClicked', e => {
+			this.changeRoute(e.detail.router.path);
+			console.log(this.routes);
 		});
 
-		this.routerView.addEventListener('routeChange', this.handleRouteChange);
+		//* test for router view
+		if (!routerView) {
+			if (!document.querySelector('.router-view')) {
+				console.log('No router view passed to HamRouter and no .router-view found in DOM. Creating route view element');
+				this.routerView = document.createElement('div');
+				this.routerView.classList.add('router-view');
+			} else this.routerView = document.querySelector('.router-view')
+		};
 	};
 
-	appendToNewParent(parent) { if (this.routerView) parent.appendChild(this.routerView) };
+	createRouteMap(routeArray) {
+		return routeArray
+			.reduce((newMap, route) => {
+				return newMap.set(route.path, {
+					...route,
+					template: document.querySelector(route.templateSelector).content.firstElementChild.cloneNode(true)
+				}, );
+			}, new Map());
+	};
 
-	handleRouteChange(event) {
-		console.log('got it', event);
-		const routePath = event.detail.destinationPath || null;
-		const routeData = event.detail.routeData || null;
-	}
+	changeRoute(destinationPath) {
+		this.routeHistory.push({
+			...this.activeRoute
+		});
+		this.activeRoute.update(this.routes.get(destinationPath))
 
-	routeChange(newRoute) {
-		console.log('route change router method', newRoute);
-	}
+		while (this.routerView.firstChild) this.routerView.removeChild(this.routerView.firstChild);
+		this.routerView.appendChild(this.routes.get(destinationPath).template);
 
-	get routerView() { return this._routerView };
-	get paths() { return this._paths };
-	get activeRoute() { return this._activeRoute };
-	get parentElement() { return this._parentElement };
-	get routeHistory() { return this._routeHistory };
-}
+		console.log('hamrouter after chage route', this);
+		console.log('activeRoute in router changeRoute()', this.activeRoute);
+	};
+
+	appendRouterViewToNewParent(parent) {
+		if (this.routerView) parent.appendChild(this.routerView)
+	};
+
+
+	get routerView() {
+		return this._routerView;
+	};
+	set routerView(newValue) {
+		this.routerView = newValue;
+	};
+
+	get routerLinks() {
+		return this._routerLinks;
+	};
+	set routerLinks(newValue) {
+		this.routerLinks = newValue;
+	};
+
+	get routes() {
+		return this._routes;
+	};
+	set routes(newValue) {
+		this.routes = newValue;
+	};
+
+	get activeRoute() {
+		return this._activeRoute;
+	};
+	set activeRoute(newValue) {
+		this.activeRoute = newValue;
+	};
+
+	get parentElement() {
+		return this._parentElement;
+	};
+	set parentElement(newValue) {
+		this.parentElement = newValue;
+	};
+
+	get routeHistory() {
+		return this._routeHistory;
+	};
+	set routeHistory(newValue) {
+		this.routeHistory = newValue;
+	};
+};
 
 
 
 export class ActiveRoute {
-	constructor(destinationPath, data) {
-		this._destinationPath = destinationPath;
-		this._data = data;
-		this._queryParams;
+	constructor(route = {
+		path: 'games'
+	}) {
+		// this._path = route.path;
+		// this._data = route.data;
+		// this._queryParams;
 	}
 
-	getData() {}
+	getData() {};
 
-	initialize() {
-		this.routerView.addEventListener('routeChange', handleRouteChange);
+	update(route) {
+		Object.entries(route).forEach(([key, value]) => this[key] = value)
+		console.log('updated active route', this);
 	};
 
-	handleRouteChange(event) {
-		const routePath = e.detail.destinationPath;
-		const routeData = e.detail.routeData;
-	};
-
-	get queryParams() { return this._queryParams };
-	get data() { return this._data };
-	get destinationPath() { return this._destinationPath };
+	// get queryParams() {
+	// 	return this._queryParams;
+	// };
+	// set queryParams(newValue) {
+	// 	this.queryParams = newValue;
+	// };
+	// get data() {
+	// 	return this._data;
+	// };
+	// set data(newValue) {
+	// 	this.data = newValue;
+	// };
+	// get destinationPath() {
+	// 	return this._destinationPath;
+	// };
+	// set destinationPath(newValue) {
+	// 	this.destinationPath = newValue;
+	// };
 };
 
-{ HamRouter, ActiveRoute }
+// export const HamRouter
+
+{
+	HamRouter,
+	ActiveRoute
+}
