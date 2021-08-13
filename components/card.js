@@ -18,6 +18,7 @@ export default {
 			},
 		}
 	},
+	
 	methods: {
 		updateHours(e) {
 			this.newShiftData.hours = parseInt(e.target.textContent)
