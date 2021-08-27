@@ -73,18 +73,23 @@
   display: grid;
   /* flex-direction: row; */
   grid-template-rows: 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-content: center;
-  
+  grid-template-columns: 1fr 1fr 1fr 2fr;
+  justify-content: space-between;
+  white-space: nowrap;
   width: 100%;
   padding: 2px 15px 10px 15px;
+  gap: 10px;
   /* border-bottom: 1px solid #d7d7d7; */
   font-size: 0.9em;
   font-weight: 600;
   text-align: center;
   background: white;
 	color: #00000054;
-  
+}
+
+.week-totals-chart-toggle {
+  text-align: right;
+  color: #3E47B1;
 }
 
 .week-group:hover>.week-totals {
